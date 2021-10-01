@@ -1,0 +1,1 @@
+# Aikido_PersonalArea
