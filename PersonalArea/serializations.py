@@ -1,4 +1,4 @@
-from PersonalArea.models import Aikido_Member
+from PersonalArea.models import Aikido_Member, Seminar
 from rest_framework import serializers
 
 
@@ -14,5 +14,15 @@ class Aikido_MemberSerizlizer(serializers.ModelSerializer):
                   'city',
                   'club',
                   'isTrainer',
-                  'trainer_id'
+                  'trainer_id',
+                  ]
+
+
+class Aikido_SeminarsSerizlizer(serializers.ModelSerializer):
+    class Meta:
+        model = Seminar
+        fields = ['student_id_id','region', 'club',
+                  'trainer', 'city',
+                  'attestation_date', 'oldKu',
+                  'newKu', 'isChild', 'examiner'
                   ]
