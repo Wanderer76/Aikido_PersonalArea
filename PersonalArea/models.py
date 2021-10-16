@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -23,23 +25,26 @@ class Aikido_Member(models.Model):
 
 
 class Seminar(models.Model):
-    member_id = models.ForeignKey(Aikido_Member, on_delete=models.DO_NOTHING)
+    name = models.CharField(name="name", max_length=100)
+    member = models.ForeignKey(Aikido_Member, on_delete=models.DO_NOTHING)
     region = models.IntegerField(name="region", null=False)
     club = models.CharField("club", max_length=30, null=False)
     trainer = models.CharField(name="trainer", null=False, max_length=100)
     city = models.CharField(name="city", null=False, max_length=30)
     attestation_date = models.DateField(name="attestation_date", null=False)
+    start_date = models.DateField(name="start_date", null=False)
     oldKu = models.IntegerField("oldKu", null=True)
     newKu = models.IntegerField("newKu", null=True)
     isChild = models.BooleanField("isChild", null=False)
     examiner = models.CharField("examiner", null=False, max_length=100)
 
     class Meta:
-        db_table = "seminars"
+        db_table = "seminar"
         managed = True
 
 
 class Competition(models.Model):
+    name = models.CharField(primary_key=True, name="name", max_length=100, unique=True, default="unable")
     member_id = models.ForeignKey(Aikido_Member, on_delete=models.DO_NOTHING)
     region = models.IntegerField(name="region", null=False)
     club = models.CharField("club", max_length=30, null=False)
@@ -48,7 +53,7 @@ class Competition(models.Model):
     position = models.IntegerField(name="position", null=False)
 
     class Meta:
-        db_table = "competitions"
+        db_table = "competition"
         managed = True
 
 
@@ -62,5 +67,5 @@ class Application(models.Model):
     participants = models.JSONField(name="participants")
 
     class Meta:
-        db_table = "applications"
+        db_table = "application"
         managed = True

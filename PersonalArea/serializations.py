@@ -21,7 +21,7 @@ class Aikido_MemberSerizlizer(serializers.ModelSerializer):
 class Aikido_SeminarsSerizlizer(serializers.ModelSerializer):
     class Meta:
         model = Seminar
-        fields = ['student_id_id','region', 'club',
+        fields = ['member','region', 'club',
                   'trainer', 'city',
                   'attestation_date', 'oldKu',
                   'newKu', 'isChild', 'examiner'
