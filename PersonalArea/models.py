@@ -4,6 +4,8 @@ from django.db import models
 
 
 # Create your models here.
+from django.utils import timezone
+
 
 class Aikido_Member(models.Model):
     id = models.IntegerField(name="id", primary_key=True, unique=True)
@@ -57,15 +59,26 @@ class Competition(models.Model):
         managed = True
 
 
-class Application(models.Model):
+class Events(models.Model):
     TYPES = (
         ("0", "Seminar"),
         ("1", "Competition")
     )
-
-    type = models.CharField(name="type", choices=TYPES, max_length=11)
-    participants = models.JSONField(name="participants")
+    event_name = models.CharField(name="event_name", primary_key=True, max_length=100)
+    start_record_date = models.DateField(name="start_record_date", default=timezone.now)
+    end_record_date = models.DateField(name="end_record_date", default=timezone.now)
+    date_of_event = models.DateField(name="date_of_event", default=timezone.now)
+    type = models.CharField(name="type", choices=TYPES,max_length=20)
 
     class Meta:
-        db_table = "application"
+        db_table = "event"
+        managed = True
+
+class Request(models.Model):
+    member_id = models.ForeignKey(Aikido_Member, on_delete=models.DO_NOTHING)
+    event_name = models.ForeignKey(Events, on_delete=models.DO_NOTHING)
+    trainer_id = models.IntegerField(name="trainer_id")
+
+    class Meta:
+        db_table = "request"
         managed = True
