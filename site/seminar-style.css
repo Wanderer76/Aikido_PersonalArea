@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+.seminar-info {
+    font-size: 150%;
+    font-weight: bolder;
+    margin: 1% auto auto 10vw;
+
+}
+
+.changeable-params {
+    color: #134F8C;
+}
+
+.download, .upload {
+    width: 20%;
+    margin: auto;
+
+    font-size: 120%;
+    color: white;
+    border-radius: 20px;
+    text-align: center;
+    padding-right: 5%;
+
+}
+
+.download {
+    background: #05861A;
+    background-image: url("assets/excel.png");
+    background-size: 15%;
+    background-repeat: no-repeat;
+    background-position: 90%;
+}
+
+.upload {
+    background: #134F8C;
+    padding-top: 1.2%;
+    padding-bottom: 1.2%;
+    background-image: url("assets/download.png");
+    background-size: 15%;
+    background-repeat: no-repeat;
+    background-position: 90%;
+}
+
+.seminar-stat {
+    margin: 5% auto;
+    text-align: center;
+}
+
+.table-header {
+    font-weight: bolder;
+}
+
+.seminar-stat table{
+    font-size: 150%;
+    width: 90%;
+    margin: 2% auto;
+
+
+}
+
+.seminar-stat table td{
+    padding: 1%;
+}
+
+.age-categories {
+    width: 40%;
+}
+
+.count {
+    width: 20%;
+}
+
+.bordered {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-radius: 20px 20px 20px 20px;
+}
+
+.seminar-stat table {
+    background-image: url("assets/table-back.png");
+    background-size: 100% 100%;
+}
+
