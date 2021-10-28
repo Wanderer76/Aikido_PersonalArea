@@ -1,34 +1,62 @@
+import datetime
 import os
 import openpyxl
 from ctypes import ArgumentError
 from openpyxl.styles import numbers, PatternFill
 from PersonalArea import models
+from Utilities import password_generantor
+
+
+def get_id(record):
+    if isinstance(record, int):
+        return int(record)
+    else:
+        if isinstance(record, str):
+            if record[0] == '№':
+                return int(record[1::])
+        raise ArgumentError('Таблица заполнена не правильно')
+
+
+def get_ku(record):
+    if isinstance(record, int):
+        return record
+    else:
+        if "дан" in record:
+            pass
+        else:
+            return int(record.replace(' ', '').replace("кю", ""))
+
+
+def parse_eu_date_to_us(record):
+    return datetime.datetime.strptime(record, "%d.%m.%Y").strftime("%Y-%m-%d")
 
 
 def parseXlcToDb(xlcFile):
     book = openpyxl.open(xlcFile, read_only=True)
     book.iso_dates = True
     sheet = book.active
-
+    print(sheet.max_row)
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
+        fileName = os.path.basename(xlcFile)
         seminar = models.Seminar()
-        seminar.name = os.path.basename(xlcFile)
+        seminar.name = fileName[0:fileName.find('.')]
         seminar.club = row[7].value
         seminar.trainer = row[8].value
         seminar.city = row[11].value
         seminar.start_date = row[10].value
         seminar.attestation_date = row[12].value
-        seminar.oldKu = int(row[3].value)
-        seminar.newKu = int(row[13].value)
+        seminar.oldKu = get_ku(row[3].value)
+        seminar.newKu = get_ku(row[13].value)
         seminar.isChild = True if row[14].value == '+' else False
         seminar.examiner = row[15].value
 
-        member_id = row[0].value
-
+        member_id = get_id(row[4].value)
+        trainer_id = get_id(row[9].value)
+        set_trainer_status(trainer_id)
         if not (models.Aikido_Member.objects.filter(id=member_id).exists()):
             aikiboy = models.Aikido_Member.objects.create(
                 id=member_id,
-                password='',
+                password= password_generantor.generate_password(),
                 name=row[1].value,
                 surname=row[0].value,
                 second_name=row[2].value,
@@ -37,7 +65,7 @@ def parseXlcToDb(xlcFile):
                 club=row[7].value,
                 photo=None,
                 isTrainer=False,
-                trainer_id=row[9].value
+                trainer_id=trainer_id
             )
             seminar.member = aikiboy
             seminar.save()
@@ -46,6 +74,13 @@ def parseXlcToDb(xlcFile):
             aikiboy = models.Aikido_Member.objects.get(id=member_id)
             seminar.member = aikiboy
             seminar.save()
+
+
+def set_trainer_status(trainer_id):
+    if models.Aikido_Member.objects.filter(id=trainer_id).exists():
+        trainer = models.Aikido_Member.objects.get(id=trainer_id)
+        trainer.isTrainer = True
+        trainer.save()
 
 
 def parseRecordsToXlc(eventName):
