@@ -11,7 +11,6 @@ class Aikido_MemberSerizlizer(serializers.ModelSerializer):
                   'second_name',
                   'birthdate',
                   'region',
-                  'city',
                   'club',
                   'isTrainer',
                   'trainer_id',
