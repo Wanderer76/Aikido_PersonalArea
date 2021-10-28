@@ -42,7 +42,13 @@ def parseXlcToDb(xlcFile):
     print(sheet.max_row)
 
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
+
         fileName = os.path.basename(xlcFile)
+        member_id = get_id(row[4].value)
+
+        if models.Seminar.objects.filter(name=fileName[0:fileName.find('.')], member_id = member_id).exists():
+            continue
+
         seminar = models.Seminar()
         seminar.name = fileName[0:fileName.find('.')]
         seminar.club = row[7].value
@@ -55,7 +61,6 @@ def parseXlcToDb(xlcFile):
         seminar.isChild = True if row[14].value == '+' else False
         seminar.examiner = row[15].value
 
-        member_id = get_id(row[4].value)
         trainer_id = get_id(row[9].value)
         set_trainer_status(trainer_id)
         if not (models.Aikido_Member.objects.filter(id=member_id).exists()):
