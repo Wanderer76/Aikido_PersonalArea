@@ -46,7 +46,7 @@ def parseXlcToDb(xlcFile):
         fileName = os.path.basename(xlcFile)
         member_id = get_id(row[4].value)
 
-        if models.Seminar.objects.filter(name=fileName[0:fileName.find('.')], member_id = member_id).exists():
+        if models.Seminar.objects.filter(name=fileName[0:fileName.find('.')], member_id=member_id).exists():
             continue
 
         seminar = models.Seminar()
@@ -97,40 +97,52 @@ def set_trainer_status(trainer_id):
 def parseRecordsToXlc(eventName):
     wb = openpyxl.Workbook(iso_dates=True)
     workSheet = wb.active
-    workSheet.append(["Фамилия", "Имя", "Отчество", "степень кю/дан", "#ID", "Дата рождения",
-                      "Регион", "Клуб", "Тренер", "id тренера", "семинар", "место проведения", "аттестация",
-                      "Присвоенная степень", "детский", "Экзаменатор"])
+    workSheet.append(['Фамилия', 'Имя', 'Отчество', 'степень кю/дан', '#ID', 'Дата рождения',
+                      'Регион', 'Клуб', 'Тренер', 'id тренера', 'семинар', 'место проведения', 'аттестация',
+                      'Присвоенная степень', 'детский', 'Экзаменатор'])
     set_blue_row(workSheet)
+    requests = models.Request.objects.filter(event_name=eventName)
+    if len(requests) == 0:
+        raise ArgumentError('Не существует такого мероприятия')
+    for request in requests.values():
+        if request['member_id'] is not None:
+            member = models.Aikido_Member.objects.get(id=request['member_id'])
+            workSheet.append(create_row(request, member))
+        else:
+            workSheet.append(create_row(request))
 
-    seminars = models.Seminar.objects.filter(name=eventName)
-    if len(seminars) == 0:
-        raise ArgumentError()
-
-    for seminar in seminars.values():
-        try:
-            member = models.Aikido_Member.objects.get(id=seminar["member_id"])
-            workSheet.append(form_row(member, seminar))
-        except:
-            continue
     for i in workSheet.iter_rows(min_row=1, max_row=workSheet.max_row):
         i[5].number_format = numbers.FORMAT_DATE_DDMMYY
         i[10].number_format = numbers.FORMAT_DATE_DDMMYY
         i[12].number_format = numbers.FORMAT_DATE_DDMMYY
+
     wb.save(f"{eventName}.xlsx")
+    wb.close()
+    return os.path.abspath(wb.path)
 
 
-def form_row(member, seminar):
+def create_row(request, member=None):
+    trainer = models.Aikido_Member.objects.get(id=request['trainer_id'])
+    event = models.Events.objects.get(event_name=request['event_name_id'])
+    oldKu = ''
+    if member is not None:
+        lastSeminar = models.Seminar.objects.filter(member=member)
+        if lastSeminar.exists():
+            oldKu = lastSeminar.order_by('newKu').first().newKu
+    second_name = '' if request['second_name'] is None else request['second_name']
+    member_id = member.id if member is not None else ''
     return [
-        member.surname, member.name, member.second_name, str(seminar['oldKu']) + "кю", member.id,
-        member.birthdate,
-        member.region,
-        seminar['club'], seminar['trainer'], member.trainer_id, seminar['start_date'], seminar['city'],
-        seminar['attestation_date'],
-                                                         str(seminar['newKu']) + "кю",
-        "да" if seminar['isChild'] else "нет", seminar['examiner']]
+        request['surname'], request['name'], second_name, oldKu, member_id,
+        request['birthdate'],
+        trainer.region,
+        trainer.club,
+        f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
+        trainer.id,
+        event.start_record_date, event.city,
+        event.date_of_event, '', '', '']
 
 
 def set_blue_row(workSheet):
     for row in workSheet.iter_rows(min_row=1, max_row=1):
         for cell in row:
-            cell.fill = PatternFill(patternType='solid', start_color="538dd5", end_color='538dd5')
+            cell.fill = PatternFill(patternType='solid', start_color='538dd5', end_color='538dd5')
