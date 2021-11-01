@@ -61,8 +61,8 @@ class Events(models.Model):
     start_record_date = models.DateField(name="start_record_date", default=timezone.now)
     end_record_date = models.DateField(name="end_record_date", default=timezone.now)
     date_of_event = models.DateField(name="date_of_event", default=timezone.now)
-    city = models.CharField(name="city", null=False, max_length=30,default="None")
-    responsible_club = models.CharField(name='responsible_club',max_length=30,default="None")
+    city = models.CharField(name="city", null=False, max_length=30, default="None")
+    responsible_club = models.CharField(name='responsible_club', max_length=30, default="None")
 
     class Meta:
         db_table = "event"
@@ -70,12 +70,12 @@ class Events(models.Model):
 
 
 class Request(models.Model):
-    name = models.CharField(name="name",max_length=25,default="None")
-    surname = models.CharField(name="surname",max_length=25,default="None")
-    second_name = models.CharField(name="second_name",max_length=25,blank=True,default='None')
-    member_id = models.ForeignKey(Aikido_Member, on_delete=models.DO_NOTHING,null=True,blank=True)
-    birthdate = models.DateField(name="birthdate",default=timezone.now)
-    event_name = models.ForeignKey(Events, on_delete=models.DO_NOTHING)
+    name = models.CharField(name="name", max_length=25, default="None")
+    surname = models.CharField(name="surname", max_length=25, default="None")
+    second_name = models.CharField(name="second_name", max_length=25, blank=True, default='None')
+    member_id = models.IntegerField(name='member_id', null=True, blank=True)
+    birthdate = models.DateField(name="birthdate", default=timezone.now)
+    event_name = models.ForeignKey(Events, on_delete=models.DO_NOTHING,related_name='event')
     trainer_id = models.IntegerField(name="trainer_id")
 
     class Meta:
