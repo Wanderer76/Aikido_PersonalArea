@@ -1,0 +1,81 @@
+.container{
+    display: block;
+    width: 100%;
+    flex-direction: column;
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+body{
+    display: flex;
+    justify-content: center;
+}
+
+div{
+    margin: 20px;
+}
+
+.dAndL{
+    display: flex;
+    margin: 10px 0;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.date{
+    margin-right: 120px;
+}
+
+.location{
+
+    width: 350px;
+    min-width: 250px;
+}
+
+input{
+
+    width: 100%;
+    min-width: 150px;
+    width: available;
+    border-radius: 10px;
+    border-color: lightgrey;
+    color: lightgrey;
+    min-height: 30px;
+    height: 45px;
+    font-size: 18px;
+}
+
+.bordered{
+    display: block;
+    margin: 50px;
+    color: white;
+    background-color: darkblue;
+    border-radius: 10px;
+    border: midnightblue;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+    width: 120px;
+    height: 35px;
+    min-height: 20px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heading{
+    display: block;
+    font-weight: bold;
+    font-family: Arial;
+    font-size: x-large;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    left: 250px;
+}
+
+.rc{
+    margin-bottom: 20px;
+}
