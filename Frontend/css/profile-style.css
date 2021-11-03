@@ -1,0 +1,140 @@
+/*section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}*/
+
+/* fucking menu stilization */
+
+.wrapper {
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+.menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  width: 20vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #134F8C;
+  transition: 0.5s;
+  transform: translateX(-65%);
+  border-radius: 0 20px 20px 0;
+}
+
+.menu img[id="logo"] {
+  margin-top: 20%;
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.menu_active {
+  transform: translateX(0%);
+}
+
+.menu_active img[id="logo"] {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.menu-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70%;
+  flex-direction: column;
+}
+
+.menu-list a {
+  color:  white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 2vh;
+}
+
+
+
+.menu-list img {
+  width: 70%;
+}
+
+/*stilization for button of menu opening*/
+.menu-btn {
+  width: 15%;
+  height: 10%;
+  background-image: url("../assets/gamburger.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  position: absolute;
+  right: 12%;
+  top: 0;
+}
+
+.btn {
+  width:  105%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /*border: 1px solid white;*/
+  align-items: center;
+  margin-right: 0;
+}
+
+.btn img {
+  width: 5vh;
+  /*flex:  1;
+  margin-left: auto;*/
+}
+
+.exit-btn {
+  width:  80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  /*border: 1px solid white;*/
+  align-items: center;
+  margin-left: auto;
+  margin-top:  25%;
+}
+
+.icon {
+  flex:  1;
+  margin-right: 0;
+}
+
+
+.description {
+  flex: 2;
+}
+
+
+.content {
+  transition: 0.5s;
+  position: relative;
+  z-index: 0;
+}
+.content_active {
+  transform: translateX(30%);
+}
+
+
+
+/*styles for different resolutions */
+@media all and (max-width: 930px){
+    .menu {
+      width: 50vw;
+    }
+}
+
+
+
