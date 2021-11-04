@@ -38,8 +38,13 @@ body {
 
 .menu img[id="logo"] {
   margin-top: 20%;
-  opacity: 0;
-  transition: opacity 300ms;
+  display: none;
+  transition: visibility 600ms linear;
+}
+
+.menu .text-a {
+  display: none;
+  transition: display 600ms linear;
 }
 
 .menu_active {
@@ -47,8 +52,13 @@ body {
 }
 
 .menu_active img[id="logo"] {
-  opacity: 1;
-  transition: opacity 300ms;
+  display: block;
+  transition: display 600ms linear;
+}
+
+.menu_active .text-a {
+  display: block;
+  transition: display 600ms linear;
 }
 
 .menu-list {
@@ -57,6 +67,7 @@ body {
   align-items: center;
   height: 70%;
   flex-direction: column;
+  margin: 5%;
 }
 
 .menu-list a {
@@ -87,7 +98,7 @@ body {
 }
 
 .btn {
-  width:  105%;
+  width:  120%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -98,12 +109,11 @@ body {
 
 .btn img {
   width: 5vh;
-  /*flex:  1;
-  margin-left: auto;*/
+  margin-right: 0;
 }
 
 .exit-btn {
-  width:  80%;
+  width:  110%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -189,7 +199,7 @@ body {
 
 
 /*styles for different resolutions */
-@media all and (max-width: 930px){
+@media all and (max-width: 1000px){
     .menu {
       width: 50vw;
     }
