@@ -164,6 +164,7 @@ body {
 
 .photo {
   height: 40%;
+  /*border: 1px solid gray;*/
   border-radius: 20px;
 }
 
@@ -193,8 +194,78 @@ body {
   margin: 5%;
 }
 
+.achievment-table {
+  justify-content: space-between;
+}
 
+.achievment {
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 3%;
+}
 
+.achievment h2 {
+  font-weight: bold;
+}
+
+.achievment-block {
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 20px;
+  box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+  padding: 2%;
+  margin: 7% 3%;
+}
+
+.achievment-name {
+  background-color: black;  
+  color: white;
+  font-weight: bolder;
+  font-size: 120%;
+  padding: 7% 2%;
+  height: 200%;
+  border-radius: 10px;
+}
+
+.achievment-info {
+  margin-top: 2%;
+  align-items: center;
+  text-align: center;
+  /*justify-content: space-around;*/
+  font-size: 110%;
+}
+
+.achievment-info p {
+  margin: 0 0;
+}
+
+.achievment-info p[id="name"] {
+  font-weight: bolder;
+}
+
+.ku-1 {
+  background-color: #9e4700;
+}
+
+.ku-2 {
+  background-color: #0417b4;
+}
+
+.ku-3 {
+  background-color: #0c9511;
+}
+
+.ku-4 {
+  background-color: #e83300;
+}
+
+.ku-5 {
+  background-color: #ffde00;
+}
+
+.not-reached {
+  opacity: 30%;
+}
 
 
 
@@ -217,6 +288,9 @@ body {
     font-size: 3vh;
   }
 
+  .achievment-block {
+    margin: 7% 1%;
+  }
 
 }
 
