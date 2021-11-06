@@ -6,6 +6,23 @@ from rest_framework.parsers import JSONParser
 from PersonalArea.serializations import *
 from PersonalArea.models import *
 from Utilities import XlsParser
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+
+
+class LoginAPIView(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        user = request.data.get('user', {})
+
+        serializer = self.serializer_class(data=user)
+        serializer.is_valid(raise_exception=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # Create your views here.
@@ -13,7 +30,8 @@ from Utilities import XlsParser
 @csrf_exempt
 def aikido_students_list(request):
     if request.method == 'GET':
-        XlsParser.parseRecordsToXlc('Тестовый семинар')
+        XlsParser.parseXlcToDb(r'C:\Users\honor\Desktop\test.xlsx')
+        #XlsParser.parseRecordsToXlc('Тестовый семинар')
         students = Aikido_Member.objects.all()
         serializer = Aikido_MemberSerizlizer(students, many=True)
         return JsonResponse(serializer.data, safe=False)
