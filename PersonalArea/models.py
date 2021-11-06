@@ -58,9 +58,9 @@ class Competition(models.Model):
 
 class Events(models.Model):
     event_name = models.CharField(name="event_name", primary_key=True, max_length=100)
-    start_record_date = models.DateField(name="start_record_date", default=timezone.now)
-    end_record_date = models.DateField(name="end_record_date", default=timezone.now)
-    date_of_event = models.DateField(name="date_of_event", default=timezone.now)
+    start_record_date = models.DateField(name="start_record_date", default=datetime.date.today)
+    end_record_date = models.DateField(name="end_record_date", default=datetime.date.today)
+    date_of_event = models.DateField(name="date_of_event", default=datetime.date.today)
     city = models.CharField(name="city", null=False, max_length=30, default="None")
     responsible_club = models.CharField(name='responsible_club', max_length=30, default="None")
 
