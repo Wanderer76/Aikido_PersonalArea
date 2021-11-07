@@ -1,5 +1,6 @@
 from PersonalArea.models import Aikido_Member, Seminar, Request, Events
 from rest_framework import serializers
+from django.contrib.auth import authenticate
 
 
 class Aikido_MemberSerizlizer(serializers.ModelSerializer):
@@ -29,3 +30,31 @@ class Events_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Events
         fields = '__all__'
+
+
+class LoginSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    password = serializers.CharField(max_length=12, write_only=True)
+    token = serializers.CharField(max_length=255, read_only=True)
+
+    def validate(self, data):
+
+        password = data.get('password', None)
+
+        if password is None:
+            raise serializers.ValidationError(
+                'Введите пароль, чтобы авторизоваться'
+            )
+
+        user = authenticate(username=id, password=password)
+
+        if user is None:
+            raise serializers.ValidationError(
+                'Пользователь с таким id и паролем не найден'
+            )
+
+        return {
+            'id': user.id,
+            'token': user.token
+        }
+

@@ -1,11 +1,31 @@
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
 from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from PersonalArea.serializations import *
 from PersonalArea.models import *
 from Utilities import XlsParser
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+
+
+class LoginAPIView(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        user = request.data.get('user', {})
+
+        serializer = self.serializer_class(data=user)
+        serializer.is_valid(raise_exception=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # Create your views here.
@@ -13,7 +33,6 @@ from Utilities import XlsParser
 @csrf_exempt
 def aikido_students_list(request):
     if request.method == 'GET':
-        XlsParser.parseRecordsToXlc('Тестовый семинар')
         students = Aikido_Member.objects.all()
         serializer = Aikido_MemberSerizlizer(students, many=True)
         return JsonResponse(serializer.data, safe=False)
@@ -38,61 +57,50 @@ def student_seminars(request, pk):
         return JsonResponse(serializer.data, safe=False)
 
 
-
-@csrf_exempt
-@transaction.atomic
-def create_event(request):
-    """ json формат в котором нужно передавать данные
-    {
-    "event_name":"название мероприятия",
-    "start_record_date":"дата начала записи в формате гггг-мм-дд",
-    "end_record_date":"дата конца записи в формате гггг-мм-дд",
-    "date_of_event":"дата события в формате гггг-мм-дд",
-    "city":"город",
-    "responsible_club":"ответственный клуб"
-    }"""
-
-    if request.method == 'POST':
+class CreateEvent(APIView):
+    @transaction.atomic
+    def post(self, request):
+        """ json формат в котором нужно передавать данные
+        {
+        "event_name":"название мероприятия",
+        "start_record_date":"дата начала записи в формате гггг-мм-дд",
+        "end_record_date":"дата конца записи в формате гггг-мм-дд",
+        "date_of_event":"дата события в формате гггг-мм-дд",
+        "city":"город",
+        "responsible_club":"ответственный клуб"
+        }"""
         data = JSONParser().parse(request)
-        name = data['event_name']
-        if Events.objects.filter(event_name=name).exists():
-            return HttpResponse(status=409, content="Такое мероприятние уже существует")
-
         serializer = Events_Serializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return HttpResponse(status=201, content="Мероприятие создано")
+            return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
         else:
-            return HttpResponse(status=500, content='Ошибка заполнения формы')
-    else:
-        return HttpResponse(status=400, content='Не верный метод')
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
 
 
-@csrf_exempt
-@transaction.atomic
-def make_request(request):
-    """json формат в котором нужно передавать данные [
-    {
-    "name":"Имя",
-    "surname":"Фамилия",
-    "second_name":"Отчество"[не обязательно],
-    "member_id": id ид участника: int[не обязательно],
-    "birthdate":"дата в формате гггг-мм-дд",
-    "event_name":"Название события",
-    "trainer_id": ид тренера: int
-    }
-]"""
+class DownloadRequests(APIView):
+    def get(self, request, seminar_name):
+        filename = XlsParser.createXlsxFromRequests(seminar_name)
+        return FileResponse(open(filename, 'rb'))
 
-    if request.method == 'GET':
-        return HttpResponse(status=400, content='Не верный метод')
 
-    data = JSONParser().parse(request)
-    if not Events.objects.filter(event_name=data['event_name']).exists():
-        return HttpResponse(status=500, content='События не существует')
-
-    serializer = Requests_Serializer(data=data, many=True)
-    if serializer.is_valid():
-        serializer.save()
-        return HttpResponse(status=201, content='заявка создана')
-    return HttpResponse(status=400,content='Ошибка заполнения формы')
-
+class CreateRequest(APIView):
+    @transaction.atomic
+    def post(self, request):
+        """json формат в котором нужно передавать данные
+         [ {
+        "name":"Имя",
+        "surname":"Фамилия",
+        "second_name":"Отчество"[не обязательно],
+        "member_id": id ид участника: int[не обязательно],
+        "birthdate":"дата в формате гггг-мм-дд",
+        "event_name":"Название события",
+        "trainer_id": ид тренера: int
+        } ]"""
+        data = JSONParser().parse(request)
+        serializer = Requests_Serializer(data=data, many=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED, data={'content': 'заявка создана'})
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)

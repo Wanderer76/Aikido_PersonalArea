@@ -3,8 +3,12 @@ import os
 import openpyxl
 from ctypes import ArgumentError
 
+from django.contrib.auth import get_user_model
 from django.db import transaction
+from django.http import FileResponse
 from openpyxl.styles import numbers, PatternFill
+from rest_framework.authtoken.models import Token
+
 from PersonalArea import models
 from Utilities import password_generantor
 
@@ -39,12 +43,14 @@ def parseXlcToDb(xlcFile):
     book = openpyxl.open(xlcFile, read_only=True)
     book.iso_dates = True
     sheet = book.active
-    print(sheet.max_row)
+
+    aikimanager = models.Aikido_Account_Manager()
+    print(Token.objects.all())
 
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
 
         fileName = os.path.basename(xlcFile)
-        member_id = get_id(row[4].value)
+        member_id = row[4].value
 
         if models.Seminar.objects.filter(name=fileName[0:fileName.find('.')], member_id=member_id).exists():
             continue
@@ -64,9 +70,9 @@ def parseXlcToDb(xlcFile):
         trainer_id = get_id(row[9].value)
         set_trainer_status(trainer_id)
         if not (models.Aikido_Member.objects.filter(id=member_id).exists()):
-            aikiboy = models.Aikido_Member.objects.create(
-                id=member_id,
-                password=password_generantor.generate_password(),
+            aikiboy = models.Aikido_Member.objects.create_user(
+                id = member_id,
+                password = password_generantor.generate_password(),
                 name=row[1].value,
                 surname=row[0].value,
                 second_name=row[2].value,
@@ -78,10 +84,12 @@ def parseXlcToDb(xlcFile):
                 trainer_id=trainer_id
             )
             seminar.member = aikiboy
+            Token.objects.get_or_create(user=aikiboy)
             seminar.save()
 
         else:
             aikiboy = models.Aikido_Member.objects.get(id=member_id)
+
             seminar.member = aikiboy
             seminar.save()
 
@@ -94,7 +102,7 @@ def set_trainer_status(trainer_id):
 
 
 @transaction.atomic
-def parseRecordsToXlc(eventName):
+def createXlsxFromRequests(eventName):
     wb = openpyxl.Workbook(iso_dates=True)
     workSheet = wb.active
     workSheet.append(['Фамилия', 'Имя', 'Отчество', 'степень кю/дан', '#ID', 'Дата рождения',
@@ -102,14 +110,17 @@ def parseRecordsToXlc(eventName):
                       'Присвоенная степень', 'детский', 'Экзаменатор'])
     set_blue_row(workSheet)
     requests = models.Request.objects.filter(event_name=eventName)
-    if len(requests) == 0:
+    if not requests.exists():
         raise ArgumentError('Не существует такого мероприятия')
+
+    event = models.Events.objects.get(event_name=eventName)
+
     for request in requests.values():
         if request['member_id'] is not None:
             member = models.Aikido_Member.objects.get(id=request['member_id'])
-            workSheet.append(create_row(request, member))
+            workSheet.append(create_row(request, event, member))
         else:
-            workSheet.append(create_row(request))
+            workSheet.append(create_row(request, event))
 
     for i in workSheet.iter_rows(min_row=1, max_row=workSheet.max_row):
         i[5].number_format = numbers.FORMAT_DATE_DDMMYY
@@ -118,17 +129,16 @@ def parseRecordsToXlc(eventName):
 
     wb.save(f"{eventName}.xlsx")
     wb.close()
-    return os.path.abspath(wb.path)
+    return f"{eventName}.xlsx"
 
 
-def create_row(request, member=None):
+def create_row(request, event, member=None):
     trainer = models.Aikido_Member.objects.get(id=request['trainer_id'])
-    event = models.Events.objects.get(event_name=request['event_name_id'])
     oldKu = ''
     if member is not None:
-        lastSeminar = models.Seminar.objects.filter(member=member)
+        lastSeminar = models.Seminar.objects.filter(member=member).order_by('attestation_date').values_list('newKu')
         if lastSeminar.exists():
-            oldKu = lastSeminar.order_by('newKu').first().newKu
+            oldKu = lastSeminar[0][0]
     second_name = '' if request['second_name'] is None else request['second_name']
     member_id = member.id if member is not None else ''
     return [

@@ -1,12 +1,43 @@
 import datetime
 
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 # Create your models here.
 from django.utils import timezone
 
+class Aikido_Account_Manager(BaseUserManager):
+    def create_user(self, **kwargs):
+        user = self.model(
+        id = kwargs.get('id'),
+        password = kwargs.get('password'),
+        name = kwargs.get('name'),
+        surname = kwargs.get('surname'),
+        second_name = kwargs.get("second_name"),
+        birthdate = kwargs.get("birthdate"),
+        region = kwargs.get("region"),
+        club = kwargs.get("club"),
+        photo = kwargs.get("photo"),
+        isTrainer = kwargs.get("isTrainer"),
+        trainer_id = kwargs.get("trainer_id")
+        )
 
-class Aikido_Member(models.Model):
+        #user.set_password(kwargs.get('password'))
+
+        user.save(using=self._db)
+
+
+        return user
+
+    def create_superuser(self, username, password):
+        pass
+
+class Aikido_Member(AbstractBaseUser):
     id = models.IntegerField(name="id", primary_key=True, unique=True)
     password = models.CharField(name="password", max_length=25)
     name = models.CharField(name="name", max_length=15, null=False)
@@ -23,6 +54,19 @@ class Aikido_Member(models.Model):
         db_table = "aikido_member"
         managed = True
 
+    USERNAME_FIELD = 'id'
+    REQUIRED_FIELD = '__all__'
+
+    objects = Aikido_Account_Manager()
+
+    def __str__(self):
+        return str(id)
+"""
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+"""
 
 class Seminar(models.Model):
     name = models.CharField(name="name", max_length=100)
@@ -58,9 +102,9 @@ class Competition(models.Model):
 
 class Events(models.Model):
     event_name = models.CharField(name="event_name", primary_key=True, max_length=100)
-    start_record_date = models.DateField(name="start_record_date", default=timezone.now)
-    end_record_date = models.DateField(name="end_record_date", default=timezone.now)
-    date_of_event = models.DateField(name="date_of_event", default=timezone.now)
+    start_record_date = models.DateField(name="start_record_date", default=datetime.date.today)
+    end_record_date = models.DateField(name="end_record_date", default=datetime.date.today)
+    date_of_event = models.DateField(name="date_of_event", default=datetime.date.today)
     city = models.CharField(name="city", null=False, max_length=30, default="None")
     responsible_club = models.CharField(name='responsible_club', max_length=30, default="None")
 
