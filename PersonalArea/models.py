@@ -62,7 +62,6 @@ class Aikido_Member(AbstractBaseUser):
     def __str__(self):
         return str(id)
 
-
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:

@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
+from pytz import unicode
 from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
@@ -20,12 +21,14 @@ class LoginAPIView(APIView):
     serializer_class = LoginSerializer
 
     def post(self, request):
-        user = request.data.get('user', {})
+        data = JSONParser().parse(request)
+        try:
+            aikiboy = Aikido_Member.objects.get(id=data['id'], password=data['password'])
+            aikiToken = Token.objects.get(user=aikiboy)
+            return Response(data={"token": unicode(aikiToken)}, status=status.HTTP_200_OK)
 
-        serializer = self.serializer_class(data=user)
-        serializer.is_valid(raise_exception=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response(data={"error": "Неверный id или пароль"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # Create your views here.

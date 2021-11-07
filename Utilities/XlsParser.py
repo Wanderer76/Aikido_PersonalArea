@@ -38,7 +38,7 @@ def get_ku(record):
 
 
 def parse_eu_date_to_us(record):
-    if len(record.split(' ')) > 1:
+    if len(record.split(' '))>1:
         return record.split(' ')[0]
     return datetime.datetime.strptime(record, "%d.%m.%Y").strftime("%Y-%m-%d")
 
@@ -48,6 +48,8 @@ def parseXlcToDb(xlcFile):
     book = openpyxl.open(xlcFile, read_only=True)
     book.iso_dates = True
     sheet = book.active
+
+    print(Token.objects.all())
 
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
 
@@ -98,7 +100,9 @@ def parseXlcToDb(xlcFile):
                 'isTrainer': False,
                 'trainer_id': trainer_id
             }
-            serializer = PersonalArea.serializations.RegestrationSerializer(data=data)
+
+            serializer = PersonalArea.serializations.RegistrationSerializer(data=data)
+
             if serializer.is_valid():
                 aikiboy = serializer.save()
                 seminar.member = aikiboy
