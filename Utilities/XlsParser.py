@@ -9,6 +9,7 @@ from django.http import FileResponse
 from openpyxl.styles import numbers, PatternFill
 from rest_framework.authtoken.models import Token
 
+import PersonalArea.serializations
 from PersonalArea import models
 from Utilities import password_generantor
 
@@ -20,6 +21,8 @@ def get_id(record):
         if isinstance(record, str):
             if record[0] == '№':
                 return int(record[1::])
+            else:
+                return int(record)
         raise ArgumentError('Таблица заполнена не правильно')
 
 
@@ -35,6 +38,8 @@ def get_ku(record):
 
 
 def parse_eu_date_to_us(record):
+    if len(record.split(' ')) > 1:
+        return record.split(' ')[0]
     return datetime.datetime.strptime(record, "%d.%m.%Y").strftime("%Y-%m-%d")
 
 
@@ -44,13 +49,10 @@ def parseXlcToDb(xlcFile):
     book.iso_dates = True
     sheet = book.active
 
-    aikimanager = models.Aikido_Account_Manager()
-    print(Token.objects.all())
-
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
 
         fileName = os.path.basename(xlcFile)
-        member_id = row[4].value
+        member_id = get_id(row[4].value)
 
         if models.Seminar.objects.filter(name=fileName[0:fileName.find('.')], member_id=member_id).exists():
             continue
@@ -70,23 +72,37 @@ def parseXlcToDb(xlcFile):
         trainer_id = get_id(row[9].value)
         set_trainer_status(trainer_id)
         if not (models.Aikido_Member.objects.filter(id=member_id).exists()):
-            aikiboy = models.Aikido_Member.objects.create_user(
-                id = member_id,
-                password = password_generantor.generate_password(),
-                name=row[1].value,
-                surname=row[0].value,
-                second_name=row[2].value,
-                birthdate=row[5].value,
-                region=int(row[6].value),
-                club=row[7].value,
-                photo=None,
-                isTrainer=False,
-                trainer_id=trainer_id
-            )
-            seminar.member = aikiboy
-            Token.objects.get_or_create(user=aikiboy)
-            seminar.save()
-
+            # aikiboy = models.Aikido_Member.objects.create_user(
+            #    id = member_id,
+            #    password = password_generantor.generate_password(),
+            #    name=row[1].value,
+            #    surname=row[0].value,
+            #    second_name=row[2].value,
+            #    birthdate=row[5].value,
+            #    region=int(row[6].value),
+            #    club=row[7].value,
+            #    photo=None,
+            #    isTrainer=False,
+            #    trainer_id=trainer_id
+            # )
+            data = {
+                'id': int(member_id),
+                'password': password_generantor.generate_password(),
+                'name': row[1].value,
+                'surname': row[0].value,
+                'second_name': row[2].value,
+                'birthdate': parse_eu_date_to_us(str(row[5].value)),
+                'region': int(row[6].value),
+                'club': row[7].value,
+                'photo': None,
+                'isTrainer': False,
+                'trainer_id': trainer_id
+            }
+            serializer = PersonalArea.serializations.RegestrationSerializer(data=data)
+            if serializer.is_valid():
+                aikiboy = serializer.save()
+                seminar.member = aikiboy
+                seminar.save()
         else:
             aikiboy = models.Aikido_Member.objects.get(id=member_id)
 

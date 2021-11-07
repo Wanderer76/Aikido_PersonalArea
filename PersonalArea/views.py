@@ -33,6 +33,7 @@ class LoginAPIView(APIView):
 @csrf_exempt
 def aikido_students_list(request):
     if request.method == 'GET':
+        XlsParser.parseXlcToDb(r'C:\Users\Artyom\Desktop\test.xlsx')
         students = Aikido_Member.objects.all()
         serializer = Aikido_MemberSerizlizer(students, many=True)
         return JsonResponse(serializer.data, safe=False)

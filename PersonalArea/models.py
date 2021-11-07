@@ -11,31 +11,31 @@ from rest_framework.authtoken.models import Token
 # Create your models here.
 from django.utils import timezone
 
+
 class Aikido_Account_Manager(BaseUserManager):
     def create_user(self, **kwargs):
         user = self.model(
-        id = kwargs.get('id'),
-        password = kwargs.get('password'),
-        name = kwargs.get('name'),
-        surname = kwargs.get('surname'),
-        second_name = kwargs.get("second_name"),
-        birthdate = kwargs.get("birthdate"),
-        region = kwargs.get("region"),
-        club = kwargs.get("club"),
-        photo = kwargs.get("photo"),
-        isTrainer = kwargs.get("isTrainer"),
-        trainer_id = kwargs.get("trainer_id")
+            id=kwargs.get('id'),
+            password=kwargs.get('password'),
+            name=kwargs.get('name'),
+            surname=kwargs.get('surname'),
+            second_name=kwargs.get("second_name"),
+            birthdate=kwargs.get("birthdate"),
+            region=kwargs.get("region"),
+            club=kwargs.get("club"),
+            photo=kwargs.get("photo"),
+            isTrainer=kwargs.get("isTrainer"),
+            trainer_id=kwargs.get("trainer_id")
         )
 
         #user.set_password(kwargs.get('password'))
 
         user.save(using=self._db)
-
-
         return user
 
     def create_superuser(self, username, password):
         pass
+
 
 class Aikido_Member(AbstractBaseUser):
     id = models.IntegerField(name="id", primary_key=True, unique=True)
@@ -61,12 +61,13 @@ class Aikido_Member(AbstractBaseUser):
 
     def __str__(self):
         return str(id)
-"""
+
+
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
-"""
+
 
 class Seminar(models.Model):
     name = models.CharField(name="name", max_length=100)
@@ -119,7 +120,7 @@ class Request(models.Model):
     second_name = models.CharField(name="second_name", max_length=25, blank=True, default='None')
     member_id = models.IntegerField(name='member_id', null=True, blank=True)
     birthdate = models.DateField(name="birthdate", default=timezone.now)
-    event_name = models.ForeignKey(Events, on_delete=models.DO_NOTHING,related_name='event')
+    event_name = models.ForeignKey(Events, on_delete=models.DO_NOTHING, related_name='event')
     trainer_id = models.IntegerField(name="trainer_id")
 
     class Meta:
