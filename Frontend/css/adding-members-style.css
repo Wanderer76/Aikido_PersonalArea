@@ -1,0 +1,212 @@
+/* fucking menu stilization */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+.wrapper {
+    position: relative;
+    overflow-x: hidden;
+}
+
+
+.menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+    width: 20vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #134F8C;
+    transition: 0.5s;
+    transform: translateX(-65%);
+    border-radius: 0 20px 20px 0;
+}
+
+.menu img[id="logo"] {
+    margin-top: 20%;
+    display: none;
+    transition: visibility 600ms linear;
+}
+
+.menu .text-a {
+    display: none;
+    transition: display 600ms linear;
+}
+
+.menu_active {
+    transform: translateX(0%);
+}
+
+.menu_active img[id="logo"] {
+    display: block;
+    transition: display 600ms linear;
+}
+
+.menu_active .text-a {
+    display: block;
+    transition: display 600ms linear;
+}
+
+.menu-list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 70%;
+    flex-direction: column;
+    margin: 5%;
+}
+
+.menu-list a {
+    color:  white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 2vh;
+}
+
+
+
+.menu-list img {
+    width: 70%;
+}
+
+/*stilization for button of menu opening*/
+.menu-btn {
+    width: 15%;
+    height: 10%;
+    background-image: url("../assets/gamburger.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    position: absolute;
+    right: 12%;
+    top: 0;
+}
+
+.btn {
+    width:  120%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /*border: 1px solid white;*/
+    align-items: center;
+    margin-right: 0;
+}
+
+.btn img {
+    width: 5vh;
+    margin-right: 0;
+}
+
+.exit-btn {
+    width:  110%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /*border: 1px solid white;*/
+    align-items: center;
+    margin-left: auto;
+    margin-top:  25%;
+}
+
+.icon {
+    flex:  1;
+    margin-right: 0;
+}
+
+
+.description {
+    flex: 2;
+}
+
+
+/*styles for content block*/
+.content {
+    transition: 0.5s;
+    position: relative;
+    z-index: 0;
+    transform: translateX(5%);
+}
+
+/*move content block when menu is opened*/
+.content_active {
+    transform: translateX(20%);
+}
+
+.logo {
+    align-items: center;
+    height: 25%;
+}
+
+@media all and (max-width: 1000px) {
+    .menu {
+        width: 50vw;
+    }
+
+    .logo-id-block button {
+        width: 15vh;
+        font-size: 3vh;
+    }
+
+    .unvisible {
+        display: none;
+    }
+
+    .content {
+        transform: translateX(10%);
+    }
+
+    .content_active {
+        transform: translateX(10%);
+    }
+}
+
+input{
+    border-radius: 10px;
+    border-color: rgba(209, 209, 209, 0.3);
+    text-align: center;
+    margin: 7% 2%;
+    height: 35px;
+    font-size: large;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+}
+
+.heading{
+    font-size: x-large;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
+.bordered{
+    color: white;
+    background-color: #0417b4;
+    border-radius: 30px;
+    border: midnightblue;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+    min-height: 20px;
+    position: relative;
+    width: 70%;
+    margin-top: 10%;
+    margin-left: 115%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    display: block;
+}
+
+
+
+
+
+
