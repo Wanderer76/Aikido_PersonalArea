@@ -13,8 +13,8 @@ body{
     justify-content: center;
 }
 
-div{
-    margin: 20px;
+div:nth-of-type(.location){
+    margin: 30px;
 }
 
 .dAndL{
@@ -25,11 +25,15 @@ div{
 }
 
 .date{
-    margin-right: 120px;
+    margin-right: 110px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .location{
-
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 8%;
     width: 350px;
     min-width: 250px;
 }
@@ -38,13 +42,13 @@ input{
 
     width: 100%;
     min-width: 150px;
-    width: available;
     border-radius: 10px;
-    border-color: lightgrey;
-    color: lightgrey;
+    border-color: rgba(209, 209, 209, 0.3);
     min-height: 30px;
     height: 45px;
     font-size: 18px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .bordered{
@@ -77,5 +81,5 @@ input{
 }
 
 .rc{
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
