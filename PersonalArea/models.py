@@ -1,14 +1,12 @@
 import datetime
 
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-
-# Create your models here.
 from django.utils import timezone
 
 
@@ -28,17 +26,33 @@ class Aikido_Account_Manager(BaseUserManager):
             trainer_id=kwargs.get("trainer_id")
         )
 
-        #user.set_password(kwargs.get('password'))
+        user.save(using=self._db)
 
+        return user
+
+    def create_superuser(self, id, login, name, surname, second_name, birthdate, region, club, password):
+        user = self.model(
+            id=id,
+            login=login,
+            password=password,
+            name=name,
+            surname=surname,
+            second_name=second_name,
+            birthdate=birthdate,
+            region=region,
+            club=club,
+            photo=None,
+            isTrainer=True,
+            is_superuser=True,
+            is_staff=True
+        )
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password):
-        pass
 
-
-class Aikido_Member(AbstractBaseUser):
+class Aikido_Member(AbstractBaseUser, PermissionsMixin):
     id = models.IntegerField(name="id", primary_key=True, unique=True)
+    login = models.CharField(name="login", max_length=25, unique=True, default=None, null=True, blank=True)
     password = models.CharField(name="password", max_length=25)
     name = models.CharField(name="name", max_length=15, null=False)
     surname = models.CharField(name="surname", max_length=20, null=False)
@@ -48,6 +62,8 @@ class Aikido_Member(AbstractBaseUser):
     club = models.CharField(name="club", null=False, max_length=30)
     photo = models.ImageField(name="photo", null=True, blank=True)
     isTrainer = models.BooleanField(name="isTrainer", null=False, default=False, blank=True)
+    is_superuser = models.BooleanField(name="is_superuser", null=False, default=False, blank=True)
+    is_staff = models.BooleanField(name="is_staff", default=False)
     trainer_id = models.IntegerField(name="trainer_id", null=True, default=None, blank=True)
 
     class Meta:
@@ -55,12 +71,20 @@ class Aikido_Member(AbstractBaseUser):
         managed = True
 
     USERNAME_FIELD = 'id'
-    REQUIRED_FIELD = '__all__'
-
+    REQUIRED_FIELDS = ['login', 'name', 'surname', 'second_name', 'birthdate', 'region', 'club']
     objects = Aikido_Account_Manager()
 
     def __str__(self):
         return str(id)
+
+    @property
+    def is_trainer(self):
+        return self.isTrainer
+
+    @property
+    def is_admin(self):
+        return self.trainer_id
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
