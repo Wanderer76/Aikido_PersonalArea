@@ -43,6 +43,16 @@ class LoginAPIView(APIView):
             return Response(data={"error": "Неверный id или пароль"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class StudentInfo(APIView):
+    def get(self, request):
+        data = request.headers.get('Authorization')[6:]
+        aiki_id = Token.objects.get(key=data).user_id
+        aiki_ser = Profile_Serializer(Aikido_Member.objects.get(id=aiki_id)).data
+        aiki_seminars = Seminar_Serializer(Seminar.objects.filter(member__id=aiki_id), many=True).data
+        aiki_ser["seminars"] = aiki_seminars
+        return Response(aiki_ser, status=status.HTTP_200_OK)
+
+
 class CreateEvent(APIView):
     """ json формат в котором нужно передавать данные
            {
@@ -106,24 +116,12 @@ def aikido_students_list(request):
     if request.method == 'GET':
         # XlsParser.parseXlcToDb(r'C:\Users\Artyom\Desktop\test.xlsx')
         students = Aikido_Member.objects.all()
-        serializer = Aikido_MemberSerizlizer(students, many=True)
+        serializer = Aikido_MemberSerializer(students, many=True)
         return JsonResponse(serializer.data, safe=False)
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = Aikido_MemberSerizlizer(data=data)
+        serializer = Aikido_MemberSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
-
-
-@csrf_exempt
-def student_seminars(request, pk):
-    if request.method == 'GET':
-        try:
-            seminars = Seminar.objects.filter(student_id=pk)
-            print(seminars.values())
-        except:
-            return HttpResponse(status=404)
-        serializer = Seminar_Serializer(seminars, many=True)
-        return JsonResponse(serializer.data, safe=False)
