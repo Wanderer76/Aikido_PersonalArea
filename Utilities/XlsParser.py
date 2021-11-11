@@ -2,13 +2,8 @@ import datetime
 import os
 import openpyxl
 from ctypes import ArgumentError
-
-from django.contrib.auth import get_user_model
 from django.db import transaction
-from django.http import FileResponse
 from openpyxl.styles import numbers, PatternFill
-from rest_framework.authtoken.models import Token
-
 import PersonalArea.serializations
 from PersonalArea import models
 from Utilities import password_generantor
@@ -23,7 +18,7 @@ def get_id(record):
                 return int(record[1::])
             else:
                 return int(record)
-        raise ArgumentError('Таблица заполнена не правильно')
+        raise ArgumentError(f"Ячейка заполнена не правильно {record}")
 
 
 def get_ku(record):
@@ -31,14 +26,19 @@ def get_ku(record):
         return record
     else:
         if "дан" in record:
-            pass
-        else:
+            ku = record.replace('дан', '')
+            if isinstance(ku, int):
+                return 10 + ku
+            else:
+                return 10 + len(list(ku))
+        elif 'кю' in record:
             return int(record.replace(' ', '').replace("кю", ""))
-    raise ArgumentError('Таблица заполнена не правильно')
+        else:
+            raise ArgumentError(f'Не правильно заполенна ячейка {record}')
 
 
 def parse_eu_date_to_us(record):
-    if len(record.split(' '))>1:
+    if len(record.split(' ')) > 1:
         return record.split(' ')[0]
     return datetime.datetime.strptime(record, "%d.%m.%Y").strftime("%Y-%m-%d")
 
@@ -48,19 +48,18 @@ def parseXlcToDb(xlcFile):
     book = openpyxl.open(xlcFile, read_only=True)
     book.iso_dates = True
     sheet = book.active
-
-    print(Token.objects.all())
+    fileName = os.path.basename(xlcFile)
+    event_name = fileName[0:fileName.find('.')]
+    seminars = models.Seminar.objects.filter(name=event_name).values_list('member_id')
 
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
-
-        fileName = os.path.basename(xlcFile)
         member_id = get_id(row[4].value)
 
-        if models.Seminar.objects.filter(name=fileName[0:fileName.find('.')], member_id=member_id).exists():
+        if seminars.filter(member_id=member_id).exists():
             continue
 
         seminar = models.Seminar()
-        seminar.name = fileName[0:fileName.find('.')]
+        seminar.name = event_name
         seminar.club = row[7].value
         seminar.trainer = row[8].value
         seminar.city = row[11].value
@@ -74,19 +73,6 @@ def parseXlcToDb(xlcFile):
         trainer_id = get_id(row[9].value)
         set_trainer_status(trainer_id)
         if not (models.Aikido_Member.objects.filter(id=member_id).exists()):
-            # aikiboy = models.Aikido_Member.objects.create_user(
-            #    id = member_id,
-            #    password = password_generantor.generate_password(),
-            #    name=row[1].value,
-            #    surname=row[0].value,
-            #    second_name=row[2].value,
-            #    birthdate=row[5].value,
-            #    region=int(row[6].value),
-            #    club=row[7].value,
-            #    photo=None,
-            #    isTrainer=False,
-            #    trainer_id=trainer_id
-            # )
             data = {
                 'id': int(member_id),
                 'password': password_generantor.generate_password(),
@@ -107,9 +93,10 @@ def parseXlcToDb(xlcFile):
                 aikiboy = serializer.save()
                 seminar.member = aikiboy
                 seminar.save()
+            else:
+                raise ArgumentError(f"Ошибка в строке {row[0].row}")
         else:
             aikiboy = models.Aikido_Member.objects.get(id=member_id)
-
             seminar.member = aikiboy
             seminar.save()
 
