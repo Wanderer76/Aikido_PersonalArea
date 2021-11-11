@@ -83,7 +83,7 @@ class Aikido_Member(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_admin(self):
-        return self.trainer_id
+        return self.is_staff
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
