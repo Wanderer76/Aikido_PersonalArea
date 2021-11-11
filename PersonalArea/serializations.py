@@ -3,20 +3,25 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 
 
-class Aikido_MemberSerizlizer(serializers.ModelSerializer):
+class Aikido_MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aikido_Member
         exclude = ['password', 'photo']
+
+
+class Profile_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Aikido_Member
+        fields = ['id', 'name', 'surname', 'birthdate', 'photo']
 
 
 # TODO изменить в дальнейшем
 class Seminar_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Seminar
-        fields = ['member', 'region', 'club',
-                  'trainer', 'city',
+        fields = ['club', 'city',
                   'attestation_date', 'oldKu',
-                  'newKu', 'isChild', 'examiner'
+                  'newKu', 'isChild'
                   ]
 
 
