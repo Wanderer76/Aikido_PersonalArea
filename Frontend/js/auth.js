@@ -13,7 +13,7 @@ butt.onclick = function () {
 
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            token = xhr.response.message;
+            token = xhr.response;
         }
         console.log(xhr.response)
     };
