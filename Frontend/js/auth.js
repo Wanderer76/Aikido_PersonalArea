@@ -11,15 +11,17 @@ butt.onclick = function () {
     id = document.getElementById('id').value;
     pass = document.getElementById('pass').value;
 
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200 ) {
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
             token = xhr.response.message;
         }
         console.log(xhr.response)
     };
 
-    let json = JSON.stringify({"id": parseInt(id),
-        "password": pass.toString()});
+    let json = JSON.stringify({
+        "id": parseInt(id),
+        "password": pass.toString()
+    });
 
     console.log(json);
     xhr.open("POST", url, true);
