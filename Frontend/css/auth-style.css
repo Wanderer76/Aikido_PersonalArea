@@ -72,6 +72,10 @@ body {
    height: 40%;
 }
 
+.hide {
+    opacity: 0;
+}
+
 
 
 
