@@ -1,23 +1,41 @@
-function add_field(){
+let d = document;
+let last_id = 0;
+function add_value_f() {
 
-    let x = document.querySelector('.new_person');
-    // создаем новое поле ввода
-    let new_field = document.createElement("input");
-    // установим для поля ввода тип данных 'text'
-    new_field.setAttribute("type", "text");
-    // установим имя для поля ввода
-    new_field.setAttribute("name", "text_field[]");
-    // определим место вствки нового поля ввода (перед каким элементом его вставить)
-    let pos = x.childElementCount;
+    // находим нужную таблицу
+    let tbody = d.getElementById('v_table').getElementsByTagName('tbody')[0];
+    for (let i = 0; i < tbody.children.length; i++) {
+        tbody.children[i].classList.remove('last_value');
+    }
 
-    // добавим поле ввода в форму
-    x.insertBefore(new_field, x.childNodes[pos]);
+    // создаем строку таблицы и добавляем ее
+    let row = d.createElement("tr");
+    tbody.appendChild(row);
+
+    // создаем ячейки в вышесозданной строке
+    let td1 = d.createElement("td");
+    let td2 = d.createElement("td");
+    let td3 = d.createElement("td");
+    let td4 = d.createElement("td");
+
+    row.appendChild(td1).setAttribute("class", "last_value");
+    row.appendChild(td2).setAttribute("class", "last_value");
+    row.appendChild(td3).setAttribute("class", "last_value");
+    row.appendChild(td4).setAttribute("class", "last_value");
+
+    last_id = last_id + 1;
+
+    // добавляем поля в ячейки
+    td1.innerHTML = '<input type="text" name="surname['+last_id+']" placeholder="Фамилия">';
+    td2.innerHTML = '<input type="text" name="name['+last_id+']" placeholder="Имя">';
+    td3.innerHTML = '<input type="text" name="second_name['+last_id+']" placeholder="Отчество">';
+    td4.innerHTML = '<input type="text" name="birthdate['+last_id+']" placeholder="ДР">';
 }
 
-let input = document.querySelector('input');
-input.addEventListener("change", function() {
-    if (input.length > 0) {
-        input.classList.remove(new_person);
-        add_field();
+function remove_value_f() {
+    let rows = d.getElementById('v_table').getElementsByTagName('tr');
+    if (rows.length > 1) {
+        let last_index = rows.length - 1;
+        rows[last_index].remove();
     }
-})
+}

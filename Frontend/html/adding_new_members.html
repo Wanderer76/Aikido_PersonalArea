@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/adding-members-style.css">
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper abc">
         <div class="menu">
             <a href="#" class="menu-btn"></a>
             <nav class="container menu-list">
@@ -44,7 +44,7 @@
                 Добавление новых участников
             </div>
             <div class="row container adding_members">
-                <div class="row adding_members-table">
+            <!--    <div class="row adding_members-table">
                     <div class="col-md-3">
                       <div><input type="text" name="surname" class="filled" value="Васильев"></div>
                       <div><input type="text" name="surname" class="filled" value="Виноградов"></div>
@@ -69,7 +69,22 @@
                         <div><input type="text" name="birthday" class="filled" value="20.10.2015"></div>
                         <div><input type="text" name="birthday" placeholder="ДР" tabindex=4 class="new_person"></div>
                     </div>
-                </div>
+                </div> -->
+                <form method="post">
+                    <table id="v_table">
+                        <tbody>
+                        <tr>
+                            <td><input type="text" name="surname[0]" placeholder="Фамилия"></td>
+                            <td><input type="text" name="name[0]" placeholder="Имя"></td>
+                            <td><input type="text" name="second_name[0]" placeholder="Отчество"></td>
+                            <td><input type="text" name="birthdate[0]" placeholder="ДР"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <input type="button" class="add_butt" onclick="add_value_f()" value="Добавить поля"/>
+                    <input type="button" class="delete_butt" onclick="remove_value_f()" value="Удалить поля"/>
+                </form>
                 <div class="col-md-4">
                     <button type="button" class="bordered" name="add_to_application">Добавить в заявку</button>
                 </div>

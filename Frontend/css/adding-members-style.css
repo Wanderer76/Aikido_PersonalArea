@@ -172,7 +172,7 @@ input{
     border-color: rgba(209, 209, 209, 0.3);
     text-align: center;
     margin: 7% 2%;
-    height: 35px;
+
     font-size: large;
 }
 
@@ -202,8 +202,41 @@ body{
     margin-left: 115%;
     padding-top: 3%;
     padding-bottom: 3%;
+    margin-bottom: 5%;
     display: block;
 }
+
+.add_butt{
+    background-color: green;
+    border: #05861A;
+    color: white;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+}
+
+.delete_butt{
+    background-color: red;
+    border: darkred;
+    color: white;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+}
+
+td{
+    padding-right: 20px;
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+td:nth-last-child(1){
+    padding-right: 0;
+}
+
+.abc{
+    overflow: auto;
+    width: 100%;
+}
+
+
 
 
 
