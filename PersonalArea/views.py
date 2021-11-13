@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
-from django.http import HttpResponse, JsonResponse, FileResponse
+from django.http import JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
 from pytz import unicode
 from rest_framework import status, permissions
@@ -116,11 +116,15 @@ class CreateRequest(APIView, IsTrainerPermission):
           "trainer_id": ид тренера: int
           } ]"""
 
-    permission_classes = [permissions.IsAdminUser, IsTrainerPermission]
+    permission_classes = (IsTrainerPermission,)
 
     @transaction.atomic
     def post(self, request):
         data = JSONParser().parse(request)
+        trainer_id = data[0]['trainer_id']
+        current_trainer_requests = Request.objects.filter(trainer_id=trainer_id)
+        if current_trainer_requests.exists():
+            current_trainer_requests.delete()
         serializer = Requests_Serializer(data=data, many=True)
         if serializer.is_valid():
             serializer.save()
