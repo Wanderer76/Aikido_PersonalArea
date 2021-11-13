@@ -10,6 +10,8 @@ from Utilities import password_generantor
 
 
 def get_id(record):
+    if record is None:
+        return generate_id()
     if isinstance(record, int):
         return int(record)
     else:
@@ -163,3 +165,12 @@ def set_blue_row(workSheet):
     for row in workSheet.iter_rows(min_row=1, max_row=1):
         for cell in row:
             cell.fill = PatternFill(patternType='solid', start_color='538dd5', end_color='538dd5')
+
+
+def generate_id():
+    ids = sorted(models.Aikido_Member.objects.values_list("id",flat=True))
+    print(ids)
+    limit = ids[-1]
+    missingNumbers = list(set(range(1, limit + 1)) - set(ids))
+    return missingNumbers[0]
+
