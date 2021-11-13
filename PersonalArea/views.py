@@ -133,6 +133,18 @@ class CreateRequest(APIView, IsTrainerPermission):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
 
 
+class TrainerEventRequest(APIView, IsTrainerPermission):
+    permission_classes = (IsTrainerPermission,)
+
+    def get(self, request, event_name):
+        trainer_id = Token.objects.get(key=request.headers.get('Authorization')[6:]).user_id
+        requests = Request.objects.filter(trainer_id=trainer_id, event_name=event_name)
+        serializer = Requests_Serializer(requests, many=True)
+
+        return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+
+
 @csrf_exempt
 def aikido_students_list(request):
     if request.method == 'GET':
