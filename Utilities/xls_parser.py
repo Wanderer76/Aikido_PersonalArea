@@ -21,12 +21,10 @@ def parseXlsToDb(xlsxFile):
     if services.check_event_for_exists(event_name):
         return 'Данные по мероприятию уже заполнены'
 
-    #seminars = models.Seminar.objects.filter(name=event_name).values_list('member_id')
-
-    for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
-        try:
+    # seminars = models.Seminar.objects.filter(name=event_name).values_list('member_id')
+    with transaction.atomic():
+        for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
             member_id = services.get_id(row[4].value)
-
             seminar = models.Seminar()
             seminar.name = event_name
             seminar.club = row[7].value
@@ -40,8 +38,8 @@ def parseXlsToDb(xlsxFile):
             seminar.examiner = row[15].value
 
             trainer_id = services.get_id(row[9].value)
-
             services.set_trainer_status(trainer_id)
+
             if not (models.Aikido_Member.objects.filter(id=member_id).exists()):
                 data = {
                     'id': int(member_id),
@@ -64,15 +62,12 @@ def parseXlsToDb(xlsxFile):
                     seminar.member = aikiboy
                     seminar.save()
                 else:
-                    return f"Ошибка в строке {row}"
+                    raise ArgumentError(f"Ошибка в строке {row}")
 
             else:
                 aikiboy = models.Aikido_Member.objects.get(id=member_id)
                 seminar.member = aikiboy
                 seminar.save()
-
-        except:
-            return "sdf"
 
     return True
 
