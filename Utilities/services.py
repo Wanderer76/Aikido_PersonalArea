@@ -74,11 +74,13 @@ def set_blue_row(workSheet):
 
 
 def generate_id():
-    ids = sorted(models.Aikido_Member.objects.values_list("id",flat=True))
+    ids = sorted(models.Aikido_Member.objects.values_list("id", flat=True))
     limit = ids[-1]
     missingNumbers = list(set(range(1, limit + 1)) - set(ids))
     return missingNumbers[0]
 
+
 def check_event_for_exists(event_name):
     if models.Seminar.objects.filter(name=event_name).exists():
-        raise ArgumentError(f'Данные по мероприятию уже заполнены')
+        return True
+    return False
