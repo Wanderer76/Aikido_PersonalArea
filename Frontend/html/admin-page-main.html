@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="coming-activities">
         <div class="row justify-content-center">
                 <p class="col-4 heading ">
                     Предстоящие семинары
@@ -21,74 +21,7 @@
                 </div>
         </div>
         <div class="bordered">
-        <div class="row align-items-start">
-            <div class="col">
-                Дата
-            </div>
-            <div class="col">
-                Город
-            </div>
-            <div class="col">
-                Ответственный клуб
-            </div>
-            <div class="col">
-
-            </div>
-        </div>
-
-        <div class="row align-items-center">
-            <div class="col date">
-                25-26 декабря
-            </div>
-            <div class="col">
-                г.Екатеринбург
-            </div>
-            <div class="col">
-
-            </div>
-            <div class="col">
-                <button type="button" name="more_details" class="more_details">Подробнее</button>
-            </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col date">
-                26-27 декабря
-            </div>
-            <div class="col">
-                г.Екатеринбург
-            </div>
-            <div class="col">
-
-            </div>
-            <div class="col">
-                <button type="button" name="more_details" class="more_details">Подробнее</button>
-            </div>
-        </div>
-        <div class="row align-items-end">
-            <div class="col date">
-                27-28 декабря
-            </div>
-            <div class="col">
-                г.Екатеринбург
-            </div>
-            <div class="col">
-
-            </div>
-            <div class="col">
-                <button type="button" name="more_details" class="more_details">Подробнее</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-4 heading">
-                Прошедшие семинары
-            </div>
-        </div>
-        <div class="bordered">
-            <div class="row align-items-start">
+            <div class="row align-items-start" id="coming-activities-header">
                 <div class="col">
                     Дата
                 </div>
@@ -103,49 +36,32 @@
                 </div>
             </div>
 
-            <div class="row align-items-center">
-                <div class="col date">
-                    25-26 декабря
-                </div>
-                <div class="col">
-                    г.Екатеринбург
-                </div>
-                <div class="col">
+        </div>
+    </div>
 
-                </div>
-                <div class="col">
-                    <button type="button" name="more_details" class="more_details">Подробнее</button>
-                </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4 heading">
+                Прошедшие семинары
             </div>
-            <div class="row align-items-center">
-                <div class="col date">
-                    26-27 декабря
+        </div>
+        <div class="bordered">
+            <div class="row align-items-start" id="preview-activities-header">
+                <div class="col">
+                    Дата
                 </div>
                 <div class="col">
-                    г.Екатеринбург
+                    Город
                 </div>
                 <div class="col">
-
-                </div>
-                <div class="col">
-                    <button type="button" name="more_details" class="more_details">Подробнее</button>
-                </div>
-            </div>
-            <div class="row align-items-end">
-                <div class="col date">
-                    27-28 декабря
-                </div>
-                <div class="col">
-                    г.Екатеринбург
+                    Ответственный клуб
                 </div>
                 <div class="col">
 
-                </div>
-                <div class="col">
-                    <button type="button" name="more_details" class="more_details">Подробнее</button>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script src="../js/admin-main-page-script.js"></script>
 </html>

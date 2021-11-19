@@ -46,7 +46,7 @@ function checkToken(token) {
         // console.log(token);
         storage.setItem('user_token', token.token);
         console.log(storage.getItem('user_token'));
-        location.href = "../html/profile.html";
+        location.href = "../html/admin-page-main.html";
     } else {
         errorMessage.classList.remove('hide');
         console.log("Неправильный логин-пароль");
