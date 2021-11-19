@@ -8,7 +8,6 @@ from pytz import unicode
 from rest_framework import status, permissions
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import BasePermission
-from django.db.models import F, Q
 from PersonalArea.serializations import *
 from PersonalArea.models import *
 from Utilities import xls_parser
@@ -148,33 +147,30 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
 
 class SeminarsList(APIView):
     permission_classes = (permissions.IsAdminUser,)
+
     # TODO сортировка соревнований по датам для выдачи
 
     @transaction.atomic
     def get(self, request):
-
-        seminar = Seminar.objects.all()
-        #upcoming = seminar.filter(Q())
-
         result = {
             "upcoming": [
                 {
-                    "start_date": "2000-01-01",
-                    "attestation_date": "2000-01-02",
+                    "start_record_date": "2000-01-01",
+                    "date_of_event": "2000-01-02",
                     "city": "Екатеринбург",
-                    "club": "Практика",
+                    "responsible_club": "Практика",
                 },
                 {
-                    "start_date": "2001-01-01",
-                    "attestation_date": "2001-01-02",
+                    "start_record_date": "2001-01-01",
+                    "date_of_event": "2001-01-02",
                     "city": "Екатеринбург",
-                    "club": "Практика",
+                    "responsible_club": "Практика",
                 },
                 {
-                    "start_date": "2021-03-05",
-                    "attestation_date": "2000-03-07",
+                    "start_record_date": "2021-03-05",
+                    "date_of_event": "2000-03-07",
                     "city": "Екатеринбург",
-                    "club": "Практика",
+                    "responsible_club": "Практика",
                 }
             ],
             "past": []
