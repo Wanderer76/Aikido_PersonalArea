@@ -1,3 +1,5 @@
+from ctypes import ArgumentError
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.http import JsonResponse, FileResponse
@@ -9,7 +11,7 @@ from rest_framework.permissions import BasePermission
 
 from PersonalArea.serializations import *
 from PersonalArea.models import *
-from Utilities import XlsParser
+from Utilities import xls_parser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -100,7 +102,7 @@ class DownloadRequests(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def get(self, request, seminar_name):
-        filename = XlsParser.createXlsxFromRequests(seminar_name)
+        filename = xls_parser.createXlsxFromRequests(seminar_name)
         return FileResponse(open(filename, 'rb'))
 
 
@@ -148,10 +150,11 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
 @csrf_exempt
 def aikido_students_list(request):
     if request.method == 'GET':
-        # XlsParser.parseXlcToDb(r'C:\Users\Artyom\Desktop\test.xlsx')
-        students = Aikido_Member.objects.all()
-        serializer = Aikido_MemberSerializer(students, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        res = xls_parser.parseXlsToDb(r'C:\Users\Artyom\Desktop\test.xlsx')
+        return JsonResponse(data={"result":res})
+        #students = Aikido_Member.objects.all()
+        #serializer = Aikido_MemberSerializer(students, many=True)
+        #return JsonResponse(serializer.data, safe=False)
     elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = Aikido_MemberSerializer(data=data)
