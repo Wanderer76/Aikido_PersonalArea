@@ -8,29 +8,28 @@ let id;
 let pass;
 let xhr = new XMLHttpRequest();
 xhr.responseType = 'json';
-let token;
+
+let storage = window.sessionStorage;
 
 butt.onclick = function () {
     id = idForm.value;
     pass = passForm.value;
 
     xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            token = xhr.response;
-            if (checkToken(token)){
-                errorMessage.classList.remove('hide');
-            }
-        }
-        console.log(xhr.response)
+        // if (this.readyState == 4 && this.status == 200) {
+        //     console.log(xhr.response);
+        //     checkToken(xhr.response);
+        // }
+        // console.log(xhr.response);
+        checkToken(xhr.response);
     };
 
-    let json = JSON.stringify({
-        "id": parseInt(id),
-        "password": pass.toString()
-    });
-
-    console.log(json);
     xhr.open("POST", url, true);
+
+    let json = JSON.stringify({
+            "id": parseInt(id),
+            "password": pass.toString()
+        });
     xhr.send(json);
 }
 
@@ -43,5 +42,13 @@ passForm.onchange = function () {
 }
 
 function checkToken(token) {
-    return token.includes("error");
+    if ("token" in token){
+        // console.log(token);
+        storage.setItem('user_token', token.token);
+        console.log(storage.getItem('user_token'));
+        location.href = "../html/profile.html";
+    } else {
+        errorMessage.classList.remove('hide');
+        console.log("Неправильный логин-пароль");
+    }
 }
