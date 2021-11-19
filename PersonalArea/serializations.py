@@ -25,6 +25,12 @@ class Seminar_Serializer(serializers.ModelSerializer):
                   ]
 
 
+class Events_ListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Events
+        exclude = ['event_name']
+
+
 class Requests_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Request
@@ -58,5 +64,3 @@ class RegistrationSerializer(serializers.ModelSerializer):
         )
         aikiboy.save()
         return aikiboy
-
-

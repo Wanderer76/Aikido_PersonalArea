@@ -83,6 +83,7 @@ class CreateEvent(APIView):
            "responsible_club":"ответственный клуб"
            }
     """
+
     permission_classes = (permissions.IsAdminUser,)
 
     @transaction.atomic
@@ -148,33 +149,16 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
 class SeminarsList(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
-    # TODO сортировка соревнований по датам для выдачи
-
     @transaction.atomic
     def get(self, request):
-        result = {
-            "upcoming": [
-                {
-                    "start_record_date": "2000-01-01",
-                    "date_of_event": "2000-01-02",
-                    "city": "Екатеринбург",
-                    "responsible_club": "Практика",
-                },
-                {
-                    "start_record_date": "2001-01-01",
-                    "date_of_event": "2001-01-02",
-                    "city": "Екатеринбург",
-                    "responsible_club": "Практика",
-                },
-                {
-                    "start_record_date": "2021-03-05",
-                    "date_of_event": "2000-03-07",
-                    "city": "Екатеринбург",
-                    "responsible_club": "Практика",
-                }
-            ],
-            "past": []
-        }
+        events = Events.objects.all()
+        upcoming = Events_ListSerializer(
+            events.filter(
+                end_record_date__gt=datetime.date.today()).order_by('start_record_date'), many=True).data
+        past = Events_ListSerializer(
+            events.filter(date_of_event__lt=datetime.date.today()).order_by('start_record_date'), many=True).data
+
+        result = {'upcoming': upcoming, 'past': past}
         return Response(status=status.HTTP_200_OK, data=result)
 
 
