@@ -57,7 +57,7 @@ input{
     color: white;
     background-color: darkblue;
     border-radius: 10px;
-    border: midnightblue;
+    border-color:red;
     box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
     width: 120px;
     height: 35px;

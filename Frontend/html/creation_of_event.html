@@ -10,23 +10,24 @@
             Создание мероприятие
         </div>
         <div>
-            <input type="text" name="event_title" placeholder="Название мероприятия">
+            <input type="text" name="event_title" id="event_title" placeholder="Название мероприятия">
         </div>
         <div class="dAndL">
-            <div><input type="date" class="date" name="date" placeholder="Дата"></div>
-            <div> <input type="text" class="location" name="location" placeholder="Место"></div>
+            <div><input type="date" class="date" name="date_start" id="date_start" placeholder="Дата"></div>
+            <div><input type="date" class="date" name="date_end" id="date_end" placeholder="Дата"></div>
+            <div> <input type="text" class="location" name="location" id="location" placeholder="Место"></div>
         </div>
         <div>
-            <input type="text" class="rc" name="resp_club" placeholder="Ответственный клуб">
+            <input type="text" class="rc" name="resp_club" id="resp_club" placeholder="Ответственный клуб">
         </div>
         <div>
-            <input type="text" class="lc" name="lead_coach" placeholder="ФИО ведущего тренера">
+            <input type="text" class="lc" name="lead_coach" id="lead_coach" placeholder="ФИО ведущего тренера">
         </div>
         <div>
-            <button type="button" class="bordered" name="create">Создать</button>
+            <button type="button" class="bordered" name="create" id="create">Создать</button>
         </div>
     </div>
 
-
+<script src="../js/creation-of-event.js"></script>
 </body>
 </html>
