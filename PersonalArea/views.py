@@ -8,7 +8,7 @@ from pytz import unicode
 from rest_framework import status, permissions
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import BasePermission
-
+from django.db.models import F, Q
 from PersonalArea.serializations import *
 from PersonalArea.models import *
 from Utilities import xls_parser
@@ -146,15 +146,53 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
 
+class SeminarsList(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+    # TODO сортировка соревнований по датам для выдачи
+
+    @transaction.atomic
+    def get(self, request):
+
+        seminar = Seminar.objects.all()
+        #upcoming = seminar.filter(Q())
+
+        result = {
+            "upcoming": [
+                {
+                    "start_date": "2000-01-01",
+                    "attestation_date": "2000-01-02",
+                    "city": "Екатеринбург",
+                    "club": "Практика",
+                },
+                {
+                    "start_date": "2001-01-01",
+                    "attestation_date": "2001-01-02",
+                    "city": "Екатеринбург",
+                    "club": "Практика",
+                },
+                {
+                    "start_date": "2021-03-05",
+                    "attestation_date": "2000-03-07",
+                    "city": "Екатеринбург",
+                    "club": "Практика",
+                }
+            ],
+            "past": []
+        }
+        return Response(status=status.HTTP_200_OK, data=result)
+
 
 @csrf_exempt
 def aikido_students_list(request):
     if request.method == 'GET':
-        res = xls_parser.parseXlsToDb(r'C:\Users\Artyom\Desktop\test.xlsx')
-        return JsonResponse(data={"result":res})
-        #students = Aikido_Member.objects.all()
-        #serializer = Aikido_MemberSerializer(students, many=True)
-        #return JsonResponse(serializer.data, safe=False)
+        try:
+            res = xls_parser.parseXlsToDb(r'C:\Users\Artyom\Desktop\test.xlsx')
+            return JsonResponse(data={"result": res})
+        except ArgumentError:
+            return JsonResponse(data={"result": "ошибка в заполнении таблицы"})
+        # students = Aikido_Member.objects.all()
+        # serializer = Aikido_MemberSerializer(students, many=True)
+        # return JsonResponse(serializer.data, safe=False)
     elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = Aikido_MemberSerializer(data=data)
