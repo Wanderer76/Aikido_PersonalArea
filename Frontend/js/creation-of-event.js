@@ -8,8 +8,9 @@ let create_button = document.getElementById('create');
 let event_title = document.getElementById('event_title');
 let date_start = document.getElementById('date_start');
 let date_end = document.getElementById('date_end');
-let locatio = document.getElementById('location');
+let location = document.getElementById('location');
 let resp_club = document.getElementById('resp_club');
+let lead_coach = document.getElementById('lead_coach');
 
 xhr.onreadystatechange = function () {
     let data = xhr.response;
@@ -23,11 +24,11 @@ create_button.onclick = function () {
 
     let result = JSON.stringify({
         "event_name": event_title.value,
-        "start_record_date": date_start.value,
-        "end_record_date": "2020-05-13",
-        "date_of_event": date_end.value,
-        "city": locatio.value,
-        "responsible_club": resp_club.value
+        "date_of_event": date_start.value,
+        "end_of_event": date_end.value,
+        "city": location.value,
+        "responsible_club": resp_club.value,
+        "responsible_trainer": lead_coach.value
     });
 
     console.log(result);
