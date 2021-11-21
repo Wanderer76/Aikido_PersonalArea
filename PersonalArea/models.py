@@ -126,11 +126,13 @@ class Competition(models.Model):
 
 class Events(models.Model):
     event_name = models.CharField(name="event_name", primary_key=True, max_length=100)
-    start_record_date = models.DateField(name="start_record_date", default=datetime.date.today)
-    end_record_date = models.DateField(name="end_record_date", default=datetime.date.today)
-    date_of_event = models.DateField(name="date_of_event", default=datetime.date.today)
+    date_of_event = models.DateField(name="date_of_event", null=False, default=datetime.date.today)
+    end_of_event = models.DateField(name="end_of_event", null=False, default=datetime.date.today)
+    start_record_date = models.DateTimeField(name="start_record_date", default=datetime.datetime.today)
+    end_record_date = models.DateTimeField(name="end_record_date", default=datetime.datetime.today)
     city = models.CharField(name="city", null=False, max_length=30, default="None")
     responsible_club = models.CharField(name='responsible_club', max_length=30, default="None")
+    responsible_trainer = models.CharField(name='responsible_trainer', max_length=60, default="None")
 
     class Meta:
         db_table = "event"
