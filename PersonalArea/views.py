@@ -2,6 +2,7 @@ from ctypes import ArgumentError
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
+from django.db.models import Count, QuerySet
 from django.http import JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
 from pytz import unicode
@@ -13,6 +14,8 @@ from PersonalArea.models import *
 from Utilities import xls_parser
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from Utilities.services import get_day_before
 
 
 class IsTrainerPermission(BasePermission):
@@ -76,11 +79,11 @@ class CreateEvent(APIView):
     """ json формат в котором нужно передавать данные
            {
            "event_name":"название мероприятия",
-           "start_record_date":"дата начала записи в формате гггг-мм-дд",
-           "end_record_date":"дата конца записи в формате гггг-мм-дд",
-           "date_of_event":"дата события в формате гггг-мм-дд",
+           "date_of_event":"дата начала семинара в формате гггг-мм-дд",
+           "end_of_event":"дата конца семинара в формате гггг-мм-дд",
            "city":"город",
            "responsible_club":"ответственный клуб"
+           "responsible_trainer":"фио ответственного тренера"
            }
     """
 
@@ -89,11 +92,15 @@ class CreateEvent(APIView):
     @transaction.atomic
     def post(self, request):
         data = JSONParser().parse(request)
+        print(data)
+        data['start_record_date'] = datetime.datetime.today()
+        data['end_record_date'] = get_day_before(datetime.date.fromisoformat(data['date_of_event']))
         serializer = Events_Serializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
         else:
+            print(serializer.errors)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
 
 
@@ -146,7 +153,7 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
 
-class SeminarsList(APIView):
+class EventsList(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     @transaction.atomic
@@ -159,7 +166,16 @@ class SeminarsList(APIView):
             events.filter(date_of_event__lt=datetime.date.today()).order_by('start_record_date'), many=True).data
 
         result = {'upcoming': upcoming, 'past': past}
+        print(result)
         return Response(status=status.HTTP_200_OK, data=result)
+
+
+class SeminarStatistic(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def get(self, request, event_name):
+        seminars = Seminar.objects.filter(name=event_name).values('oldKu', 'newKu').annotate(count=Count('oldKu'))
+        return Response(status=status.HTTP_200_OK, data=seminars)
 
 
 @csrf_exempt
