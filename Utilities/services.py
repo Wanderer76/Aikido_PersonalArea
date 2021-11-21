@@ -84,3 +84,7 @@ def check_event_for_exists(event_name):
     if models.Seminar.objects.filter(name=event_name).exists():
         return True
     return False
+
+def get_day_before(date_of_event):
+    return datetime.datetime(date_of_event.year, date_of_event.month, date_of_event.day - 1, 23, 59, 59, 0)
+
