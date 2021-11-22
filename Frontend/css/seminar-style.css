@@ -85,5 +85,51 @@ body {
 .bordered-container {
     border:  1px solid black;
     border-radius: 20px;
+    margin: 2% 0;
 }
 
+.rank-stat td {
+    width: 33%;
+}
+
+.rank {
+    width: 90%;
+    padding: 2%;
+    border-radius: 10px;
+    color: white;
+}
+.ku-1 {
+  background-color: #9e4700;
+}
+
+.ku-2 {
+  background-color: #0417b4;
+}
+
+.ku-3 {
+  background-color: #0c9511;
+}
+
+.ku-4 {
+  background-color: #e83300;
+}
+
+.ku-5 {
+  background-color: #ffde00;
+}
+
+.stat-changer {
+    background-color: #134F8C;
+    border: 1px solid white;
+    border-radius: 10px;
+    min-width: 20%;
+    max-width: 80%;
+    padding: 1%;
+    color: white;
+    font-size: 130%;
+    outline: none;
+}
+
+.hidden {
+   display: none;
+}

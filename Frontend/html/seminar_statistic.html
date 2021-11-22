@@ -20,9 +20,8 @@
     </div>
     <div class="container seminar-stat">
         <h3>Статистика соревнования</h3>
-        <div class="bordered-container">
+        <div class="bordered-container hidden" id="age-table">
             <table>
-
                 <tr class="table-header">
                     <td class="sortered-param">Возрастные категории</td>
                     <td class="count bordered">Количество</td>
@@ -41,7 +40,33 @@
                 </tr>
             </table>
         </div>
+
+        <div class="bordered-container rank-stat" id="rank-table">
+            <table>
+                <tr class="table-header">
+                    <td>Пояс</td>
+                    <td class="bordered">Сдавало</td>
+                    <td class="bordered">Сдало</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="ku-5 rank">5 кю</div>
+                    </td>
+                    <td class="bordered">30</td>
+                    <td class="bordered">24</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="ku-3 rank">3 кю</div>
+                    </td>
+                    <td class="bordered">27</td>
+                    <td class="bordered">18</td>
+                </tr>
+            </table>
+        </div>
+        <button class="stat-changer" id="stat-changer">Сменить</button>
     </div>
 
 </body>
+<script src="../js/seminar-statistic.js"></script>
 </html>
