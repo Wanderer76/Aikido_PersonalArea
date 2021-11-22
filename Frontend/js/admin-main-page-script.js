@@ -25,19 +25,23 @@ xhr.send();
 function addDataToTable(data, tagAfterInserting, tag) {
     let activities = JSON.parse(data);
     let array;
+
     if (tag == 'upcoming')
         array = activities.upcoming;
     else array = activities.past;
-    console.log(array[0].city);
+
+    if (array.length == 0) {
+        return;
+    }
+
     for (var i = 0; i < array.length; i++) {
         let activity = array[i];
-        console.log(activity.responsible_club);
         let output = document.createElement('div');
         output.classList.add('row');
         output.classList.add('align-items-center');
         output.innerHTML =
             '   <div class="col date">\n' +
-            '       '+ createDateOutput(activity.start_record_date, activity.date_of_event) + '\n' +
+            '       '+ createDateOutput(activity.date_of_event, activity.end_of_event) + '\n' +
             '   </div>\n' +
             '   <div class="col">\n' +
             '       г.'+ activity.city +'\n' +
@@ -47,6 +51,7 @@ function addDataToTable(data, tagAfterInserting, tag) {
             '   <div class="col">\n' +
             '       <button type="button" name="more_details" class="more_details">Подробнее</button>\n' +
             '   </div>\n';
+
         tagAfterInserting.parentElement.insertBefore(output, tagAfterInserting.nextSibling);
     }
 }
