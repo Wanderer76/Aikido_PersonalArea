@@ -219,7 +219,6 @@ class EventsList(APIView):
             events.filter(date_of_event__lt=datetime.date.today()).order_by('start_record_date'), many=True).data
 
         result = {'upcoming': upcoming, 'past': past}
-        print(result)
         return Response(status=status.HTTP_200_OK, data=result)
 
 
@@ -229,6 +228,17 @@ class SeminarStatistic(APIView):
     def get(self, request, event_name):
         seminars = Seminar.objects.filter(name=event_name).values('oldKu', 'newKu').annotate(count=Count('oldKu'))
         return Response(status=status.HTTP_200_OK, data=seminars)
+
+
+class EventView(APIView):
+    permission_classes = (permissions.IsAdminUser, )
+
+    def get(self,request,event_name):
+        try:
+            event = Events_Serializer(Events.objects.get(event_name=event_name))
+            return JsonResponse(data={"result": event})
+        except:
+            return JsonResponse(data={"result": "события не существует"})
 
 
 @csrf_exempt
