@@ -25,6 +25,12 @@ class Seminar_Serializer(serializers.ModelSerializer):
                   ]
 
 
+class Deti_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Aikido_Member
+        fields = ['id', 'name', 'surname']
+
+
 class Events_ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Events

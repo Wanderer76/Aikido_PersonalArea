@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/v1/events/requests/create/', csrf_exempt(views.CreateRequest.as_view())),
     path('api/v1/events/requests/<str:event_name>/', views.TrainerEventRequest.as_view()),
     path('api/v1/account/profile/', csrf_exempt(views.StudentInfo.as_view())),
+    path('api/v1/account/trainer_students/', csrf_exempt(views.TrainerHasbiks.as_view())),
     path('api/v1/admin/seminar_statistic/', views.EventsList.as_view()),
     path('api/v1/admin/seminar/<str:event_name>/', views.SeminarStatistic.as_view()),
 ]
