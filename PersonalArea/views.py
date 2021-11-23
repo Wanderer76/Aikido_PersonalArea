@@ -235,7 +235,7 @@ class EventView(APIView):
 
     def get(self,request,event_name):
         try:
-            event = Events_Serializer(Events.objects.get(event_name=event_name))
+            event = Events_Serializer(Events.objects.get(event_name=event_name)).data
             return JsonResponse(data={"result": event})
         except:
             return JsonResponse(data={"result": "события не существует"})
