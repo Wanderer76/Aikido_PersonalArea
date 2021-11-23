@@ -154,6 +154,34 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
 
 
 class EventsList(APIView):
+    """
+    Возвращает данные в следующем формате
+    {
+    "upcoming":[
+        {
+        "event_name":"1",
+        "date_of_event":"2021-11-30",
+        "end_of_event":"2021-12-01",
+        "start_record_date":"2021-11-22T16:33:24.709532Z",
+        "end_record_date":"2021-11-29T23:59:59Z",
+        "city":"sdf",
+        "responsible_club":"sfd",
+        "responsible_trainer":"sfd"
+        }
+    ],
+    "past":[
+        {
+        "event_name":"название мероприятия111",
+        "date_of_event":"2000-05-05",
+        "end_of_event":"2021-11-20",
+        "start_record_date":"2000-05-05T00:00:00Z",
+        "end_record_date":"2000-05-05T00:00:00Z",
+        "city":"город",
+        "responsible_club":"ответственный клуб",
+        "responsible_trainer":"None"
+        }
+    ]
+    """
     permission_classes = (permissions.IsAdminUser,)
 
     @transaction.atomic
