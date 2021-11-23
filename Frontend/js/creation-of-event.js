@@ -12,6 +12,7 @@ let location_field = document.getElementById('location');
 let resp_club = document.getElementById('resp_club');
 let lead_coach = document.getElementById('lead_coach');
 console.log("Enter")
+
 xhr.onreadystatechange = function () {
     let data = xhr.response;
     console.log(data);
@@ -32,6 +33,6 @@ create_button.onclick = function () {
     });
 
     console.log(result);
-    xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
+    xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
     xhr.send(result);
 }
