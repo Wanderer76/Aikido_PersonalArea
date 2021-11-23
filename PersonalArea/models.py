@@ -108,6 +108,7 @@ class Seminar(models.Model):
     class Meta:
         db_table = "seminar"
         managed = True
+        get_latest_by = 'attestation_date'
 
 
 class Competition(models.Model):
