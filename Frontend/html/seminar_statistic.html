@@ -8,14 +8,9 @@
     <link rel="stylesheet" href="../css/seminar-style.css">
 </head>
 <body>
-    <div class="container seminar-info">
-        <h1>Х центральный семинар по прикладному айкидо</h1>
-        <p>Дата: <span class="changeable-params">25-26 декабря 2021 года</span></p>
-        <p>Место: <span class="changeable-params">г. Екатеринбург</span></p>
-        <p>Количество заявленных участников: <span class="changeable-params">111</span></p>
-        <p>Окончание записи через сайт: <span class="changeable-params">24.12.2021 23:59:59</span></p>
-    </div>
-    <div class="row">
+    <!-- here js will insert activity's base info block (name, date, etc)-->
+
+    <div class="row" id="buttons-block">
         <button class="download col-6 col-md-6 col-lg-6" onclick="window.open('../assets/file.xlsx')">Скачать список участников</button>
         <button class="upload col-6 col-md-6 col-lg-6">Загрузить отчет</button>
     </div>
@@ -69,5 +64,6 @@
     </div>
 
 </body>
-<script src="../js/seminar-statistic.js"></script>
+<script src="../js/seminar-statistic-toogle-table.js"></script>
+<script src="../js/get-seminar-info.js"></script>
 </html>
