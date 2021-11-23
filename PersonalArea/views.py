@@ -75,6 +75,31 @@ class StudentInfo(APIView):
         return Response(aiki_ser, status=status.HTTP_200_OK)
 
 
+class TrainerHasbiks(APIView):
+    def get(self, request):
+        try:
+            data = request.headers.get('Authorization')[6:]
+            aiki_id = Token.objects.get(key=data).user_id
+            aiki_chel = Aikido_Member.objects.get(id=aiki_id)
+
+            if aiki_chel.is_trainer:
+                hasbiki = Deti_Serializer(Aikido_Member.objects
+                                          .filter(trainer_id=aiki_chel.id), many=True).data
+
+                for hasbik in hasbiki:
+                    seminar_boy = Seminar_Serializer(Seminar.objects
+                                                     .filter(member__id=hasbik["id"]).latest())
+                    hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
+                    hasbik["ku"] = seminar_boy.data["newKu"]
+
+                return Response(data={"список учеников": hasbiki}, status=status.HTTP_200_OK)
+            else:
+                raise ObjectDoesNotExist
+
+        except ObjectDoesNotExist:
+            return Response(data={"error": "вы не тренер"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class CreateEvent(APIView):
     """ json формат в котором нужно передавать данные
            {
