@@ -28,7 +28,7 @@ class Seminar_Serializer(serializers.ModelSerializer):
 class Events_ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Events
-        exclude = ['event_name']
+        fields = '__all__'
 
 
 class Requests_Serializer(serializers.ModelSerializer):
