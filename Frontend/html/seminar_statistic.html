@@ -12,7 +12,11 @@
 
     <div class="row" id="buttons-block">
         <button class="download col-6 col-md-6 col-lg-6" onclick="window.open('../assets/file.xlsx')">Скачать список участников</button>
-        <button class="upload col-6 col-md-6 col-lg-6">Загрузить отчет</button>
+        <!--<button class="upload col-6 col-md-6 col-lg-6">Загрузить отчет</button>-->
+        <input type="file" class="input-file" id="fileForm">
+        <label for="fileForm" class="form-control-file upload col-6 col-md-6 col-lg-6">
+            <span>Загрузить список участников</span>
+        </label>
     </div>
     <div class="container seminar-stat">
         <h3>Статистика соревнования</h3>
