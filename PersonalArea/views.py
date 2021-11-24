@@ -1,13 +1,14 @@
 from ctypes import ArgumentError
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.uploadhandler import FileUploadHandler, TemporaryFileUploadHandler
 from django.db import transaction
 from django.db.models import Count, QuerySet
 from django.http import JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
 from pytz import unicode
 from rest_framework import status, permissions
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.permissions import BasePermission
 from PersonalArea.serializations import *
 from PersonalArea.models import *
@@ -134,8 +135,25 @@ class DownloadRequests(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def get(self, request, seminar_name):
-        filename = xls_parser.createXlsxFromRequests(seminar_name)
-        return FileResponse(open(filename, 'rb'))
+        try:
+            filename = xls_parser.createXlsxFromRequests(seminar_name)
+            return FileResponse(open(filename, 'rb'),status=status.HTTP_200_OK)
+        except ArgumentError:
+            return JsonResponse(data={'result': 'Не существует такого мероприятия'},status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoadRequests(APIView):
+    """вызов api/v1/seminar/<str:seminar_name>/ """
+    permission_classes = (permissions.IsAdminUser,)
+    parser_classes = (FileUploadParser,)
+
+    def post(self, request, filename, format=None):
+        data = request.data['file']
+        with open('requests/' + filename + ".xlsx", 'wb+') as destination:
+            for chunk in data.chunks():
+                destination.write(chunk)
+            result = xls_parser.parseXlsToDb(destination.name)
+            return Response(data={'result': result})
 
 
 class CreateRequest(APIView, IsTrainerPermission):
@@ -231,9 +249,9 @@ class SeminarStatistic(APIView):
 
 
 class EventView(APIView):
-    permission_classes = (permissions.IsAdminUser, )
+    permission_classes = (permissions.IsAdminUser,)
 
-    def get(self,request,event_name):
+    def get(self, request, event_name):
         try:
             event = Events_Serializer(Events.objects.get(event_name=event_name)).data
             return JsonResponse(data={"result": event})
