@@ -11,10 +11,10 @@
     <!-- here js will insert activity's base info block (name, date, etc)-->
 
     <div class="row" id="buttons-block">
-        <button class="download col-6 col-md-6 col-lg-6" onclick="window.open('../assets/file.xlsx')">Скачать список участников</button>
+        <button class="download col-6 col-md-6 col-lg-6" id="download">Скачать список участников</button>
         <!--<button class="upload col-6 col-md-6 col-lg-6">Загрузить отчет</button>-->
-        <input type="file" class="input-file" id="fileForm">
-        <label for="fileForm" class="form-control-file upload col-6 col-md-6 col-lg-6">
+        <input type="file" class="input-file" id="upload">
+        <label for="upload" class="form-control-file upload col-6 col-md-6 col-lg-6">
             <span>Загрузить список участников</span>
         </label>
     </div>
@@ -70,4 +70,6 @@
 </body>
 <script src="../js/seminar-statistic-toogle-table.js"></script>
 <script src="../js/get-seminar-info.js"></script>
+<script src="../js/download-file.js"></script>
+<script src="../js/upload-file.js"></script>
 </html>
