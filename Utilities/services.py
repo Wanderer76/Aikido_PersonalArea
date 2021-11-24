@@ -80,8 +80,13 @@ def generate_id():
     return missingNumbers[0]
 
 
-def check_event_for_exists(event_name):
+def check_seminars_for_exists(event_name):
     if models.Seminar.objects.filter(name=event_name).exists():
+        return True
+    return False
+
+def check_event_for_exists(event_name):
+    if models.Events.objects.filter(event_name=event_name).exists():
         return True
     return False
 
