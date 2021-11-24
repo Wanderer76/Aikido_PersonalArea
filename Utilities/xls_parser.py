@@ -18,7 +18,10 @@ def parseXlsToDb(xlsxFile):
     fileName = os.path.basename(xlsxFile)
     event_name = fileName[0:fileName.find('.')]
 
-    if services.check_event_for_exists(event_name):
+    if not services.check_event_for_exists(event_name):
+        return 'Мероприятие не существует'
+
+    if services.check_seminars_for_exists(event_name):
         return 'Данные по мероприятию уже заполнены'
 
     # seminars = models.Seminar.objects.filter(name=event_name).values_list('member_id')
