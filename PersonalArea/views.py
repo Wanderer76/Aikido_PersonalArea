@@ -67,6 +67,7 @@ class AdminLoginAPIView(APIView):
 
 
 class StudentInfo(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
     def get(self, request):
         data = request.headers.get('Authorization')[6:]
         aiki_id = Token.objects.get(key=data).user_id
