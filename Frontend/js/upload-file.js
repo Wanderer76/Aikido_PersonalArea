@@ -1,6 +1,6 @@
 let uploadButton = document.getElementById('upload');
 let filename = window.sessionStorage.getItem("activityName");
-let uploadUrl = 'api/v1/admin/seminar/load/' + filename + '/';
+let uploadUrl = 'http://localhost:8000/api/v1/admin/seminar/load/' + filename + '/';
 let uploader = new XMLHttpRequest();
 
 uploader.onreadystatechange = state => { console.log(uploader.status); }
