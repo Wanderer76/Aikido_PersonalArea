@@ -3,7 +3,7 @@ let filename = window.sessionStorage.getItem("activityName");
 let uploadUrl = 'http://localhost:8000/api/v1/admin/seminar/load/' + filename + '/';
 let uploader = new XMLHttpRequest();
 
-uploader.onreadystatechange = state => { console.log(uploader.status); }
+uploader.onreadystatechange = state => { console.log(uploader.response); }
 
 uploadButton.onchange = function () {
     let file = document.getElementById('upload').files[0];
