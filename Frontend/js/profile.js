@@ -104,6 +104,8 @@ function setBaseInfo(data) {
     document.getElementById('id-button').textContent = 'ID #' + data.id;
     if (data.photo !== null)
         document.getElementById('photo').src = data.photo;
+    if (data.club !== null)
+        document.getElementById('club-photo').src=data.club+'.png';
 }
 
 
