@@ -36,10 +36,9 @@ function displayAchievment(achievment) {
     let name = id.substring(1, id.length);
     for (var i = num; i < 6; i++) {
         let block = document.getElementById(i + name);
-        console.log(i + name);
         block.classList.remove('not-reached');
         if (i == num) {
-            block.children[1].children[0].textContent = 'Seminar name';
+            block.children[1].children[0].textContent = achievment.name;
             block.children[1].children[1].textContent = setDateFormat(achievment.attestation_date);
         }
     }
@@ -104,8 +103,9 @@ function setBaseInfo(data) {
     document.getElementById('id-button').textContent = 'ID #' + data.id;
     if (data.photo !== null)
         document.getElementById('photo').src = data.photo;
-    if (data.club !== null)
-        document.getElementById('club-photo').src=data.club+'.png';
+    if (data.club == null || data.club == 'null')
+        console.log('null photo');
+    else document.getElementById('club-photo').src=data.club+'.png';
 }
 
 
