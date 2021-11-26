@@ -38,7 +38,15 @@ class LoginAPIView(APIView):
         try:
             aikiboy = Aikido_Member.objects.get(id=data['id'], password=data['password'])
             aikiToken = Token.objects.get(user=aikiboy)
-            return Response(data={"token": unicode(aikiToken)}, status=status.HTTP_200_OK)
+            hasbikStatus = ""
+            if aikiboy.is_admin or aikiboy.is_superuser:
+                hasbikStatus = "admin"
+            elif aikiboy.is_trainer:
+                hasbikStatus = "trainer"
+            else:
+                hasbikStatus = "user"
+
+            return Response(data={"token": unicode(aikiToken),"status":hasbikStatus}, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             return Response(data={"error": "Неверный id или пароль"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -197,7 +205,7 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
 
-class EventsList(APIView):
+class EventsList(APIView,IsTrainerPermission):
     """
     Возвращает данные в следующем формате
     {
@@ -226,7 +234,7 @@ class EventsList(APIView):
         }
     ]
     """
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (IsTrainerPermission,)
 
     @transaction.atomic
     def get(self, request):
