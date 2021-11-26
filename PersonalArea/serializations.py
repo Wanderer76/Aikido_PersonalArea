@@ -19,7 +19,7 @@ class Profile_Serializer(serializers.ModelSerializer):
 class Seminar_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Seminar
-        fields = ['club', 'city',
+        fields = ['name', 'club', 'city',
                   'attestation_date', 'oldKu',
                   'newKu', 'isChild'
                   ]
