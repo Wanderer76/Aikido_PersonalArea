@@ -18,8 +18,21 @@ xhr.onreadystatechange = function() {
 function setOutputParams(jsonData) {
     jsonData = JSON.parse(jsonData);
     setBaseInfo(jsonData);
+    setStatusAbility(jsonData);
     setAchievmentStory(jsonData);
     setAchievmentStoryInTable(jsonData);
+}
+
+function setStatusAbility() {
+    let adminButton = document.getElementById("admin-button");
+    let trainerButton = document.getElementById("trainer-button");
+    if (storage.getItem('status') == 'trainer')
+        adminButton.classList.add("hidden");
+    else if (storage.getItem('status') == user) {
+        adminButton.classList.add('hidden');
+        trainerButton.classList.add('hidden');
+    }
+
 }
 
 function setAchievmentStory(data) {

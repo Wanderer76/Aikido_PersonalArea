@@ -44,11 +44,8 @@ passForm.onchange = function () {
 function checkToken(info) {
     if ("token" in info){
         storage.setItem('user_token', info.token);
-        storage.setItem('status', info.status)
-        if (info.status == 'trainer' || info.status == 'user')
-            location.href = "../html/profile.html";
-        else if (info.status = 'admin')
-            location.href = "../html/admin-page-main.html";
+        storage.setItem('status', info.status);
+        location.href = "../html/profile.html";
     } else {
         errorMessage.classList.remove('hide');
         console.log("Неправильный логин-пароль");

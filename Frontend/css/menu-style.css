@@ -137,6 +137,11 @@ body {
     transform: translateX(20%);
 }
 
+/* style for hiding admin and trainer buttons */
+.hidden {
+    display: none;
+}
+
 @media all and (max-width: 1000px) {
     .menu {
         width: 50vw;
