@@ -20,7 +20,7 @@ butt.onclick = function () {
         //     console.log(xhr.response);
         //     checkToken(xhr.response);
         // }
-        // console.log(xhr.response);
+        console.log(xhr.response);
         checkToken(xhr.response);
     };
 
@@ -41,13 +41,14 @@ passForm.onchange = function () {
     errorMessage.classList.add('hide')
 }
 
-function checkToken(token) {
-    if ("token" in token){
-        // console.log(token);
-        storage.setItem('user_token', token.token);
-        console.log(storage.getItem('user_token'));
-        location.href = "../html/profile.html";
-        // location.href = "../html/admin-page-main.html";
+function checkToken(info) {
+    if ("token" in info){
+        storage.setItem('user_token', info.token);
+        storage.setItem('status', info.status)
+        if (info.status == 'trainer' || info.status == 'user')
+            location.href = "../html/profile.html";
+        else if (info.status = 'admin')
+            location.href = "../html/admin-page-main.html";
     } else {
         errorMessage.classList.remove('hide');
         console.log("Неправильный логин-пароль");
