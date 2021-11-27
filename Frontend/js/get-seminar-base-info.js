@@ -1,16 +1,17 @@
 let storage = window.sessionStorage;
-let url = 'http://localhost:8000/api/v1/admin/event_statistic/'+ storage.getItem("activityName") + '/';
-console.log(url);
-// storage.removeItem("activityName");
-let xhr = new XMLHttpRequest();
+let baseInfoRequest = new XMLHttpRequest();
+SendSeminarInfoRequest('http://localhost:8000/api/v1/admin/event_statistic/' + storage.getItem("activityName") + '/', baseInfoRequest);
 
-xhr.open('GET', url);
-xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
-xhr.send();
+function SendSeminarInfoRequest(url, request) {
 
-xhr.onreadystatechange = function() {
+    baseInfoRequest.open('GET', url);
+    baseInfoRequest.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
+    baseInfoRequest.send();
+}
+
+baseInfoRequest.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        let data = xhr.response;
+        let data = baseInfoRequest.response;
         setInfoToHeader(data);
     }
 }
@@ -22,7 +23,7 @@ function setInfoToHeader(data) {
     output.classList.add('container');
     output.classList.add('seminar-info');
     output.innerHTML =
-                '<h1>' + info.event_name + '</h1>\n' +
+                '<h1 id="event-name">' + info.event_name + '</h1>\n' +
         '        <p>Дата: <span class="changeable-params">' + createDateOutput(info.date_of_event, info.end_of_event) + '</span></p>\n' +
         '        <p>Место: <span class="changeable-params">'+ info.city +'</span></p>\n' +
         '        <p>Ответственный клуб: <span class="changeable-params">'+ info.responsible_club +'</span></p>' +

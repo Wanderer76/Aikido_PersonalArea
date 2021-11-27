@@ -114,6 +114,7 @@ function setBaseInfo(data) {
     document.getElementById('surname').textContent = data.surname;
     document.getElementById('birthdate').textContent = setDateFormat(data.birthdate);
     document.getElementById('id-button').textContent = 'ID #' + data.id;
+    storage.getItem('myId', data.id);
     if (data.photo !== null)
         document.getElementById('photo').src = data.photo;
     if (data.club == null || data.club == 'null')

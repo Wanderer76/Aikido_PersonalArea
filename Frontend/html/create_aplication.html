@@ -44,7 +44,7 @@
 
   <div class="container content">
     <div class="base-info col-12">
-      <h1 class="row">Х центральный семинар по прикладному айкидо</h1>
+      <h1 class="row" id="event-name">Х центральный семинар по прикладному айкидо</h1>
       <p>Дата: <span class="blue-text">17 - 19 декабря 2021 года</span></p>
       <p>Место: <span  class="blue-text">г.Еатеринбург, ул. Академика Постовского, 11, ФОК "Соболь"</span></p>
       <p>Количество заявленных участников: <span  class="blue-text">111</span></p>
@@ -54,8 +54,12 @@
     <div class="participants-block col-12">
       <h3>Добавить участников в заявку</h3>
       <div class="bordered">
-        <table>
-          <tr>
+        <table id="members-selection">
+          <tr id="default-row">
+            <td></td>
+          </tr>
+          <!--<tr>
+              <td>#1231</td>
             <td>Гришин Иван</td>
             <td>18.05.2011</td>
             <td>
@@ -64,6 +68,7 @@
             <td class="checkbox-cell"><input type="checkbox" class="checkbox"></td>
           </tr>
           <tr>
+              <td>#1232</td>
             <td>Гусеева Вера</td>
             <td>14.06.2004</td>
             <td>
@@ -72,6 +77,7 @@
             <td class="checkbox-cell"><input type="checkbox" class="checkbox"></td>
           </tr>
           <tr>
+              <td>#1233</td>
             <td>Зверев Платон</td>
             <td>22.06.2012</td>
             <td>
@@ -80,17 +86,18 @@
             <td class="checkbox-cell"><input type="checkbox" class="checkbox"></td>
           </tr>
           <tr>
+            <td>#1234</td>
             <td>Львов Гордей</td>
             <td>03.11.208</td>
             <td>
               <div class="degree ku-2">2 кю</div>
             </td>
             <td class="checkbox-cell"><input type="checkbox" class="checkbox"></td>
-          </tr>
+          </tr> -->
         </table>
       </div>
       <div class="row button-block">
-        <button class="col-4 table-button" id="add-button">Добавить новых участников не из сообщества</button>
+        <button class="col-4 table-button" id="add-button" onclick = "location.href = 'adding_new_members.html'">Добавить новых участников не из сообщества</button>
         <button class="col-4 table-button" id="send-button">Отправить</button>
       </div>
     </div>
@@ -99,6 +106,8 @@
 </div>
 </body>
 <script src = "../js/navbar-swipe.js"></script>
-<script src="../js/new-input-appear.js"></script>
-<script src="../js/get_participant_list.js"></script>
+<script src="../js/get-seminar-base-info.js"></script>
+<script src="../js/get-event-member-info.js"></script>
+<script src="../js/insert-new-members.js"></script>
+<script src="../js/send_participant_list.js"></script>
 </html>
