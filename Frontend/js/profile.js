@@ -105,7 +105,10 @@ function setBaseInfo(data) {
         document.getElementById('photo').src = data.photo;
     if (data.club == null || data.club == 'null')
         console.log('null photo');
-    else document.getElementById('club-photo').src=data.club+'.png';
+    else {
+        document.getElementById('club-photo').src = '../assets/clubs_logo/'+ data.club + '.png';
+        console.log(data.club);
+    }
 }
 
 
