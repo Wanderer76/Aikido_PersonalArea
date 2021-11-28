@@ -79,9 +79,15 @@ class StudentInfo(APIView):
     def get(self, request):
         data = request.headers.get('Authorization')[6:]
         aiki_id = Token.objects.get(key=data).user_id
-        aiki_ser = Profile_Serializer(Aikido_Member.objects.get(id=aiki_id)).data
-        aiki_seminars = Seminar_Serializer(Seminar.objects.filter(member__id=aiki_id), many=True).data
+        aiki_chel = Aikido_Member.objects.get(id=aiki_id)
+        aiki_ser = Profile_Serializer(aiki_chel).data
+        aiki_seminars = Seminar_Serializer(Seminar.objects.filter(member__id=aiki_id).order_by("attestation_date"), many=True).data
         aiki_ser["seminars"] = aiki_seminars
+
+        if aiki_chel.is_trainer:
+            aiki_ser["members"] = Aikido_Member.objects.filter(trainer_id=aiki_id).count()
+            aiki_ser["license"] = None
+
         return Response(aiki_ser, status=status.HTTP_200_OK)
 
 
