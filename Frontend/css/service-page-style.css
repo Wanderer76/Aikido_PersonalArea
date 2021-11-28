@@ -225,38 +225,42 @@ body {
     border: 1px solid black;
     border-radius: 25px;
     background-color: ghostwhite;
-    padding: 2%;
-    margin:  3%;
+   /* padding: 2%;
+    margin:  3%;*/
     font-size: 2vw;
     font-weight: bolder;
     color: #134F8C;
     text-align: center;
     box-shadow: -0.1em 0.15em 3px rgba(122, 122, 122, 0.5);
+    grid-area: belt-id;
 }
 
 .base-info h2 {
     font-size: 350%;
-    padding-left: 2%;
-    margin-left:  3%;
+    /*padding-left: 2%;
+    margin-left:  3%;*/
     font-weight: bold;
+    grid-area: h2;
 }
 
 .base-info h3 {
     font-size: 250%;
-    padding-left: 2%;
+    /*padding-left: 2%;
     padding-top: 2%;
-    margin-left:  3%;
+    margin-left:  3%;*/
     font-weight: bold;
+    grid-area: h3;
 }
 
 .license_info{
     width: 25%;
    /* position: relative;
-    right: 25%;*/
-    margin-left: 8%;
-    padding-left: 2%;
-    text-align: center;
+    right: 25%;
     margin-bottom: 2%;
+    margin-left: 8%;
+    padding-left: 2%;*/
+    text-align: center;
+    grid-area: license_info;
 }
 
 
@@ -272,9 +276,10 @@ body {
    /* position: relative;
     left: 22%;
     top: -300px*/
-    margin-left: 40%;
+    /*margin-left: 40%;
     padding-left: 2%;
-    margin-top: -25%;
+    margin-top: -25%;*/
+    grid-area: club_info;
 }
 
 td{
@@ -397,4 +402,13 @@ th{
     font-size: larger;
     text-align: left;
 }
+
+/*.theTOP{
+    display: grid;
+    grid-template-areas: '. h3 . . club_info club_info club_info club_info'
+                         '. h2 . . club_info club_info club_info club_info'
+                         '. belt-id . . club_info club_info club_info club_info'
+                         'license_info license_info  license_info . club_info club_info club_info club_info'
+                         'license_info license_info  license_info . club_info club_info club_info club_info';
+}*/
 
