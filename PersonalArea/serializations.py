@@ -12,7 +12,7 @@ class Aikido_MemberSerializer(serializers.ModelSerializer):
 class Profile_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Aikido_Member
-        fields = ['id', 'name', 'surname', 'birthdate', 'photo', 'club']
+        fields = ['id', 'name', 'surname', 'birthdate', 'photo', 'club','region']
 
 
 # TODO изменить в дальнейшем
