@@ -16,6 +16,7 @@ console.log("Enter")
 xhr.onreadystatechange = function () {
     let data = xhr.response;
     console.log(data);
+    location.href = '../html/admin-page-main.html';
 };
 
 create_button.onclick = function () {
