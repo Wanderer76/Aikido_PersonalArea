@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/v1/admin/seminar/<str:event_name>/', views.SeminarStatistic.as_view()),
     path('api/v1/admin/seminar/download/<str:seminar_name>/', views.DownloadRequests.as_view()),
     path('api/v1/admin/seminar/load/<str:filename>/', csrf_exempt(views.LoadRequests.as_view())),
+    path('api/v1/admin/members_info/', csrf_exempt(views.AikidoMembersInfo.as_view())),
 
 ]
 
