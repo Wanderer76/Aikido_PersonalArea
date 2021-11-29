@@ -74,6 +74,14 @@ class AdminLoginAPIView(APIView):
             return Response(data={"error": "Неверный id или пароль"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class AikidoMembersInfo(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        aiki_info = Member_InfoSerializer(Aikido_Member.objects.all(), many=True).data
+        return Response(aiki_info, status=status.HTTP_200_OK)
+
+
 class StudentInfo(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     def get(self, request):
