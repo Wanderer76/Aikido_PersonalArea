@@ -2,7 +2,7 @@ let storage = window.sessionStorage;
 let baseInfoRequest = new XMLHttpRequest();
 SendSeminarInfoRequest('http://localhost:8000/api/v1/admin/event_statistic/' + storage.getItem("activityName") + '/', baseInfoRequest);
 
-function SendSeminarInfoRequest(url, request) {
+function SendSeminarInfoRequest(url) {
 
     baseInfoRequest.open('GET', url);
     baseInfoRequest.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
@@ -12,6 +12,7 @@ function SendSeminarInfoRequest(url, request) {
 baseInfoRequest.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         let data = baseInfoRequest.response;
+        console.log(data);
         setInfoToHeader(data);
     }
 }

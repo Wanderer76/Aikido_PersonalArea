@@ -6,11 +6,9 @@ xhr.open('GET', url);
 xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
 xhr.send();
 
-console.log()
 xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         let data = xhr.response;
-        console.log(data);
         setOutputParams(data);
     }
 }
@@ -28,7 +26,7 @@ function setStatusAbility() {
     let trainerButton = document.getElementById("trainer-button");
     if (storage.getItem('status') == 'trainer')
         adminButton.classList.add("hidden");
-    else if (storage.getItem('status') == user) {
+    else if (storage.getItem('status') == 'user') {
         adminButton.classList.add('hidden');
         trainerButton.classList.add('hidden');
     }
@@ -114,14 +112,13 @@ function setBaseInfo(data) {
     document.getElementById('surname').textContent = data.surname;
     document.getElementById('birthdate').textContent = setDateFormat(data.birthdate);
     document.getElementById('id-button').textContent = 'ID #' + data.id;
-    storage.getItem('myId', data.id);
+    storage.setItem('myId', data.id);
     if (data.photo !== null)
         document.getElementById('photo').src = data.photo;
     if (data.club == null || data.club == 'null')
         console.log('null photo');
     else {
         document.getElementById('club-photo').src = '../assets/clubs_logo/'+ data.club + '.png';
-        console.log(data.club);
     }
 }
 

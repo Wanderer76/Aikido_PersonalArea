@@ -18,11 +18,29 @@ seminar_xhr.onreadystatechange = function() {
     }
 }
 
-function sendActivityName(button) {
+function sendActivityName(button, action) {
     let buttonNum = button.id.split('-')[2];
     let name  = document.getElementById('name-' + buttonNum);
     sessionStorage.setItem("activityName", name.textContent);
-    location.href = "../html/seminar_statistic.html";
+    if (action == 'download') {
+        let seminarName = window.sessionStorage.getItem("activityName");
+        let downloadUrl = 'http://localhost:8000/api/v1/admin/seminar/download/'+ seminarName + '/';
+        let downloader = new XMLHttpRequest();
+        let data;
+        downloader.open('GET', downloadUrl);
+        downloader.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
+        downloader.send();
+        console.log("downloading...");
+
+        downloader.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                data = downloader.response;
+                window.open(data);
+            }
+        }
+    }
+    else
+        location.href = "../html/create_aplication.html";
 }
 
 function addDataToTable(data, tagAfterInserting, tag) {
@@ -44,20 +62,22 @@ function addDataToTable(data, tagAfterInserting, tag) {
             output.innerHTML =
            ' <tr>' +
                ' <td>'+ createDateOutput(activity.date_of_event, activity.end_of_event) +'</td>' +
+               '<td class ="bordered-3" id="name-'+ num +'">'+ activity.event_name +'</td>'+
                ' <td class="bordered-3">'+ activity.city +'</td>' +
                 '<td class="bordered-3">'+ activity.responsible_club +'</td>' +
                 '<td class="bordered-3">' +
-                   ' <button type="button" name="apply" class="apply">Подать \ Изменить заявку' +
+                   ' <button type="button" name="apply" class="apply" id="more-button-'+ num + '"  onclick="sendActivityName(this, \'apply\')">Подать \ Изменить заявку' +
                    ' </button>' +
                 '</td>' +
             '</tr>';
         else  output.innerHTML =
             ' <tr>' +
             ' <td>'+ createDateOutput(activity.date_of_event, activity.end_of_event) +'</td>' +
+            '<td class ="bordered-3" id="name-'+ num +'">'+ activity.event_name +'</td>'+
             ' <td class="bordered-3">'+ activity.city +'</td>' +
             '<td class="bordered-3">'+ activity.responsible_club +'</td>' +
             '<td class="bordered-3">' +
-            ' <button type="button" name="change_application" class="download_sheet">Скачать ведомость' +
+            ' <button type="button" name="download_sheet" class="download_sheet" id="more-button-'+ num + '"  onclick="sendActivityName(this, \'download\')">Скачать ведомость' +
             ' </button>' +
             '</td>' +
             '</tr>';

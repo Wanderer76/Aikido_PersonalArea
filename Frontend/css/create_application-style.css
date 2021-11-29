@@ -15,18 +15,15 @@ body {
     transform: translateX(20%);
 }
 
-.base-info {
-    font-size: 140%;
-}
-
-.base-info h1 {
-    margin: 3% 0;
-    text-align: center;
-}
-
-.blue-text {
-    color: #134F8C;
+.seminar-info {
+    font-size: 150%;
     font-weight: bolder;
+    margin: 1% auto auto 2vw;
+
+}
+
+.changeable-params {
+    color: #134F8C;
 }
 
 
@@ -52,6 +49,10 @@ body {
     padding: 1% 0;
 }
 
+.participants-block table th {
+    font-size: 120%;
+}
+
 
 .checkbox-cell {
     width: 10%
@@ -65,10 +66,12 @@ body {
 }
 
 .degree {
+    padding: 1%;
     max-width: 90%;
     margin: auto;
     border-radius: 10px;
     color: white;
+    line-height: 100%;
 }
 
 
@@ -91,6 +94,10 @@ body {
 
 .ku-5 {
     background-color: #ffde00;
+}
+
+.dateInBlock {
+    font-size: 80%;
 }
 
 /*styles for buttons under table with participants*/

@@ -43,18 +43,22 @@
   </div>
 
   <div class="container content">
-    <div class="base-info col-12">
-      <h1 class="row" id="event-name">Х центральный семинар по прикладному айкидо</h1>
-      <p>Дата: <span class="blue-text">17 - 19 декабря 2021 года</span></p>
-      <p>Место: <span  class="blue-text">г.Еатеринбург, ул. Академика Постовского, 11, ФОК "Соболь"</span></p>
-      <p>Количество заявленных участников: <span  class="blue-text">111</span></p>
-      <p>Окончание записи через сайт: <span  class="blue-text">16.12.2021 23:59:59</span></p>
-    </div>
+    <!-- here js will insert activity's base info block (name, date, etc)-->
+
+    <div id="buttons-block"></div>
 
     <div class="participants-block col-12">
       <h3>Добавить участников в заявку</h3>
       <div class="bordered">
         <table id="members-selection">
+          <tr>
+              <th>ID</th>
+              <th>Имя Фамилия</th>
+              <th>Дата рождения</th>
+              <th>Уровень</th>
+              <th>Включить в заявку</th>
+          </tr>
+
           <tr id="default-row">
             <td></td>
           </tr>
