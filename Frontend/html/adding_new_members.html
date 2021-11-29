@@ -44,32 +44,6 @@
                 Добавление новых участников
             </div>
             <div class="row container adding_members">
-            <!--    <div class="row adding_members-table">
-                    <div class="col-md-3">
-                      <div><input type="text" name="surname" class="filled" value="Васильев"></div>
-                      <div><input type="text" name="surname" class="filled" value="Виноградов"></div>
-                      <div><input type="text" name="surname" class="filled" value="Морозова"></div>
-                      <div><input type="text" name="surname" placeholder="Фамилия" tabindex=1 class="new_person"></div>
-                    </div>
-                    <div class="col-md-3">
-                        <div><input type="text" name="name" class="filled" value="Илья"></div>
-                        <div><input type="text" name="name" class="filled" value="Матвей"></div>
-                        <div><input type="text" name="name" class="filled" value="Мария"></div>
-                        <div><input type="text" name="name" placeholder="Имя" tabindex=2 class="new_person"></div>
-                    </div>
-                    <div class="col-md-3">
-                        <div><input type="text" name="patronymic" class="filled" value="Вячеславович"></div>
-                        <div><input type="text" name="patronymic" class="filled" value="Александрович"></div>
-                        <div><input type="text" name="patronymic" class="filled" value="Сергеевна"></div>
-                        <div><input type="text" name="patronymic" placeholder="Отчество" tabindex=3 class="new_person"></div>
-                    </div>
-                    <div class="col-md-3">
-                        <div><input type="text" name="birthday" class="filled" value="18.09.2017"></div>
-                        <div><input type="text" name="birthday" class="filled" value="25.09.2017"></div>
-                        <div><input type="text" name="birthday" class="filled" value="20.10.2015"></div>
-                        <div><input type="text" name="birthday" placeholder="ДР" tabindex=4 class="new_person"></div>
-                    </div>
-                </div> -->
                 <form method="post">
                     <table id="v_table">
                         <tbody>
@@ -86,7 +60,7 @@
                     <input type="button" class="delete_butt" onclick="remove_value_f()" value="Удалить поля"/>
                 </form>
                 <div class="col-md-4">
-                    <button type="button" class="add_to_applic" name="add_to_application">Добавить в заявку</button>
+                    <button type="button" id="add_to_applic" class="add_to_applic" name="add_to_application">Добавить в заявку</button>
                 </div>
             </div>
         </div>
@@ -94,4 +68,5 @@
 </body>
 <script src = "../js/navbar-swipe.js"></script>
 <script src="../js/new-input-appear.js"></script>
+<script src="../js/adding-new-members.js"></script>
 </html>
