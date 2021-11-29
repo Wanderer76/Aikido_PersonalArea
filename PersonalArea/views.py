@@ -208,7 +208,7 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
         requests = Request.objects.filter(trainer_id=trainer_id, event_name=event_name)
         serializer = Requests_Serializer(requests, many=True)
 
-        return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 
 class EventsList(APIView,IsTrainerPermission):
