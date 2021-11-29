@@ -16,22 +16,11 @@ xhr.onreadystatechange = function() {
 function setOutputParams(jsonData) {
     jsonData = JSON.parse(jsonData);
     setBaseInfo(jsonData);
-    setStatusAbility(jsonData);
     setAchievmentStory(jsonData);
     setAchievmentStoryInTable(jsonData);
 }
 
-function setStatusAbility() {
-    let adminButton = document.getElementById("admin-button");
-    let trainerButton = document.getElementById("trainer-button");
-    if (storage.getItem('status') == 'trainer')
-        adminButton.classList.add("hidden");
-    else if (storage.getItem('status') == 'user') {
-        adminButton.classList.add('hidden');
-        trainerButton.classList.add('hidden');
-    }
 
-}
 
 function setAchievmentStory(data) {
     for (var i = 0; i < data.seminars.length; i++) {
@@ -115,6 +104,7 @@ function setBaseInfo(data) {
     storage.setItem('myId', data.id);
     if (data.photo !== null)
         document.getElementById('photo').src = data.photo;
+    console.log(data.club);
     if (data.club == null || data.club == 'null')
         console.log('null photo');
     else {

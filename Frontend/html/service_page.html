@@ -11,43 +11,47 @@
 <body>
     <div class="wrapper">
         <div class="menu">
-            <a href="#" class="menu-btn"></a>
-            <nav class="container menu-list">
-                <div class="btn">
-                    <div class="description"><a href="#" class="text-a">Мой профиль</a></div>
-                    <div class="icon"><a href="#"><img src="../assets/home.png"></a></div>
-                </div>
-                <div class="btn">
-                    <div class="description"><a href="#" class="text-a">Семинары</a></div>
-                    <div class="icon"><a href="#"><img src="../assets/competition.png"></a></div>
-                </div>
-                <div class="btn">
-                    <div class="description"><a href="#" class="text-a">Статьи</a></div>
-                    <div class="icon"><a href="#"><img src="../assets/articles.png"></a></div>
-                </div>
-                <div class="btn">
-                    <div class="description"><a href="#" class="text-a">Контакты</a></div>
-                    <div class="icon"><a href="#"><img src="../assets/contacts.png"></a></div>
-                </div>
-                <div class="btn">
-                    <div class="description"><a href="#" class="text-a">Служебная</a></div>
-                    <div class="icon"><a href="#"><img src="../assets/service.png"></a></div>
-                </div>
-                <img id="logo" src="../assets/logo_federation.png" alt="LOGO">
-                <div class="exit-btn">
-                    <div class="description"><a href="#" class="text-a">Выйти</a></div>
-                    <div class="icon"><a href="#"><img src="../assets/exit-icon.png"></a></div>
-                </div>
-            </nav>
+          <a href="#" class="menu-btn"></a>
+          <nav class="container menu-list">
+            <div class="btn">
+                <div class="description"><a href="profile.html" class="text-a">Мой профиль</a></div>
+                <div class="icon"><a href="profile.html"><img src="../assets/home.png"></a></div>
+            </div>
+            <div class="btn">
+                <div class="description"><a href="#" class="text-a">Семинары</a></div>
+                <div class="icon"><a href="#"><img src="../assets/competition.png"></a></div>
+            </div>
+            <div class="btn">
+                <div class="description"><a href="#" class="text-a">Статьи</a></div>
+                <div class="icon"><a href="#"><img src="../assets/articles.png"></a></div>
+            </div>
+            <div class="btn">
+                <div class="description"><a href="#" class="text-a">Контакты</a></div>
+                <div class="icon"><a href="#"><img src="../assets/contacts.png"></a></div>
+            </div>
+            <div class="btn" id="trainer-button">
+                <div class="description"><a href="service_page.html" class="text-a">Служебная</a></div>
+                <div class="icon"><a href="service_page.html"><img src="../assets/service.png"></a></div>
+            </div>
+            <div class="btn" id="admin-button">
+                <div class="description"><a href="admin-page-main.html" class="text-a">Админка</a></div>
+                <div class="icon"><a href="admin-page-main.html"><img src="../assets/admin-icon.png"></a></div>
+            </div>
+            <img id="logo" src="../assets/logo_federation.png" alt="LOGO">
+            <div class="exit-btn">
+                <div class="description"><a href="authorization.html" class="text-a">Выйти</a></div>
+                <div class="icon"><a href="authorization.html"><img src="../assets/exit-icon.png"></a></div>
+            </div>
+          </nav>
         </div>
         <div class="content">
             <div class="theTOP">
                 <div class="container">
                     <div class="row base-info">
                         <div class="col-6 md-col-2 fio">
-                            <h3 class="row" id="name">Евгений</h3>
-                            <h2 class="row" id="surname">Топаев</h2>
-                            <button class="col-4 col-md-5 belt-id" id="id">ID #0001</button>
+                            <h3 class="row" id="name">Неизвестная</h3>
+                            <h2 class="row" id="surname">Личность</h2>
+                            <button class="col-4 col-md-5 belt-id" id="id">ID #0000</button>
                         </div>
                     </div>
 
@@ -151,4 +155,5 @@
 <script src="../js/service-page.js"></script>
 <script src="../js/service-page-seminar.js"></script>
 <script src="../js/service-page-stud.js"></script>
+<script src="../js/set-status-ability-to-menu.js"></script>
 </html>
