@@ -1,6 +1,5 @@
 import os
 from ctypes import ArgumentError
-
 import openpyxl
 from django.db import transaction
 from openpyxl.styles import numbers
@@ -21,8 +20,7 @@ def parseXlsToDb(xlsxFile):
     if not services.check_event_for_exists(event_name):
         return 'Мероприятие не существует'
 
-    if services.check_seminars_for_exists(event_name):
-        return 'Данные по мероприятию уже заполнены'
+    services.check_seminars_for_exists(event_name)
 
     # seminars = models.Seminar.objects.filter(name=event_name).values_list('member_id')
     with transaction.atomic():

@@ -23,7 +23,7 @@ def get_ku(record):
         return record
     else:
         if "дан" in record:
-            ku = record.replace('дан', '')
+            ku = record.replace('дан', '').replace(' ', '')
             if isinstance(ku, int):
                 return 10 + ku
             else:
@@ -81,15 +81,23 @@ def generate_id():
 
 
 def check_seminars_for_exists(event_name):
-    if models.Seminar.objects.filter(name=event_name).exists():
-        return True
-    return False
+    seminars = models.Seminar.objects.filter(name=event_name).prefetch_related("member")
+
+    if seminars.exists():
+        hasbiks_id = seminars.values_list("member", flat=True)
+        for i in hasbiks_id:
+            if seminars.filter(member_id=i).count() == 1:
+                seminars.get(member=models.Aikido_Member.objects.get(id=i)).delete()
+                models.Aikido_Member.objects.get(id=i).delete()
+            else:
+                seminars.get(member=models.Aikido_Member.objects.get(id=i)).delete()
+
 
 def check_event_for_exists(event_name):
     if models.Events.objects.filter(event_name=event_name).exists():
         return True
     return False
 
+
 def get_day_before(date_of_event):
     return datetime.datetime(date_of_event.year, date_of_event.month, date_of_event.day - 1, 23, 59, 59, 0)
-
