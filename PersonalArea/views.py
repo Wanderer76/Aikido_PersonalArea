@@ -263,8 +263,8 @@ class SeminarStatistic(APIView):
         return Response(status=status.HTTP_200_OK, data=seminars)
 
 
-class EventView(APIView):
-    permission_classes = (permissions.IsAdminUser,)
+class EventView(APIView,IsTrainerPermission):
+    permission_classes = (IsTrainerPermission,)
 
     def get(self, request, event_name):
         try:
