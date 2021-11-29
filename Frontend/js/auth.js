@@ -10,21 +10,19 @@ let xhr = new XMLHttpRequest();
 xhr.responseType = 'json';
 
 let storage = window.sessionStorage;
+xhr.onreadystatechange = function () {
+    // if (this.readyState == 4 && this.status == 200) {
+    //     console.log(xhr.response);
+    //     checkToken(xhr.response);
+    // }
+    console.log(xhr.response);
+    checkToken(xhr.response);
+};
 
 butt.onclick = function () {
     id = idForm.value;
     pass = passForm.value;
-
-    xhr.onreadystatechange = function () {
-        // if (this.readyState == 4 && this.status == 200) {
-        //     console.log(xhr.response);
-        //     checkToken(xhr.response);
-        // }
-        console.log(xhr.response);
-        checkToken(xhr.response);
-    };
-
-    xhr.open("POST", url, true);
+    xhr.open("POST", url);
 
     let json = JSON.stringify({
             "id": parseInt(id),
