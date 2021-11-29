@@ -31,6 +31,12 @@ class Deti_Serializer(serializers.ModelSerializer):
         fields = ['id', 'password', 'name', 'surname', 'birthdate']
 
 
+class Member_InfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Aikido_Member
+        fields = ['id', 'password']
+
+
 class Events_ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Events
