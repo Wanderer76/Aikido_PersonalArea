@@ -22,6 +22,9 @@ def get_ku(record):
     if isinstance(record, int):
         return record
     else:
+        if record =="" or record is None:
+            return None
+
         if "дан" in record:
             ku = record.replace('дан', '').replace(' ', '')
             if isinstance(ku, int):
@@ -55,7 +58,7 @@ def create_row(request, event, member=None):
         if lastSeminar.exists():
             oldKu = lastSeminar[0][0]
     second_name = ''
-    if request['second_name'] != 'None' and request['second_name'] !=  '':
+    if request['second_name'] != 'None' and request['second_name'] != '':
         second_name = request['second_name']
 
     member_id = member.id if member is not None else ''
@@ -102,5 +105,8 @@ def check_event_for_exists(event_name):
     return False
 
 
-def get_day_before(date_of_event):
-    return datetime.datetime(date_of_event.year, date_of_event.month, date_of_event.day - 1, 23, 59, 59, 0)
+def get_day_before(date_of_event: datetime.date):
+    print(datetime.date.today() - datetime.timedelta(1))
+    print(date_of_event - datetime.timedelta(1))
+    day_before = date_of_event - datetime.timedelta(1)
+    return datetime.datetime(day_before.year, day_before.month, day_before.day, 23, 59, 59, 0)
