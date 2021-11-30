@@ -2,9 +2,8 @@ let studentsInfoRequest = new XMLHttpRequest();
 studentsInfoRequest.responseType = 'json';
 const stud_url = "http://localhost:8000/api/v1/account/trainer_students/";
 
-getTrainerStudents();
-function getTrainerStudents() {
-    studentsInfoRequest.open("GET", stud_url);
+function getTrainerStudents(url) {
+    studentsInfoRequest.open("GET", url);
     studentsInfoRequest.setRequestHeader('Authorization', 'Token ' + window.sessionStorage.getItem('user_token'));
     studentsInfoRequest.send();
 }
