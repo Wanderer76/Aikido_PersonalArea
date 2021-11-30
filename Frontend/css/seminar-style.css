@@ -29,6 +29,7 @@ body {
 }
 
 .download {
+    text-decoration: none;
     background: #05861A;
     background-image: url("../assets/excel.png");
     background-size: 15%;
@@ -38,6 +39,11 @@ body {
     padding-bottom: 1.2%;
     box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
     }
+
+#buttons-block a:hover {
+    text-decoration: none;
+    color: white;
+}
 
 .upload {
     background: #134F8C;
