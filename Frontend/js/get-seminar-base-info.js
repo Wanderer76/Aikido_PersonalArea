@@ -12,7 +12,6 @@ function SendSeminarInfoRequest(url) {
 baseInfoRequest.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         let data = baseInfoRequest.response;
-        console.log(data);
         setInfoToHeader(data);
     }
 }
