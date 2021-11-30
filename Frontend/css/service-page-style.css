@@ -344,12 +344,28 @@ th{
     width: content-box;
     padding-top: 2%;
     padding-bottom: 2%;
+    margin-bottom: 3%;
     text-align: center;
 }
 
 .list_stud td{
     padding-right: 1.5%;
     padding-bottom: 1.5%;
+}
+
+.table-button {
+    justify-self: center;
+    margin-left: 30%;
+    margin-right: auto;
+    margin-bottom: 10%;
+    min-height: 30%;
+    background-color: #134F8C;
+    color: white;
+    padding: 1%;
+    border: 1px solid white;
+    outline: none;
+    border-radius: 20px;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
 }
 
 .abc{

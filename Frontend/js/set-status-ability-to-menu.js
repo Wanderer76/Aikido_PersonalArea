@@ -3,9 +3,9 @@ setStatusAbility();
 function setStatusAbility() {
     let adminButton = document.getElementById("admin-button");
     let trainerButton = document.getElementById("trainer-button");
-    if (storage.getItem('status') == 'trainer')
+    if (window.sessionStorage.getItem('status') == 'trainer')
         adminButton.classList.add("hidden");
-    else if (storage.getItem('status') == 'user') {
+    else if (window.sessionStorage.getItem('status') == 'user') {
         adminButton.classList.add('hidden');
         trainerButton.classList.add('hidden');
     }
