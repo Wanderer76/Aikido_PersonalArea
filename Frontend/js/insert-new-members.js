@@ -10,7 +10,7 @@ function addNewMembers() {
         output.innerHTML =
         '<td></td>' +
         '<td>'+ studData[i].name + ' ' + studData[i].surname +'</td>' +
-        '<td>'+ studData[i].birthdate +'</td>' +
+        '<td>'+ setDateFormat(studData[i].birthdate) +'</td>' +
         '<td>' +
         '</td>' +
         '<td class="checkbox-cell"><input type="checkbox" class="checkbox" checked></td>';
