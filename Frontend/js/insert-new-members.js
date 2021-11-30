@@ -1,21 +1,20 @@
 addNewMembers();
-
 function addNewMembers() {
-    let studData = storage.getItem('new-members');
+    let studData = JSON.parse(window.sessionStorage.getItem('new_aiki'));
+    console.log(studData);
     if (studData == null) return;
 
     let defRow = document.getElementById('default-row');
     for (let i = 0; i < studData.length; i++) {
         let output = document.createElement('tr');
         output.innerHTML =
-        '<td>#'+ studData[i].id +'</td>' +
+        '<td></td>' +
         '<td>'+ studData[i].name + ' ' + studData[i].surname +'</td>' +
-        '<td>'+ setDateFormat(studData[i].birthdate) +'</td>' +
+        '<td>'+ studData[i].birthdate +'</td>' +
         '<td>' +
-            '<div class="degree ku-'+ studData[i].ku +'">'+ studData[i].ku+' кю <br><span  class="dateInBlock">'+ setDateFormat(studData[i].attestation_date) +'</span></div>' +
         '</td>' +
-        '<td class="checkbox-cell"><input type="checkbox" class="checkbox"></td>';
-        defRow.parentElement.insertBefore(output, defRow);
+        '<td class="checkbox-cell"><input type="checkbox" class="checkbox" checked></td>';
+        defRow.parentElement.insertBefore(output, defRow.nextSibling);
     }
-    storage.remove('new-members');
+    storage.removeItem('new_aiki');
 }

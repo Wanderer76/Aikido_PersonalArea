@@ -17,7 +17,10 @@ function getRowInfo(checkbox) {
     if (checkbox.checked){
         let cols = checkbox.parentElement.parentElement.getElementsByTagName("td");
         let birthdate = cols[2].textContent.split('.');
-        participants.push({
+        let memberId = cols[0].textContent;
+        console.log('member: ' + memberId);
+        if (memberId != '') {
+            participants.push({
             "name": cols[1].textContent.split(" ")[0],
             "surname" : cols[1].textContent.split(" ")[1],
             "member_id" : cols[0].textContent.substring(1, cols[0].textContent.length),
@@ -25,5 +28,15 @@ function getRowInfo(checkbox) {
             "event_name" : document.getElementById('event-name').textContent,
             "trainer_id" : storage.getItem("myId")
         });
+        } else {
+            participants.push({
+            "name": cols[1].textContent.split(" ")[0],
+            "surname" : cols[1].textContent.split(" ")[1],
+            "birthdate" : birthdate[2]+'-'+birthdate[1]+'-'+birthdate[0],
+            "event_name" : document.getElementById('event-name').textContent,
+            "trainer_id" : storage.getItem("myId")
+        });
+        }
+
     }
 }

@@ -23,7 +23,8 @@ eventMemberRequest.onreadystatechange = function() {
             havePreviewRequest = false;
         else {
             havePreviewRequest = true;
-            eventCheckedMemmbers = this.response;
+            eventCheckedMemmbers = eventMemberRequest.response;
+            console.log(eventCheckedMemmbers);
         }
         getTrainerStudents();
     }
@@ -35,26 +36,25 @@ studentsInfoRequest.onreadystatechange = function () {
         showTrainerStudents(studentList);
         if (havePreviewRequest) changeAplication();
     }
+    // console.log(this.response);
 }
 
 function changeAplication() {
-    console.log(eventCheckedMemmbers);
+    console.log('change');
     checkStudentsFromPreviewAplication(eventCheckedMemmbers);
     addNewMembersFromPreviewAplication(eventCheckedMemmbers);
 }
 
 function checkStudentsFromPreviewAplication(eventCheckedMembers) {
     let checkboxes = document.querySelectorAll('.checkbox');
-    checkboxes.forEach(element => checkStudent(element, eventCheckedMembers))
+    for (let i=0; i<checkboxes.length; i++)
+        checkStudent(checkboxes[i], eventCheckedMembers);
 }
 
 function checkStudent(checkbox, eventCheckedMembers) {
     let studentId = checkbox.parentElement.parentElement.getElementsByTagName("td")[0].textContent;
-    console.log(studentId);
-    console.log(eventCheckedMembers);
     for (let i=0; i< eventCheckedMembers.length; i++) {
-        console.log(eventCheckedMembers[i].id);
-        if (('#' + eventCheckedMembers[i].id) == studentId) {
+        if (('#' + eventCheckedMembers[i].member_id) == studentId) {
             checkbox.checked = true;
         }
     }
@@ -63,7 +63,7 @@ function checkStudent(checkbox, eventCheckedMembers) {
 function addNewMembersFromPreviewAplication(eventCheckedMembers) {
     let defRow = document.getElementById('default-row');
     for (let i=0; i< eventCheckedMembers.length; i++) {
-        if (!checkMemberInListByID(studentList, eventCheckedMembers[i].id)) {
+        if (!checkMemberInListByID(studentList, eventCheckedMembers[i].member_id)) {
             let output = document.createElement('tr');
             output.innerHTML =
             '<td></td>' +
@@ -77,9 +77,12 @@ function addNewMembersFromPreviewAplication(eventCheckedMembers) {
 }
 
 function checkMemberInListByID(list, id) {
-    for (let i=0; i<list.length; i++)
+    for (let i=0; i<list.length; i++) {
+        if (list[i].id == null)
+            continue;
         if (list[i].id == id)
             return true;
+    }
     return false;
 }
 
