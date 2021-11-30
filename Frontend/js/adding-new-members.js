@@ -21,4 +21,5 @@ add_to_applic.onclick = function (){
     }
     window.sessionStorage.setItem('new_aiki',JSON.stringify(result));
     console.log('good!')
+    location.href = '../html/create_aplication.html';
 }

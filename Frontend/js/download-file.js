@@ -29,11 +29,3 @@ function saveAs(blob, filename) {
     window.URL.revokeObjectURL(url);
 }
 
-// downloader.onreadystatechange = function() {
-//     if (this.readyState == 4 && this.status == 200) {
-//         data = downloader.response;
-//         window.open(data);
-//         console.log('setted');
-//
-//     }
-// }
