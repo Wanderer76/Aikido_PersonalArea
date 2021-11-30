@@ -54,7 +54,10 @@ def create_row(request, event, member=None):
         lastSeminar = models.Seminar.objects.filter(member=member).order_by('attestation_date').values_list('newKu')
         if lastSeminar.exists():
             oldKu = lastSeminar[0][0]
-    second_name = '' if request['second_name'] is None else request['second_name']
+    second_name = ''
+    if request['second_name'] != 'None' and request['second_name'] !=  '':
+        second_name = request['second_name']
+
     member_id = member.id if member is not None else ''
     return [
         request['surname'], request['name'], second_name, oldKu, member_id,
