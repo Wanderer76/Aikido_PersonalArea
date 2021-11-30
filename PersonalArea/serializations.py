@@ -34,7 +34,7 @@ class Deti_Serializer(serializers.ModelSerializer):
 class Member_InfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aikido_Member
-        fields = ['id', 'password']
+        fields = ['id', 'password', 'name', 'surname', 'birthdate']
 
 
 class Events_ListSerializer(serializers.ModelSerializer):
@@ -47,7 +47,6 @@ class Requests_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Request
         exclude = ['id']
-        
 
 class Events_Serializer(serializers.ModelSerializer):
     class Meta:

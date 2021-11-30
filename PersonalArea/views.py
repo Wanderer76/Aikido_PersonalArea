@@ -79,7 +79,7 @@ class AikidoMembersInfo(APIView):
 
     def get(self, request):
         aiki_info = Member_InfoSerializer(Aikido_Member.objects.all(), many=True).data
-        return Response(aiki_info, status=status.HTTP_200_OK)
+        return Response({"список учеников":aiki_info}, status=status.HTTP_200_OK)
 
 
 class StudentInfo(APIView):
