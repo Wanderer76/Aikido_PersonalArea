@@ -2,7 +2,9 @@ let seminarName = window.sessionStorage.getItem("activityName");
 let downloadUrl = 'http://localhost:8000/api/v1/admin/seminar/download/'+ seminarName + '/';
 let downloadButton = document.getElementById('download');
 let downloader = new XMLHttpRequest();
+downloader.responseType = 'blob';
 let data;
+let isAttributeSet = false;
 
 
 downloadButton.onclick = function () {
@@ -11,11 +13,27 @@ downloadButton.onclick = function () {
     downloader.send();
 }
 
-downloader.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        data = downloader.response;
-        console.log(data);
-        downloadButton.setAttribute('download', data);
-        console.log("downloading...");
-    }
+downloader.onload = function () {
+    saveAs(this.response, seminarName+'.xlsx');
 }
+
+function saveAs(blob, filename) {
+     var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+
+    var url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+// downloader.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//         data = downloader.response;
+//         window.open(data);
+//         console.log('setted');
+//
+//     }
+// }
