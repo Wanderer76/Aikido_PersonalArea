@@ -63,7 +63,7 @@ def create_row(request, event, member=None):
         trainer.club,
         f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
         trainer.id,
-        event.start_record_date, event.city,
+        event.start_record_date.date(), event.city,
         event.date_of_event, '', '', '']
 
 
