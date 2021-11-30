@@ -29,7 +29,7 @@ function add_value_f() {
     td1.innerHTML = '<input type="text" name="surname['+last_id+']" placeholder="Фамилия">';
     td2.innerHTML = '<input type="text" name="name['+last_id+']" placeholder="Имя">';
     td3.innerHTML = '<input type="text" name="second_name['+last_id+']" placeholder="Отчество">';
-    td4.innerHTML = '<input type="text" name="birthdate['+last_id+']" placeholder="ДР">';
+    td4.innerHTML = '<input type="date" name="birthdate['+last_id+']" placeholder="ДР">';
 }
 
 function remove_value_f() {
