@@ -9,7 +9,7 @@ function addNewMembers() {
         let output = document.createElement('tr');
         output.innerHTML =
         '<td></td>' +
-        '<td>'+ studData[i].name + ' ' + studData[i].surname + ' ' + studData[i].second_name +'</td>' +
+        '<td>'+ studData[i].surname + ' ' + studData[i].name + ' ' + studData[i].second_name +'</td>' +
         '<td>'+ setDateFormat(studData[i].birthdate) +'</td>' +
         '<td>' +
         '</td>' +
