@@ -61,6 +61,9 @@ def create_row(request, event, member=None):
     if request['second_name'] != 'None' and request['second_name'] != '':
         second_name = request['second_name']
 
+    if member is not None and member.second_name is not None:
+        second_name = member.second_name
+
     member_id = member.id if member is not None else ''
     return [
         request['surname'], request['name'], second_name, oldKu, member_id,
