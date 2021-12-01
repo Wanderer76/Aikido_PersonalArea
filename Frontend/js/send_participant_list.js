@@ -8,7 +8,7 @@ sendButton.onclick = function () {
     let url = 'http://localhost:8000/api/v1/events/requests/create/';
     sender.open('POST', url);
     sender.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
-    console.log(JSON.stringify(participants));
+    // console.log(JSON.stringify(participants));
     sender.send(JSON.stringify(participants));
     location.href = '../html/service_page.html';
 }
@@ -32,6 +32,7 @@ function getRowInfo(checkbox) {
             participants.push({
             "name": cols[1].textContent.split(" ")[0],
             "surname" : cols[1].textContent.split(" ")[1],
+            "second_name" : cols[1].textContent.split(" ")[2],
             "birthdate" : birthdate[2]+'-'+birthdate[1]+'-'+birthdate[0],
             "event_name" : document.getElementById('event-name').textContent,
             "trainer_id" : storage.getItem("myId")
