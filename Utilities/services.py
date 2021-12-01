@@ -70,7 +70,7 @@ def create_row(request, event, member=None):
         f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
         trainer.id,
         event.start_record_date.date(), event.city,
-        event.date_of_event, '', '', '']
+        event.date_of_event, '', '', event.responsible_trainer]
 
 
 def set_blue_row(workSheet):
