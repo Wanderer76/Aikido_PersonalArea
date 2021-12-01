@@ -18,9 +18,48 @@ function setOutputParams(jsonData) {
     setBaseInfo(jsonData);
     setAchievmentStory(jsonData);
     setAchievmentStoryInTable(jsonData);
+    setBelt(jsonData);
 }
 
+function setBelt(data) {
+    console.log(data);
+    let belt = getBeltColor(data.seminars);
+    console.log(belt);
+    document.getElementById('belt-img').src = '../assets/belts/'+ belt +'_belt.jpg';
+}
 
+function getBeltColor(seminars, isChild) {
+    if (seminars.length == 0 || seminars == null)
+        return 'white';
+    let maxChildAchievment = getMaxKu(seminars, isChild);
+    let maxAchievment = getMaxKu(seminars, isChild);
+    if (maxAchievment == 6)
+        maxAchievment = maxChildAchievment;
+    switch (maxAchievment) {
+        case 5:
+            return 'yellow';
+        case 4:
+            return 'red';
+        case 3:
+            return 'green';
+        case 2:
+            return 'blue';
+        case 1:
+            return 'brown';
+        default:
+            return 'black';
+    }
+}
+
+function getMaxKu(seminars, isChild) {
+    let maxAchievment = 6;
+    for (let i = 0; i< seminars.length; i++){
+        if (isChild == seminars[i].isCHild)
+            if ((seminars[i].newKu > 10 && seminars[i].newKu > maxAchievment) || (seminars[i].newKu < maxAchievment && maxAchievment < 10))
+                maxAchievment = seminars[i].newKu;
+    }
+    return maxAchievment;
+}
 
 function setAchievmentStory(data) {
     for (var i = 0; i < data.seminars.length; i++) {
@@ -104,7 +143,6 @@ function setBaseInfo(data) {
     storage.setItem('myId', data.id);
     if (data.photo !== null)
         document.getElementById('photo').src = data.photo;
-    console.log(data.club);
     if (data.club == null || data.club == 'null')
         console.log('null photo');
     else {
