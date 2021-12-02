@@ -5,26 +5,29 @@ from ctypes import ArgumentError
 
 
 def get_id(record):
+    result = None
     if record is None:
-        return generate_id()
+        result = generate_id()
     if isinstance(record, int):
-        return int(record)
+        result = int(record)
     else:
         if isinstance(record, str):
             if record[0] == '№':
-                return int(record[1::])
+                result = int(record.replace(' ', '')[1::])
             else:
-                return int(record)
+                result = int(record)
+    if result is None:
         raise ArgumentError(f"Ячейка заполнена не правильно {record}")
+    else:
+        return result
 
 
 def get_ku(record):
     if isinstance(record, int):
         return record
     else:
-        if record =="" or record is None:
+        if record == "" or record is None:
             return None
-
         if "дан" in record:
             ku = record.replace('дан', '').replace(' ', '')
             if isinstance(ku, int):
@@ -96,10 +99,10 @@ def check_seminars_for_exists(event_name):
         hasbiks_id = seminars.values_list("member", flat=True)
         for i in hasbiks_id:
             if seminars.filter(member_id=i).count() == 1:
-                seminars.get(member=models.Aikido_Member.objects.get(id=i)).delete()
+                seminars.get(member_id=i).delete()
                 models.Aikido_Member.objects.get(id=i).delete()
             else:
-                seminars.get(member=models.Aikido_Member.objects.get(id=i)).delete()
+                seminars.get(member_id=i).delete()
 
 
 def check_event_for_exists(event_name):

@@ -26,6 +26,10 @@ def parseXlsToDb(xlsxFile):
     with transaction.atomic():
         for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
             member_id = services.get_id(row[4].value)
+
+            if models.Seminar.objects.filter(name=event_name,member__id=member_id).exists():
+                raise ArgumentError(f"Ячейка заполнена не правильно {row[4]}")
+
             seminar = models.Seminar()
             seminar.name = event_name
             seminar.club = row[7].value

@@ -175,8 +175,11 @@ class LoadRequests(APIView):
         with open('requests/' + filename + ".xlsx", 'wb+') as destination:
             for chunk in data.chunks():
                 destination.write(chunk)
-            result = xls_parser.parseXlsToDb(destination.name)
-            return Response(data={'result': result})
+            try:
+                result = xls_parser.parseXlsToDb(destination.name)
+                return Response(data={'result': result}, status=status.HTTP_200_OK)
+            except ArgumentError as error:
+                return Response(data={'result':error.args},status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateRequest(APIView, IsTrainerPermission):
