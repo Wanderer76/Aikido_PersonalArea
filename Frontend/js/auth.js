@@ -16,6 +16,7 @@ xhr.onreadystatechange = function () {
     //     checkToken(xhr.response);
     // }
     console.log(xhr.response);
+    console.log('token must be getted');
     checkToken(xhr.response);
 };
 
@@ -40,6 +41,7 @@ passForm.onchange = function () {
 }
 
 function checkToken(info) {
+    if (info == null) return;
     if ("token" in info){
         storage.setItem('user_token', info.token);
         storage.setItem('status', info.status);
