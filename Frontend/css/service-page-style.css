@@ -250,6 +250,7 @@ body {
     margin-left:  3%;*/
     font-weight: bold;
     grid-area: h3;
+    margin-top: 2%;
 }
 
 .license_info{
@@ -261,6 +262,8 @@ body {
     padding-left: 2%;*/
     text-align: center;
     grid-area: license_info;
+    margin-top: -100px;
+    margin-left: -1%;
 }
 
 
@@ -280,6 +283,9 @@ body {
     padding-left: 2%;
     margin-top: -25%;*/
     grid-area: club_info;
+    margin-top: -15%;
+    margin-left: 40%;
+
 }
 
 td{
