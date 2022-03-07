@@ -1,10 +1,10 @@
 import datetime
-from openpyxl.styles import PatternFill
+from openpyxl.styles import PatternFill, numbers
 from PersonalArea import models
 from ctypes import ArgumentError
 
 
-def get_id(record):
+def parse_id_from_xls(record):
     result = None
     if record is None:
         result = generate_id()
@@ -55,7 +55,7 @@ def set_trainer_status(trainer_id):
 
 def create_row(request, event, member=None):
     trainer = models.Aikido_Member.objects.get(id=request['trainer_id'])
-    oldKu = ''
+    oldKu = 0
     if member is not None:
         lastSeminar = models.Seminar.objects.filter(member=member).order_by('attestation_date').values_list('newKu')
         if lastSeminar.exists():
@@ -69,7 +69,7 @@ def create_row(request, event, member=None):
 
     member_id = member.id if member is not None else ''
     return [
-        request['surname'], request['name'], second_name, oldKu, member_id,
+        request['surname'], request['name'], second_name, parse_ku(oldKu), member_id,
         request['birthdate'],
         trainer.region,
         trainer.club,
@@ -111,8 +111,21 @@ def check_event_for_exists(event_name):
     return False
 
 
+def set_date_format(workSheet):
+    for i in workSheet.iter_rows(min_row=1, max_row=workSheet.max_row):
+        i[5].number_format = numbers.FORMAT_DATE_DDMMYY
+        i[10].number_format = numbers.FORMAT_DATE_DDMMYY
+        i[12].number_format = numbers.FORMAT_DATE_DDMMYY
+
+
 def get_day_before(date_of_event: datetime.date):
-    print(datetime.date.today() - datetime.timedelta(1))
-    print(date_of_event - datetime.timedelta(1))
     day_before = date_of_event - datetime.timedelta(1)
     return datetime.datetime(day_before.year, day_before.month, day_before.day, 23, 59, 59, 0)
+
+
+def parse_ku(value: int) -> str:
+    if value > 10:
+        return f"{value % 10} дан"
+    if value == 0:
+        return ""
+    return f"{value} кю"

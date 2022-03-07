@@ -14,9 +14,8 @@ urlpatterns = [
     path('api/v1/account/trainer_students/', csrf_exempt(views.TrainerHasbiks.as_view())),
     path('api/v1/admin/seminar_statistic/', views.EventsList.as_view()),
     path('api/v1/admin/event_statistic/<str:event_name>/', views.EventView.as_view()),
+    path('api/v1/admin/seminar/list/<str:seminar_url>/', csrf_exempt(views.AikidoSeminarList.as_view())),
     path('api/v1/admin/seminar/<str:event_name>/', views.SeminarStatistic.as_view()),
-    path('api/v1/admin/seminar/download/<str:seminar_name>/', views.DownloadRequests.as_view()),
-    path('api/v1/admin/seminar/load/<str:filename>/', csrf_exempt(views.LoadRequests.as_view())),
     path('api/v1/admin/members_info/', csrf_exempt(views.AikidoMembersInfo.as_view())),
 
 ]

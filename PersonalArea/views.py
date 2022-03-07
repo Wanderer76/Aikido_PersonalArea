@@ -1,14 +1,13 @@
 from ctypes import ArgumentError
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.files.uploadhandler import FileUploadHandler, TemporaryFileUploadHandler
 from django.db import transaction
-from django.db.models import Count, QuerySet
+from django.db.models import Count
 from django.http import JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
 from pytz import unicode
 from rest_framework import status, permissions
-from rest_framework.parsers import JSONParser, FileUploadParser
+from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, FormParser
 from rest_framework.permissions import BasePermission
 from PersonalArea.serializations import *
 from PersonalArea.models import *
@@ -46,7 +45,7 @@ class LoginAPIView(APIView):
             else:
                 hasbikStatus = "user"
 
-            return Response(data={"token": unicode(aikiToken),"status":hasbikStatus}, status=status.HTTP_200_OK)
+            return Response(data={"token": unicode(aikiToken), "status": hasbikStatus}, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             return Response(data={"error": "Неверный id или пароль"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -79,17 +78,19 @@ class AikidoMembersInfo(APIView):
 
     def get(self, request):
         aiki_info = Member_InfoSerializer(Aikido_Member.objects.all(), many=True).data
-        return Response({"список учеников":aiki_info}, status=status.HTTP_200_OK)
+        return Response({"список учеников": aiki_info}, status=status.HTTP_200_OK)
 
 
 class StudentInfo(APIView):
     permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request):
         data = request.headers.get('Authorization')[6:]
         aiki_id = Token.objects.get(key=data).user_id
         aiki_chel = Aikido_Member.objects.get(id=aiki_id)
         aiki_ser = Profile_Serializer(aiki_chel).data
-        aiki_seminars = Seminar_Serializer(Seminar.objects.filter(member__id=aiki_id).order_by("attestation_date"), many=True).data
+        aiki_seminars = Seminar_Serializer(Seminar.objects.filter(member__id=aiki_id).order_by("attestation_date"),
+                                           many=True).data
         aiki_ser["seminars"] = aiki_seminars
 
         if aiki_chel.is_trainer:
@@ -153,33 +154,26 @@ class CreateEvent(APIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
 
 
-class DownloadRequests(APIView):
-    """вызов api/v1/seminar/<str:seminar_name>/ """
-    permission_classes = (permissions.IsAdminUser,)
+class AikidoSeminarList(APIView):
+    """вызов api/v1/admin/seminar/download/<str:seminar_name>/ """
+    permission_classes = (permissions.AllowAny,)
+    parser_classes = (JSONParser, FileUploadParser,)
 
-    def get(self, request, seminar_name):
+    def get(self, request, seminar_url):
         try:
-            filename = xls_parser.createXlsxFromRequests(seminar_name)
-            return FileResponse(open(filename, 'rb'),status=status.HTTP_200_OK)
-        except ArgumentError:
-            return JsonResponse(data={'result': 'Не существует такого мероприятия'},status=status.HTTP_400_BAD_REQUEST)
+            xlsx_file_path = xls_parser.createXlsxFromRequests(seminar_url)
+            print(type(xlsx_file_path))
+            return FileResponse(open(xlsx_file_path, 'rb'), as_attachment=True, status=status.HTTP_200_OK)
+        except ArgumentError as exception:
+            return JsonResponse(data={'result': exception.args[0]}, status=status.HTTP_400_BAD_REQUEST)
 
-
-class LoadRequests(APIView):
-    """вызов api/v1/seminar/<str:seminar_name>/ """
-    permission_classes = (permissions.IsAdminUser,)
-    parser_classes = (FileUploadParser,)
-
-    def post(self, request, filename, format=None):
+    def put(self, request, seminar_url):
         data = request.data['file']
-        with open('requests/' + filename + ".xlsx", 'wb+') as destination:
-            for chunk in data.chunks():
-                destination.write(chunk)
-            try:
-                result = xls_parser.parseXlsToDb(destination.name)
-                return Response(data={'result': result}, status=status.HTTP_200_OK)
-            except ArgumentError as error:
-                return Response(data={'result':error.args},status=status.HTTP_400_BAD_REQUEST)
+        try:
+            result = xls_parser.parseXlsToDb(seminar_url, data)
+            return Response(data={'result': result}, status=status.HTTP_200_OK)
+        except ArgumentError as error:
+            return Response(data={'result': error.args}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateRequest(APIView, IsTrainerPermission):
@@ -222,7 +216,7 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
         return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 
-class EventsList(APIView,IsTrainerPermission):
+class EventsList(APIView, IsTrainerPermission):
     """
     Возвращает данные в следующем формате
     {
@@ -274,7 +268,7 @@ class SeminarStatistic(APIView):
         return Response(status=status.HTTP_200_OK, data=seminars)
 
 
-class EventView(APIView,IsTrainerPermission):
+class EventView(APIView, IsTrainerPermission):
     permission_classes = (IsTrainerPermission,)
 
     def get(self, request, event_name):
