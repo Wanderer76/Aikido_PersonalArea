@@ -49,6 +49,7 @@ body {
 }
 
 .menu_active .text-a {
+    font-family: 'Nunito', sans-serif;
     display: block;
     transition: display 600ms linear;
 }
