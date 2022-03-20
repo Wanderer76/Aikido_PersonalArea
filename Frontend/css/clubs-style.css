@@ -1,0 +1,137 @@
+.content {
+    transition: 0.5s;
+    position: relative;
+    z-index: 0;
+    transform: translateX(5%);
+}
+
+h1 {
+    text-align: center;
+}
+
+.ro div{
+    width: 100%;
+    margin-right: -5%;
+}
+
+.po div{
+    width: 100%;
+}
+
+.card div {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.card {
+    display: flex;
+    max-width: 70%;
+    width: 70%;
+    box-shadow: -0.2em 0.2em 0.4em 1px rgba(122, 122, 122, 0.2), 0.2em 0.2em 0.4em 2px rgba(122, 122, 122, 0.5);
+    margin-right: auto;
+    margin-left: auto;
+    justify-content: space-around;
+}
+
+.bordered-container.card {
+    border-radius: 30px;
+}
+
+img {
+    max-height: 90%;
+    max-width: 50%;
+    display: inline-block;
+    margin-top: 5%;
+    margin-bottom: auto;
+    margin-left: 9%;
+}
+
+.inf-list {
+    display: inline-block;
+    max-width: 50%;
+    max-height: 80%;
+    text-align: center;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: large;
+}
+
+.deleteBut {
+    display: inline-block;
+    max-width: 50%;
+    background-color: red;
+    border: darkred;
+    color: white;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+    border-radius: 10px;
+    min-height: 20px;
+    max-height: 20%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    padding: 1.1% 10% 1.1% 10%;
+    font-weight: bold;
+    font-size: large;
+}
+
+.editBut {
+    display: inline-block;
+    max-width: 50%;
+    color: white;
+    background-color: #0417b4;
+    border-radius: 10px;
+    border-color: mediumblue;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+    max-height: 20%;
+    min-height: 20px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
+    margin-top: auto;
+    padding: 1.1% 7% 1.1% 7%;
+    font-weight: bold;
+    font-size: large;
+}
+
+.club_name {
+    font-size: x-large;
+    color: #0417b4;
+    margin-top: 10%;
+    margin-bottom: 0;
+}
+
+.fio {
+    font-size: x-large;
+}
+
+.city {
+    margin-bottom: -2%;
+}
+
+.region {
+    margin-bottom: 0;
+}
+
+.add_club {
+    color: white;
+    background-color: midnightblue;
+    border-radius: 30px;
+    border-color: darkblue;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+    max-height: 20%;
+    min-height: 20px;
+    display: block;
+    position: relative;
+    margin-left: 40%;
+    margin-right: auto;
+    margin-top: 3%;
+    padding: 1.1% 5% 1.1% 5%;
+    font-size: large;
+    font-weight: bold;
+}
+
+
