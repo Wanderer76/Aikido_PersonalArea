@@ -1,0 +1,70 @@
+
+.content {
+
+    transition: 0.5s;
+    position: relative;
+    z-index: 0;
+    transform: translateX(10%);
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+/*move content block when menu is opened*/
+.content_active {
+    transform: translateX(20%);
+}
+
+
+.category {
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+    margin: auto;
+    padding-top: 10%;
+    text-align: center;
+
+    border-radius: 10px;
+    background: #134F8C no-repeat bottom;
+    background-size: 120%;
+
+    color: white;
+    text-decoration: none;
+    font-size: 2vw;
+
+    transition: 0.2s;
+}
+
+.category:hover {
+    transform: scale(1.1);
+    color: white;
+}
+
+.category:first-child {
+    background-image: url("../assets/trainers_backg.png");
+}
+
+.category:nth-child(2) {
+    background-image: url("../assets/competitions_backg.png");
+}
+
+.category:last-child {
+    background-image: url("../assets/logo_federation_backg.png");
+}
+
+
+
+@media all and (max-width: 1000px) {
+    .content{
+        padding-bottom: 10vh;
+    }
+
+    .category {
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 10%;
+        font-size: 5vh;
+        padding-top: 25%;
+        background-size: 100% auto;
+    }
+
+}
