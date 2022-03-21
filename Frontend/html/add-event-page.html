@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://api-maps.yandex.ru/2.1/?apikey=1fc42576-f294-4305-baaf-9c78e6b88dcc&lang=ru_RU"
+                type="text/javascript">
+        </script>
+        <title>Создание мероприятия</title>
+        <link rel="stylesheet" href="../css/add-event-style.css">
+        <link rel="stylesheet" href="../css/menu-style.css">
+    </head>
+    <body>
+    <div class="menu">
+        <a href="#" class="menu-btn"></a>
+        <nav class="container menu-list">
+            <div class="btn">
+                <div class="description"><a href="profile.html" class="text-a">Мой профиль</a></div>
+                <div class="icon"><a href="profile.html"><img src="../assets/home.png"></a></div>
+            </div>
+            <div class="btn">
+                <div class="description"><a href="#" class="text-a">Семинары</a></div>
+                <div class="icon"><a href="#"><img src="../assets/competition.png"></a></div>
+            </div>
+            <div class="btn">
+                <div class="description"><a href="#" class="text-a">Статьи</a></div>
+                <div class="icon"><a href="#"><img src="../assets/articles.png"></a></div>
+            </div>
+            <div class="btn">
+                <div class="description"><a href="#" class="text-a">Контакты</a></div>
+                <div class="icon"><a href="#"><img src="../assets/contacts.png"></a></div>
+            </div>
+            <div class="btn" id="trainer-button">
+                <div class="description"><a href="service_page.html" class="text-a">Служебная</a></div>
+                <div class="icon"><a href="service_page.html"><img src="../assets/service.png"></a></div>
+            </div>
+            <div class="btn" id="admin-button">
+                <div class="description"><a href="admin-page-main.html" class="text-a">Админка</a></div>
+                <div class="icon"><a href="admin-page-main.html"><img src="../assets/admin-icon.png"></a></div>
+            </div>
+            <img id="logo" src="../assets/logo_federation.png" alt="LOGO">
+            <div class="exit-btn">
+                <div class="description"><a href="authorization.html" class="text-a">Выйти</a></div>
+                <div class="icon"><a href="authorization.html"><img src="../assets/exit-icon.png"></a></div>
+            </div>
+        </nav>
+    </div>
+        <main class="page-body__page-main">
+            <div class="page-body__container">
+                <form action="#" method="post">
+                    <h1>Создание мероприятия</h1>
+                    <section>
+                        <div class="event-title">
+                            <label class="visually-hidden" for="event-name">Название мероприятия</label>
+                            <input type="text" title="Название мероприятия" name="event-name" id="event-name" placeholder="Название мероприятия">
+                        </div>
+                        <div class="event-dates">
+                            <label class="visually-hidden" for="date-start">Дата начала</label>
+                            <input type="date" class="date" title="Дата начала" name="date-start" id="date-start" placeholder="Дата начала">
+                            <label class="visually-hidden" for="date-end">Дата окончания</label>
+                            <input type="date" class="date" title="Дата окончания" name="date-end" id="date-end" placeholder="Дата окончания">
+                        </div>
+                        <div class="event-address">
+                            <label class="visually-hidden" for="event-location">Адрес проведения</label>
+                            <input type="text" class="event-location" title="Адрес проведения" name="event-location" id="event-location" placeholder="Адрес проведения">
+                        </div>
+                        <div class="map" id="map">
+
+                        </div>
+                        <label class="visually-hidden" for="resp-club-select">Ответственный клуб</label>
+                        <select title="Ответственный клуб" name="resp-club" id="resp-club-select">
+                            <option value="">-- Ответственный клуб --</option>
+                            <option value="alpha">Альфа</option>
+                            <option value="beta">Бета</option>
+                            <option value="gamma">Гамма</option>
+                            <option value="delta">Дельта</option>
+                        </select>
+                        <div class="coach-and-rank">
+                            <label class="visually-hidden" for="lead-coach">ФИО ведущего тренера</label>
+                            <input type="text" class="lead-coach" title="ФИО ведущего тренера" name="lead-coach" id="lead-coach" placeholder="ФИО ведущего тренера">
+                            <label class="visually-hidden" for="max-rang-select">Макс. ранг</label>
+                            <select class="max-rang" title="Максимальный ранг" name="max-rang" id="max-rang-select">
+                                <option value="">-- Макс. ранг --</option>
+                                <option value="6kyu">КАКИЕ ЕСТЬ</option>
+                                <option value="5kyu">ОГРАНИЧЕНИЯ</option>
+                                <option value="4kyu">ПО</option>
+                                <option value="3kyu">РАНГАМ?</option>
+                                <option value="2kyu">2-й кю</option>
+                                <option value="1kyu">1-й кю</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <!-- Придумать структуру блока "Расписание мероприятия"-->
+                    <section>
+                        <h2>Расписание мероприятия</h2>
+                        <label class="visually-hidden" for="participant-category">Категория</label>
+                        <select title="Категория" name="participant-category" id="participant-category">
+                            <option value="">-- Категория --</option>
+                            <option value="6kyu">Дети младшие пояса</option>
+                            <option value="5kyu">Дети старшие пояса</option>
+                            <option value="4kyu">Взрослые</option>
+                            <option value="3kyu">Аттестация</option>
+                        </select>
+                        <div class="day-schedule">
+                            <button type="button" class="add-schedule-butt" title="Добавить день"  name="add-day-butt" id="add-day">+</button>
+                            <button type="button" class="add-schedule-butt" title="Добавить время" name="add-time-butt" id="add-time">+</button>
+                        </div>
+                    </section>
+                    <!-- Придумать структуру блока "Расписание мероприятия"-->
+
+                    <section>
+                        <h2>Афиша мероприятия</h2>
+                        <div class="event-icons">
+                            <label class="icon-field" title="Поле загрузки фото тренера">
+                                <input type="file" name="coach-icon" id="coach-icon" accept="image/jpeg, image/png">
+                                <img src="../assets/empty-coach-icon.png" id="coach-icon-preview" alt="Фото тренера" height="100%">
+                            </label>
+                            <label class="icon-field" title="Поле загрузки логотипа клуба">
+                                <input type="file" name="coach-icon" id="logo-icon" accept="image/jpeg, image/png">
+                                <img src="../assets/empty-club-icon.png" id="logo-icon-preview" alt="Логотип клуба" height="100%">
+                            </label>
+                        </div>
+                        <div class="event-poster">
+                            <label class="icon-field" title="Поле загрузки афиши мероприятия">
+                                <input type="file" name="event-poster" id="event-poster" accept="image/jpeg, image/png">
+                                <img src="../assets/empty-poster.png" id="event-poster-preview" alt="Афиша мероприятия" >
+                            </label>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Контакты организатора</h2>
+                        <label class="visually-hidden"  for="organizer-name">ФИО организатора</label>
+                        <input type="text" title="ФИО организатора" name="organizer-name" id="organizer-name" placeholder="ФИО организатора">
+                        <label class="visually-hidden"  for="organizer-phone">Телефон</label>
+                        <input type="text" title="Телефон" name="organizer-phone" id="organizer-phone" placeholder="Телефон">
+                        <label class="visually-hidden" for="organizer-email">E-mail</label>
+                        <input type="text" title="E-mail" name="organizer-email" id="organizer-email" placeholder="E-mail">
+                    </section>
+                    <div class="save-butts">
+                        <button type="button" class="create-butt" name="create" id="create">Создать</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    <script src="../js/add-event-page-script.js"></script>
+    </body>
+</html>
+
