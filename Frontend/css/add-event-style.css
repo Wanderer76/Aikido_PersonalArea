@@ -44,12 +44,35 @@ input {
 
     margin-bottom: 20px;
 
+    border-style: solid;
     border-radius: 10px;
     border-color: rgba(209, 209, 209, 0.3);
     border-width: medium;
 
     font-size: 18px;
 }
+
+.input-number {
+    min-height: 30px;
+    height: 45px;
+    width: 60px;
+
+
+    margin-bottom: 20px;
+
+    border-style: solid;
+    border-radius: 10px;
+    border-color: rgba(209, 209, 209, 0.3);
+    border-width: medium;
+
+    font-size: 18px;
+}
+
+.image-offset {
+    display: flex;
+    flex-direction: column;
+}
+
 
 select {
     min-height: 30px;
@@ -119,6 +142,8 @@ select {
 
 .event-icons {
     margin-bottom: 60px;
+
+    align-items: center;
 }
 
 .icon-field {
@@ -173,6 +198,7 @@ select {
     margin-bottom: 20px;
 
     color: gray;
+    border-style: solid;
     background-color: white;
     border-radius: 20px;
     border-color: rgba(209, 209, 209, 0.3);

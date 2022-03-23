@@ -41,9 +41,9 @@ function updateImagePoster() {
     }
 }
 
-const inputPoster = document.getElementById('event-poster');
-const previewPoster = document.getElementById('event-poster-preview');
-inputPoster.addEventListener('change', updateImagePoster);
+//const inputPoster = document.getElementById('event-poster');
+//const previewPoster = document.getElementById('event-poster-preview');
+//inputPoster.addEventListener('change', updateImagePoster);
 
 //Переделать на Яндекс Карты
 // Initialize and add the map

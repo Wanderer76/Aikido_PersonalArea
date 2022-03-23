@@ -15,32 +15,32 @@
         <nav class="container menu-list">
             <div class="btn">
                 <div class="description"><a href="profile.html" class="text-a">Мой профиль</a></div>
-                <div class="icon"><a href="profile.html"><img src="../assets/home.png"></a></div>
+                <div class="icon"><a href="profile.html"><img src="../assets/home.png" alt=""></a></div>
             </div>
             <div class="btn">
-                <div class="description"><a href="#" class="text-a">Семинары</a></div>
-                <div class="icon"><a href="#"><img src="../assets/competition.png"></a></div>
+                <div class="description"><a href="#" class="text-a">Мероприятия</a></div>
+                <div class="icon"><a href="#"><img src="../assets/competition.png" alt="Мероприятия"></a></div>
             </div>
             <div class="btn">
                 <div class="description"><a href="#" class="text-a">Статьи</a></div>
-                <div class="icon"><a href="#"><img src="../assets/articles.png"></a></div>
+                <div class="icon"><a href="#"><img src="../assets/articles.png" alt="Статьи"></a></div>
             </div>
             <div class="btn">
                 <div class="description"><a href="#" class="text-a">Контакты</a></div>
-                <div class="icon"><a href="#"><img src="../assets/contacts.png"></a></div>
+                <div class="icon"><a href="#"><img src="../assets/contacts.png" alt="Контакты"></a></div>
             </div>
             <div class="btn" id="trainer-button">
                 <div class="description"><a href="service_page.html" class="text-a">Служебная</a></div>
-                <div class="icon"><a href="service_page.html"><img src="../assets/service.png"></a></div>
+                <div class="icon"><a href="service_page.html"><img src="../assets/service.png" alt="Служебная"></a></div>
             </div>
             <div class="btn" id="admin-button">
                 <div class="description"><a href="admin-page-main.html" class="text-a">Админка</a></div>
-                <div class="icon"><a href="admin-page-main.html"><img src="../assets/admin-icon.png"></a></div>
+                <div class="icon"><a href="admin-page-main.html"><img src="../assets/admin-icon.png" alt="Админка"></a></div>
             </div>
             <img id="logo" src="../assets/logo_federation.png" alt="LOGO">
             <div class="exit-btn">
                 <div class="description"><a href="authorization.html" class="text-a">Выйти</a></div>
-                <div class="icon"><a href="authorization.html"><img src="../assets/exit-icon.png"></a></div>
+                <div class="icon"><a href="authorization.html"><img src="../assets/exit-icon.png" alt="Выйти"></a></div>
             </div>
         </nav>
     </div>
@@ -64,15 +64,11 @@
                             <input type="text" class="event-location" title="Адрес проведения" name="event-location" id="event-location" placeholder="Адрес проведения">
                         </div>
                         <div class="map" id="map">
-
                         </div>
+
                         <label class="visually-hidden" for="resp-club-select">Ответственный клуб</label>
                         <select title="Ответственный клуб" name="resp-club" id="resp-club-select">
                             <option value="">-- Ответственный клуб --</option>
-                            <option value="alpha">Альфа</option>
-                            <option value="beta">Бета</option>
-                            <option value="gamma">Гамма</option>
-                            <option value="delta">Дельта</option>
                         </select>
                         <div class="coach-and-rank">
                             <label class="visually-hidden" for="lead-coach">ФИО ведущего тренера</label>
@@ -84,8 +80,6 @@
                                 <option value="5kyu">ОГРАНИЧЕНИЯ</option>
                                 <option value="4kyu">ПО</option>
                                 <option value="3kyu">РАНГАМ?</option>
-                                <option value="2kyu">2-й кю</option>
-                                <option value="1kyu">1-й кю</option>
                             </select>
                         </div>
                     </section>
@@ -115,17 +109,34 @@
                                 <input type="file" name="coach-icon" id="coach-icon" accept="image/jpeg, image/png">
                                 <img src="../assets/empty-coach-icon.png" id="coach-icon-preview" alt="Фото тренера" height="100%">
                             </label>
+                            <div class="image-offset" title="Смещение по горизонтали">
+                                <label for="coach-x-offset">
+                                    <input type="number" class="input-number" id="coach-x-offset" value="0"> X
+                                </label>
+                                <label for="coach-y-offset" title="Смещение по вертикали">
+                                    <input type="number" class="input-number" id="coach-y-offset" value="0"> Y
+                                </label>
+                            </div>
                             <label class="icon-field" title="Поле загрузки логотипа клуба">
                                 <input type="file" name="coach-icon" id="logo-icon" accept="image/jpeg, image/png">
                                 <img src="../assets/empty-club-icon.png" id="logo-icon-preview" alt="Логотип клуба" height="100%">
                             </label>
+                            <div class="image-offset">
+                                <label for="logo-x-offset" title="Смещение по горизонтали">
+                                    <input type="number" class="input-number" id="logo-x-offset" value="0"> X
+                                </label>
+                                <label for="logo-y-offset" title="Смещение по вертикали">
+                                    <input type="number" class="input-number" id="logo-y-offset" value="0"> Y
+                                </label>
+                            </div>
                         </div>
+                        <!--
                         <div class="event-poster">
                             <label class="icon-field" title="Поле загрузки афиши мероприятия">
                                 <input type="file" name="event-poster" id="event-poster" accept="image/jpeg, image/png">
                                 <img src="../assets/empty-poster.png" id="event-poster-preview" alt="Афиша мероприятия" >
                             </label>
-                        </div>
+                        </div> -->
                     </section>
                     <section>
                         <h2>Контакты организатора</h2>
