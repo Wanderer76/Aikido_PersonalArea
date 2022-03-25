@@ -14,6 +14,10 @@ from PersonalArea.models import *
 from Utilities import xls_parser
 from rest_framework.response import Response
 from rest_framework.views import APIView
+#from django.template.defaultfilters import slugify
+#from django.utils.text import slugify
+#from pytils.translit import slugify
+from pytils.translit import slugify
 
 from Utilities.services import get_day_before
 
@@ -145,7 +149,11 @@ class CreateEvent(APIView):
         print(data)
         data['start_record_date'] = datetime.datetime.today()
         data['end_record_date'] = get_day_before(datetime.date.fromisoformat(data['date_of_event']))
+        #print(data['event_name'])
+        #print(slugify(data['event_name']))
+        data['slug'] = slugify(data['event_name'])
         serializer = Events_Serializer(data=data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})

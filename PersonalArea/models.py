@@ -134,6 +134,7 @@ class Events(models.Model):
     city = models.CharField(name="city", null=False, max_length=30, default="None")
     responsible_club = models.CharField(name='responsible_club', max_length=30, default="None")
     responsible_trainer = models.CharField(name='responsible_trainer', max_length=60, default="None")
+    slug = models.SlugField(name='slug', max_length=150, unique=True, null=False)
 
     class Meta:
         db_table = "event"
