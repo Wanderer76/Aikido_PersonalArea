@@ -260,7 +260,7 @@ class EventsList(APIView, IsTrainerPermission):
         events = Events.objects.all()
         upcoming = Events_ListSerializer(
             events.filter(
-                end_record_date__gt=datetime.date.today()).order_by('start_record_date'), many=True).data
+                end_record_date__ge=datetime.date.today()).order_by('start_record_date'), many=True).data
         past = Events_ListSerializer(
             events.filter(date_of_event__lt=datetime.date.today()).order_by('start_record_date'), many=True).data
 
