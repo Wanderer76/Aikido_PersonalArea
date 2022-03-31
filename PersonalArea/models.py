@@ -9,6 +9,8 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.utils import timezone
 
+from clubs.models import Club
+
 
 class Aikido_Account_Manager(BaseUserManager):
     def create_user(self, **kwargs):
@@ -59,7 +61,7 @@ class Aikido_Member(AbstractBaseUser, PermissionsMixin):
     second_name = models.CharField(name="second_name", max_length=20, null=True)
     birthdate = models.DateField(name="birthdate", null=False)
     region = models.IntegerField(name="region", null=False)
-    club = models.CharField(name="club", null=False, max_length=30)
+    club = models.OneToOneField(Club, on_delete=models.CASCADE)
     photo = models.ImageField(name="photo", null=True, blank=True)
     isTrainer = models.BooleanField(name="isTrainer", null=False, default=False, blank=True)
     is_superuser = models.BooleanField(name="is_superuser", null=False, default=False, blank=True)

@@ -5,20 +5,20 @@ from django.db import transaction
 from django.db.models import Count
 from django.http import JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
+# from django.template.defaultfilters import slugify
+# from django.utils.text import slugify
+# from pytils.translit import slugify
+from pytils.translit import slugify
 from pytz import unicode
 from rest_framework import status, permissions
-from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, FormParser
+from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.permissions import BasePermission
-from PersonalArea.serializations import *
-from PersonalArea.models import *
-from Utilities import xls_parser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-#from django.template.defaultfilters import slugify
-#from django.utils.text import slugify
-#from pytils.translit import slugify
-from pytils.translit import slugify
 
+from PersonalArea.models import *
+from PersonalArea.serializations import *
+from Utilities import xls_parser
 from Utilities.services import get_day_before
 
 
@@ -149,8 +149,8 @@ class CreateEvent(APIView):
         print(data)
         data['start_record_date'] = datetime.datetime.today()
         data['end_record_date'] = get_day_before(datetime.date.fromisoformat(data['date_of_event']))
-        #print(data['event_name'])
-        #print(slugify(data['event_name']))
+        # print(data['event_name'])
+        # print(slugify(data['event_name']))
         data['slug'] = slugify(data['event_name'])
         serializer = Events_Serializer(data=data)
 
