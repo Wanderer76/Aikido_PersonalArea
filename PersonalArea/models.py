@@ -61,7 +61,7 @@ class Aikido_Member(AbstractBaseUser, PermissionsMixin):
     second_name = models.CharField(name="second_name", max_length=20, null=True)
     birthdate = models.DateField(name="birthdate", null=False)
     region = models.IntegerField(name="region", null=False)
-    club = models.ForeignKey(Club, on_delete=models.CASCADE,blank=True)
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, blank=True)
     photo = models.ImageField(name="photo", null=True, blank=True)
     isTrainer = models.BooleanField(name="isTrainer", null=False, default=False, blank=True)
     is_superuser = models.BooleanField(name="is_superuser", null=False, default=False, blank=True)
@@ -113,20 +113,6 @@ class Seminar(models.Model):
         get_latest_by = 'attestation_date'
 
 
-class Competition(models.Model):
-    name = models.CharField(primary_key=True, name="name", max_length=100, unique=True, default="unable")
-    member_id = models.ForeignKey(Aikido_Member, on_delete=models.DO_NOTHING)
-    region = models.IntegerField(name="region", null=False)
-    club = models.CharField("club", max_length=30, null=False)
-    trainer = models.CharField(name="trainer", null=False, max_length=100)
-    city = models.CharField(name="city", null=False, max_length=30)
-    position = models.IntegerField(name="position", null=False)
-
-    class Meta:
-        db_table = "competition"
-        managed = True
-
-
 class Events(models.Model):
     event_name = models.CharField(name="event_name", primary_key=True, max_length=100)
     date_of_event = models.DateField(name="date_of_event", null=False, default=datetime.date.today)
@@ -149,7 +135,7 @@ class Request(models.Model):
     second_name = models.CharField(name="second_name", max_length=25, blank=True, default='None')
     member_id = models.IntegerField(name='member_id', null=True, blank=True)
     birthdate = models.DateField(name="birthdate", default=timezone.now)
-    event_name = models.ForeignKey(Events, on_delete=models.DO_NOTHING, related_name='event')
+    event_name = models.ForeignKey(Events, on_delete=models.CASCADE, related_name='event')
     trainer_id = models.IntegerField(name="trainer_id")
 
     class Meta:
