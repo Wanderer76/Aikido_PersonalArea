@@ -134,7 +134,7 @@ class Events(models.Model):
     start_record_date = models.DateTimeField(name="start_record_date", default=datetime.datetime.today)
     end_record_date = models.DateTimeField(name="end_record_date", default=datetime.datetime.today)
     city = models.CharField(name="city", null=False, max_length=30, default="None")
-    responsible_club = models.CharField(name='responsible_club', max_length=30, default="None")
+    responsible_club = models.OneToOneField(Club, on_delete=models.CASCADE, related_name="responsible_club")
     responsible_trainer = models.CharField(name='responsible_trainer', max_length=60, default="None")
     slug = models.SlugField(name='slug', max_length=150, unique=True, null=False)
 
