@@ -72,7 +72,7 @@ def create_row(request, event, member=None):
         request['surname'], request['name'], second_name, parse_ku(oldKu), member_id,
         request['birthdate'],
         trainer.region,
-        trainer.club,
+        trainer.club.name,
         f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
         trainer.id,
         event.start_record_date.date(), event.city,
@@ -88,7 +88,7 @@ def set_blue_row(workSheet):
 def generate_id():
     ids = sorted(models.Aikido_Member.objects.values_list("id", flat=True))
     limit = ids[-1]
-    missingNumbers = list(set(range(1, limit + 1)) - set(ids))
+    missingNumbers = list(set(range(1, limit + 3)) - set(ids))
     return missingNumbers[0]
 
 
