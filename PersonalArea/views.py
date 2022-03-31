@@ -170,7 +170,6 @@ class AikidoSeminarList(APIView):
     def get(self, request, seminar_url):
         try:
             xlsx_file_path = xls_parser.createXlsxFromRequests(seminar_url)
-            print(type(xlsx_file_path))
             return FileResponse(open(xlsx_file_path, 'rb'), as_attachment=True, status=status.HTTP_200_OK)
         except ArgumentError as exception:
             return JsonResponse(data={'result': exception.args[0]}, status=status.HTTP_400_BAD_REQUEST)
@@ -260,7 +259,7 @@ class EventsList(APIView, IsTrainerPermission):
         events = Events.objects.all()
         upcoming = Events_ListSerializer(
             events.filter(
-                end_record_date__ge=datetime.date.today()).order_by('start_record_date'), many=True).data
+                end_record_date__gte=datetime.date.today()).order_by('start_record_date'), many=True).data
         past = Events_ListSerializer(
             events.filter(date_of_event__lt=datetime.date.today()).order_by('start_record_date'), many=True).data
 

@@ -22,7 +22,7 @@ class Aikido_Account_Manager(BaseUserManager):
             second_name=kwargs.get("second_name"),
             birthdate=kwargs.get("birthdate"),
             region=kwargs.get("region"),
-            club=kwargs.get("club"),
+            club=Club.objects.get(name=kwargs.get("club")),
             photo=kwargs.get("photo"),
             isTrainer=kwargs.get("isTrainer"),
             trainer_id=kwargs.get("trainer_id")
@@ -42,7 +42,7 @@ class Aikido_Account_Manager(BaseUserManager):
             second_name=second_name,
             birthdate=birthdate,
             region=region,
-            club=club,
+            club=Club.objects.get(name=club),
             photo=None,
             isTrainer=True,
             is_superuser=True,
@@ -61,7 +61,7 @@ class Aikido_Member(AbstractBaseUser, PermissionsMixin):
     second_name = models.CharField(name="second_name", max_length=20, null=True)
     birthdate = models.DateField(name="birthdate", null=False)
     region = models.IntegerField(name="region", null=False)
-    club = models.OneToOneField(Club, on_delete=models.CASCADE)
+    club = models.ForeignKey(Club, on_delete=models.CASCADE,blank=True)
     photo = models.ImageField(name="photo", null=True, blank=True)
     isTrainer = models.BooleanField(name="isTrainer", null=False, default=False, blank=True)
     is_superuser = models.BooleanField(name="is_superuser", null=False, default=False, blank=True)
@@ -131,8 +131,8 @@ class Events(models.Model):
     event_name = models.CharField(name="event_name", primary_key=True, max_length=100)
     date_of_event = models.DateField(name="date_of_event", null=False, default=datetime.date.today)
     end_of_event = models.DateField(name="end_of_event", null=False, default=datetime.date.today)
-    start_record_date = models.DateTimeField(name="start_record_date", default=datetime.datetime.today)
-    end_record_date = models.DateTimeField(name="end_record_date", default=datetime.datetime.today)
+    start_record_date = models.DateTimeField(name="start_record_date", default=datetime.datetime.now)
+    end_record_date = models.DateTimeField(name="end_record_date", default=datetime.datetime.now)
     city = models.CharField(name="city", null=False, max_length=30, default="None")
     responsible_club = models.OneToOneField(Club, on_delete=models.CASCADE, related_name="responsible_club")
     responsible_trainer = models.CharField(name='responsible_trainer', max_length=60, default="None")
