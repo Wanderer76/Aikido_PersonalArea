@@ -1,3 +1,5 @@
+import os
+import tempfile
 from ctypes import ArgumentError
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -93,8 +95,9 @@ class StudentInfo(APIView):
         aiki_id = Token.objects.get(key=data).user_id
         aiki_chel = Aikido_Member.objects.get(id=aiki_id)
         aiki_ser = Profile_Serializer(aiki_chel).data
-        aiki_seminars = Seminar_Serializer(Seminar.objects.filter(member__id=aiki_id).order_by("attestation_date"),
-                                           many=True).data
+        aiki_seminars = Achievements_Serializer(
+            Achievements.objects.filter(member__id=aiki_id).order_by("attestation_date"),
+            many=True).data
         aiki_ser["seminars"] = aiki_seminars
 
         if aiki_chel.is_trainer:
@@ -116,8 +119,8 @@ class TrainerHasbiks(APIView):
                                           .filter(trainer_id=aiki_chel.id), many=True).data
 
                 for hasbik in hasbiki:
-                    seminar_boy = Seminar_Serializer(Seminar.objects
-                                                     .filter(member__id=hasbik["id"]).latest())
+                    seminar_boy = Achievements_Serializer(Achievements.objects
+                                                          .filter(member__id=hasbik["id"]).latest())
                     hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
                     hasbik["ku"] = seminar_boy.data["newKu"]
 
@@ -171,8 +174,8 @@ class AikidoSeminarList(APIView):
 
     def get(self, request, seminar_url):
         try:
-            xlsx_file_path = xls_parser.createXlsxFromRequests(seminar_url)
-            return FileResponse(open(xlsx_file_path, 'rb'), as_attachment=True, status=status.HTTP_200_OK)
+            stream_file = xls_parser.createXlsxFromRequests(seminar_url)
+            return FileResponse(stream_file, as_attachment=True, status=status.HTTP_200_OK)
         except ArgumentError as exception:
             return JsonResponse(data={'result': exception.args[0]}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -203,7 +206,8 @@ class CreateRequest(APIView, IsTrainerPermission):
     def post(self, request):
         data = JSONParser().parse(request)
         trainer_id = data[0]['trainer_id']
-        current_trainer_requests = Request.objects.filter(trainer_id=trainer_id)
+        current_trainer_requests = Request.objects.filter(event__event_name=data[0]['event_name'],
+                                                          trainer_id=trainer_id)
         if current_trainer_requests.exists():
             current_trainer_requests.delete()
         serializer = Requests_Serializer(data=data, many=True)
@@ -211,7 +215,7 @@ class CreateRequest(APIView, IsTrainerPermission):
             serializer.save()
             return Response(status=status.HTTP_201_CREATED, data={'content': 'заявка создана'})
         else:
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 
 
 class TrainerEventRequest(APIView, IsTrainerPermission):
@@ -273,7 +277,8 @@ class SeminarStatistic(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def get(self, request, event_name):
-        seminars = Seminar.objects.filter(name=event_name).values('oldKu', 'newKu').annotate(count=Count('oldKu'))
+        seminars = Achievements.objects.filter(event_name=event_name).values('received_ku').annotate(
+            count=Count('received_ku'))
         return Response(status=status.HTTP_200_OK, data=seminars)
 
 
