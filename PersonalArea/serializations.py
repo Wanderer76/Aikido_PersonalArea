@@ -1,13 +1,8 @@
 import datetime
 
-from pytils.translit import slugify
-
-from PersonalArea.models import Aikido_Member, Seminar, Request, Events
 from rest_framework import serializers
-from django.contrib.auth import authenticate
 
-from Utilities.services import get_day_before
-from clubs.models import Club
+from PersonalArea.models import Aikido_Member, Achievements, Request, Events
 
 
 class Aikido_MemberSerializer(serializers.ModelSerializer):
@@ -23,13 +18,11 @@ class Profile_Serializer(serializers.ModelSerializer):
 
 
 # TODO изменить в дальнейшем
-class Seminar_Serializer(serializers.ModelSerializer):
+class Achievements_Serializer(serializers.ModelSerializer):
     class Meta:
-        model = Seminar
-        fields = ['name', 'club', 'city',
-                  'attestation_date', 'oldKu',
-                  'newKu', 'isChild'
-                  ]
+        model = Achievements
+        fields = ['event_name',
+                  'attestation_date', 'received_ku', 'is_child']
 
 
 class Deti_Serializer(serializers.ModelSerializer):
