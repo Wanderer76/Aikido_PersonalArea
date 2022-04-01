@@ -94,7 +94,7 @@ class StudentInfo(APIView):
         aiki_chel = Aikido_Member.objects.get(id=aiki_id)
         aiki_ser = Profile_Serializer(aiki_chel).data
         aiki_seminars = Achievements_Serializer(
-            Achievements.objects.filter(member__id=aiki_id).order_by("attestation_date"),
+            Achievements.objects.filter(member__id=aiki_id, received_ku__isnull=False).order_by("attestation_date"),
             many=True).data
         aiki_ser["seminars"] = aiki_seminars
 
@@ -118,7 +118,8 @@ class TrainerHasbiks(APIView):
 
                 for hasbik in hasbiki:
                     seminar_boy = Achievements_Serializer(Achievements.objects
-                                                          .filter(member__id=hasbik["id"]).latest())
+                                                          .filter(member__id=hasbik["id"],
+                                                                  received_ku__isnull=False).latest())
                     hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
                     hasbik["ku"] = seminar_boy.data["received_ku"]
 
