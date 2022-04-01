@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 # from pytils.translit import slugify
 from pytils.translit import slugify
 from pytz import unicode
-from rest_framework import status, permissions
+from rest_framework import status, permissions, parsers
 from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.permissions import BasePermission
 from rest_framework.response import Response
@@ -145,20 +145,22 @@ class CreateEvent(APIView):
 
     @transaction.atomic
     def post(self, request):
-        data = JSONParser().parse(request)
-        print(data)
-        data['start_record_date'] = datetime.datetime.today()
-        data['end_record_date'] = get_day_before(datetime.date.fromisoformat(data['date_of_event']))
-        # print(data['event_name'])
-        # print(slugify(data['event_name']))
-        data['slug'] = slugify(data['event_name'])
-        serializer = Events_Serializer(data=data)
+        # data = JSONParser().parse(request.data['data'])
+        # data['start_record_date'] = datetime.datetime.today()
+        # data['end_record_date'] = get_day_before(datetime.date.fromisoformat(data['date_of_event']))
+        # data['slug'] = slugify(data['event_name'])
+        # data['poster'] = file
 
+        serializer = Events_Serializer(data=request.data)
         if serializer.is_valid():
+            serializer.validated_data['start_record_date'] = datetime.datetime.today()
+            serializer.validated_data['end_record_date'] = get_day_before(
+                datetime.date.fromisoformat(str(serializer.validated_data['date_of_event'])))
+            serializer.validated_data['slug'] = slugify(serializer.validated_data['event_name'])
             serializer.save()
             return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
         else:
-            print(serializer.errors)
+            print(serializer.validated_data)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
 
 
