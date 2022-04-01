@@ -32,10 +32,9 @@ class Aikido_Account_Manager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, id, login, name, surname, second_name, birthdate, region, club, password):
+    def create_superuser(self, id, name, surname, second_name, birthdate, region, club, password):
         user = self.model(
             id=id,
-            login=login,
             password=password,
             name=name,
             surname=surname,
@@ -54,7 +53,6 @@ class Aikido_Account_Manager(BaseUserManager):
 
 class Aikido_Member(AbstractBaseUser, PermissionsMixin):
     id = models.IntegerField(name="id", primary_key=True, unique=True)
-    login = models.CharField(name="login", max_length=25, unique=True, default=None, null=True, blank=True)
     password = models.CharField(name="password", max_length=25)
     name = models.CharField(name="name", max_length=15, null=False)
     surname = models.CharField(name="surname", max_length=20, null=False)
@@ -73,7 +71,7 @@ class Aikido_Member(AbstractBaseUser, PermissionsMixin):
         managed = True
 
     USERNAME_FIELD = 'id'
-    REQUIRED_FIELDS = ['login', 'name', 'surname', 'second_name', 'birthdate', 'region', 'club']
+    REQUIRED_FIELDS = ['name', 'surname', 'second_name', 'birthdate', 'region', 'club']
     objects = Aikido_Account_Manager()
 
     def __str__(self):
