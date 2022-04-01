@@ -123,6 +123,9 @@ class Events(models.Model):
     responsible_club = models.OneToOneField(Club, on_delete=models.CASCADE, related_name="responsible_club")
     responsible_trainer = models.CharField(name='responsible_trainer', max_length=60, default="None")
     slug = models.SlugField(name='slug', max_length=150, unique=True, null=False)
+    schedule = models.JSONField(name="schedule")
+    contacts = models.JSONField(name="contacts")
+    poster = models.ImageField(name="poster", upload_to='posters/')
 
     class Meta:
         db_table = "event"
