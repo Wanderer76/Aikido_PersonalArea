@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'PersonalArea',
+    'clubs',
     'corsheaders',
 ]
 
@@ -118,7 +119,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "Aikido_PersonalAreaDB",
         'USER': 'postgres',
-        'PASSWORD': 'shiz666',
+        'PASSWORD': '1',
         'HOST': 'localhost',
         'Port': '5432',
     }
@@ -172,3 +173,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:63342",
     'http://localhost:8000',
 ]
+
+POSTER_ROOT = os.path.join(BASE_DIR,'posters')
+POSTER_URL = '/posters/'
