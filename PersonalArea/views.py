@@ -54,29 +54,6 @@ class LoginAPIView(APIView):
             return Response(data={"error": "Неверный id или пароль"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class AdminLoginAPIView(APIView):
-    """json формат в котором нужно передавать данные
-    {
-        "login": "login",
-        "password": "password"
-    }
-    """
-    permission_classes = (permissions.AllowAny,)
-
-    def post(self, request):
-        data = JSONParser().parse(request)
-        try:
-            aikiboy = Aikido_Member.objects.get(login=data['login'], password=data['password'])
-            if aikiboy.is_admin:
-                aikiToken = Token.objects.get(user=aikiboy)
-                return Response(data={"token": unicode(aikiToken)}, status=status.HTTP_200_OK)
-            else:
-                raise ObjectDoesNotExist()
-
-        except ObjectDoesNotExist:
-            return Response(data={"error": "Неверный id или пароль"}, status=status.HTTP_400_BAD_REQUEST)
-
-
 class AikidoMembersInfo(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
