@@ -1,5 +1,3 @@
-import os
-import tempfile
 from ctypes import ArgumentError
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 # from pytils.translit import slugify
 from pytils.translit import slugify
 from pytz import unicode
-from rest_framework import status, permissions, parsers
+from rest_framework import status, permissions
 from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.permissions import BasePermission
 from rest_framework.response import Response
@@ -122,7 +120,7 @@ class TrainerHasbiks(APIView):
                     seminar_boy = Achievements_Serializer(Achievements.objects
                                                           .filter(member__id=hasbik["id"]).latest())
                     hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
-                    hasbik["ku"] = seminar_boy.data["newKu"]
+                    hasbik["ku"] = seminar_boy.data["received_ku"]
 
                 return Response(data={"список учеников": hasbiki}, status=status.HTTP_200_OK)
             else:
@@ -206,8 +204,8 @@ class CreateRequest(APIView, IsTrainerPermission):
     def post(self, request):
         data = JSONParser().parse(request)
         trainer_id = data[0]['trainer_id']
-        current_trainer_requests = Request.objects.filter(event__event_name=data[0]['event_name'],
-                                                          trainer_id=trainer_id)
+        current_trainer_requests = Request.objects.prefetch_related('event').filter(event_name=data[0]['event_name'],
+                                                                                    trainer_id=trainer_id)
         if current_trainer_requests.exists():
             current_trainer_requests.delete()
         serializer = Requests_Serializer(data=data, many=True)

@@ -138,7 +138,7 @@ class Request(models.Model):
     second_name = models.CharField(name="second_name", max_length=25, blank=True, default='None')
     member_id = models.IntegerField(name='member_id', null=True, blank=True)
     birthdate = models.DateField(name="birthdate", default=timezone.now)
-    event = models.ForeignKey(Events, on_delete=models.CASCADE, related_name='event')
+    event_name = models.ForeignKey(Events, on_delete=models.CASCADE, related_name='event')
     trainer_id = models.IntegerField(name="trainer_id")
 
     class Meta:
