@@ -6,7 +6,7 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-.page-body__container {
+main .page-body__container {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -14,29 +14,29 @@ body {
     margin: 5% 20%;
 }
 
-form {
+main form {
     display: block;
 
     margin-top: 0;
 }
 
-h1 {
+main h1 {
     margin-top: 40px;
     margin-bottom: 40px;
 }
 
-h2 {
+main h2 {
     margin-bottom: 40px;
 }
 
-section {
+main section {
     display: flex;
     flex-direction: column;
 
     margin-bottom: 80px;
 }
 
-input {
+main input {
     min-height: 30px;
     height: 45px;
     width: 100%;
@@ -52,7 +52,7 @@ input {
     font-size: 18px;
 }
 
-.input-number {
+main .input-number {
     min-height: 30px;
     height: 45px;
     width: 60px;
@@ -68,13 +68,13 @@ input {
     font-size: 18px;
 }
 
-.image-offset {
+main .image-offset {
     display: flex;
     flex-direction: column;
 }
 
 
-select {
+main select {
     min-height: 30px;
     height: 45px;
     width: 100%;
@@ -89,30 +89,30 @@ select {
     font-size: 18px;
 }
 
-.coach-and-rank {
+main .coach-and-rank {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.date {
+main .date {
     width: 40%;
 }
 
-.day-schedule {
+main .day-schedule {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 
 }
 
-.event-icons {
+main .event-icons {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.event-poster {
+main .event-poster {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -120,17 +120,17 @@ select {
     height: max-content;
 }
 
-.event-poster .icon-field {
+main .event-poster .icon-field {
     width: 100%;
     height: fit-content;
 }
 
-.event-poster  img {
+main .event-poster  img {
     width: 100%;
     height: fit-content;
 }
 
-.event-dates {
+main .event-dates {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -140,13 +140,13 @@ select {
     margin: 10px 0;
 }
 
-.event-icons {
+main .event-icons {
     margin-bottom: 60px;
 
     align-items: center;
 }
 
-.icon-field {
+main .icon-field {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -161,19 +161,19 @@ select {
     cursor: pointer;
 }
 
-.icon-field input {
+main .icon-field input {
     display: none;
 }
 
-.lead-coach {
+main .lead-coach {
     width: 60%;
 }
 
-.max-rang {
+main .max-rang {
     width: 30%;
 }
 
-.create-butt{
+main .create-butt{
     display: block;
     position: relative;
 
@@ -190,7 +190,7 @@ select {
     font-size: 20px;
 }
 
-.add-schedule-butt {
+main .add-schedule-butt {
     width: 30%;
     min-height: 30px;
     height: 45px;
@@ -207,12 +207,12 @@ select {
     font-size: 30px;
 }
 
-.save-butts {
+main .save-butts {
     display: flex;
     justify-content: center;
 }
 
-.visually-hidden {
+main .visually-hidden {
     display: none;
 }
 
