@@ -6,43 +6,11 @@
                 type="text/javascript">
         </script>
         <title>Создание мероприятия</title>
-        <link rel="stylesheet" href="../css/add-event-style.css">
         <link rel="stylesheet" href="../css/menu-style.css">
+        <link rel="stylesheet" href="../css/add-event-style.css">
     </head>
     <body>
-    <div class="menu">
-        <a href="#" class="menu-btn"></a>
-        <nav class="container menu-list">
-            <div class="btn">
-                <div class="description"><a href="profile.html" class="text-a">Мой профиль</a></div>
-                <div class="icon"><a href="profile.html"><img src="../assets/home.png" alt=""></a></div>
-            </div>
-            <div class="btn">
-                <div class="description"><a href="#" class="text-a">Мероприятия</a></div>
-                <div class="icon"><a href="#"><img src="../assets/competition.png" alt="Мероприятия"></a></div>
-            </div>
-            <div class="btn">
-                <div class="description"><a href="#" class="text-a">Статьи</a></div>
-                <div class="icon"><a href="#"><img src="../assets/articles.png" alt="Статьи"></a></div>
-            </div>
-            <div class="btn">
-                <div class="description"><a href="#" class="text-a">Контакты</a></div>
-                <div class="icon"><a href="#"><img src="../assets/contacts.png" alt="Контакты"></a></div>
-            </div>
-            <div class="btn" id="trainer-button">
-                <div class="description"><a href="service_page.html" class="text-a">Служебная</a></div>
-                <div class="icon"><a href="service_page.html"><img src="../assets/service.png" alt="Служебная"></a></div>
-            </div>
-            <div class="btn" id="admin-button">
-                <div class="description"><a href="admin-page-main.html" class="text-a">Админка</a></div>
-                <div class="icon"><a href="admin-page-main.html"><img src="../assets/admin-icon.png" alt="Админка"></a></div>
-            </div>
-            <img id="logo" src="../assets/logo_federation.png" alt="LOGO">
-            <div class="exit-btn">
-                <div class="description"><a href="authorization.html" class="text-a">Выйти</a></div>
-                <div class="icon"><a href="authorization.html"><img src="../assets/exit-icon.png" alt="Выйти"></a></div>
-            </div>
-        </nav>
+    <div class="content">
     </div>
         <main class="page-body__page-main">
             <div class="page-body__container">
@@ -150,12 +118,12 @@
                     </section>
                     <section>
                         <h2>Контакты организатора</h2>
-                        <label class="visually-hidden"  for="organizer-name">ФИО организатора</label>
-                        <input type="text" title="ФИО организатора" name="organizer-name" id="organizer-name" placeholder="ФИО организатора">
-                        <label class="visually-hidden"  for="organizer-phone">Телефон</label>
-                        <input type="text" title="Телефон" name="organizer-phone" id="organizer-phone" placeholder="Телефон">
-                        <label class="visually-hidden" for="organizer-email">E-mail</label>
-                        <input type="text" title="E-mail" name="organizer-email" id="organizer-email" placeholder="E-mail">
+                        <label class="visually-hidden"  for="org-name">ФИО организатора</label>
+                        <input type="text" title="ФИО организатора" name="organizer-name" id="org-name" placeholder="ФИО организатора">
+                        <label class="visually-hidden"  for="org-phone">Телефон</label>
+                        <input type="text" title="Телефон" name="organizer-phone" id="org-phone" placeholder="Телефон">
+                        <label class="visually-hidden" for="org-email">E-mail</label>
+                        <input type="text" title="E-mail" name="organizer-email" id="org-email" placeholder="E-mail">
                     </section>
                     <div class="save-butts">
                         <button type="button" class="create-butt" name="create" id="create">Создать</button>
@@ -163,7 +131,8 @@
                 </form>
             </div>
         </main>
-    <script src="../js/add-event-page-script.js"></script>
+        <script src="../js/menu-inserting.js"></script>
+        <script src="../js/add-event-page-script.js"></script>
     </body>
 </html>
 
