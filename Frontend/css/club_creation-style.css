@@ -1,0 +1,193 @@
+.content {
+    padding-top: 2%;
+    margin-bottom: 5%;
+}
+
+h1 {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.logo-uploader input {
+    display: none;
+}
+
+.forms {
+    margin-top: 3%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50%;
+    width: 90vw;
+    display: grid;
+    grid-template-areas: "icon club-name club-name club-name"
+                         "icon area-name area-name area-name"
+                         "icon city city city";
+
+}
+
+.forms input[type="text"] {
+    margin-left: 0;
+    margin-right: auto;
+    margin-bottom: 5%;
+    width: 80%;
+    border-radius: 30px;
+    border: 1px solid black;
+    font-size: 3.7vh;
+    padding-left: 1vw;
+}
+
+.logo-uploader {
+    border: 1px solid black;
+    border-radius: 25px;
+    grid-area: icon;
+    text-align: center;
+    margin-left: 10%;
+    width: 25vw;
+    height: 45vh;
+    padding: 3%;
+
+}
+
+.logo-uploader img {
+    align-self: center;
+    overflow: hidden;
+}
+
+.logo-uploader h3, h4 {
+    margin-top: 50%;
+}
+
+#club-name{
+    grid-area: club-name;
+}
+
+#area{
+    grid-area: area-name;
+}
+
+#city{
+    grid-area: city;
+}
+
+.coach-selector-block {
+    width: 90%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: auto;
+    display: grid;
+    grid-template-areas: "coach-name-add coach-name-add add";
+}
+
+.coach-selector {
+    grid-area: coach-name;
+    margin: 2% 1%;
+    border-radius: 25px;
+    border: 1px solid black;
+    padding: 1%;
+    font-size: 3.7vh;
+}
+
+.add {
+    grid-area: add;
+    margin-right: 1%;
+    margin-left: 1%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    border-radius: 25px;
+    border: 1px solid black;
+    background: white;
+    font-size: 6vh;
+}
+
+.coach-selector-add {
+    grid-area: coach-name-add;
+}
+
+.send-button {
+    background: #134F8C;
+    align-self: center;
+    height: 8vh;
+    width: 40%;
+
+    border: none;
+    border-radius: 25px;
+
+    font-size: 3.7vh;
+    color: white;
+}
+
+.button-block {
+    text-align: center;
+    width: 80%;
+    align-self: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.error-message {
+    color: red;
+    font-size: 2vh;
+    margin-top: 2%;
+}
+
+.hidden {
+    display: none;
+}
+
+@media all and (max-width: 700px) {
+    .content{
+        padding-bottom: 10vh;
+    }
+
+    .category {
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 10%;
+        font-size: 5vh;
+        padding-top: 25%;
+        background-size: 100% auto;
+    }
+
+    .forms {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10%;
+        height: 50%;
+        width: 100%;
+        display: grid;
+        grid-template-areas: "icon" "club-name" "area-name" "city";
+
+    }
+
+    .forms input[type="text"] {
+        margin-left: 5%;
+        margin-right: auto;
+        margin-top: 2%;
+        margin-bottom: 3%;
+        width: 80%;
+        border-radius: 30px;
+        border: 1px solid black;
+        font-size: 3.7vh;
+        padding-left: 1vw;
+    }
+
+    .logo-uploader {
+        border: 1px solid black;
+        border-radius: 25px;
+        grid-area: icon;
+        text-align: center;
+        margin-left: 10%;
+        margin-right: 5%;
+        width: 70%;
+        height: 60vh;
+    }
+
+    .logo-uploader h3, h4 {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+
+}
+

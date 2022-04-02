@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание клуба</title>
+    <link rel="stylesheet" href="../css/club_creation-style.css">
+</head>
+<body>
+    <div class="wrapper abc">
+        <div class="container content center-block vh-100 d-flex flex-wrap">
+            <h1>Добавление клуба</h1>
+            <div class="forms">
+                <label class="logo-uploader center-block" for="logo-uploader">
+                    <input type="file" name="logo-uploader" id="logo-uploader" accept="image/jpeg, image/png">
+                    <img src="../assets/empty-club-icon.png" class="" id="logo-icon-preview" alt="Лого клуба" width="90%">
+                </label>
+                <input type="text" id="club-name" onchange="hideErrorMessage()" placeholder="Название клуба">
+                <input type="text" id="area" onchange="hideErrorMessage()" placeholder="Область">
+                <input type="text" id="city" onchange="hideErrorMessage()" placeholder="Город">
+            </div>
+            <div class="coach-selector-block">
+                <select name="coach-selector" onchange="hideErrorMessage()" class=" coach-selector coach-selector-add">
+                    <option value="none" selected>Выберите главного тренера</option>
+                </select>
+                <button class="add" onclick="addMoreCoach()">+</button>
+            </div>
+            <div class="button-block">
+                <button class="send-button" id="send-button" onclick="sendAllInfo()">Добавить клуб</button>
+                <p class="error-message hidden" id="error-message">Введены не все данные</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../js/menu-inserting.js"></script>
+<script src="../js/club-creation-script.js"></script>
+</html>
