@@ -26,3 +26,28 @@ class CreateClub(APIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
 
 
+class UpdateClub(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    @transaction.atomic
+    def patch(self, request, slug):
+        try:
+            club = Club.objects.get(slug=slug)
+        except Club.DoesNotExist:
+            return JsonResponse({'message': 'The club does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        club_data = JSONParser().parse(request)
+        serializer = Clubs_Serializer(club, data=club_data, partial=True)
+
+        if serializer.is_valid():
+            Club.objects.filter(slug=slug).update(**club_data)
+            serializer.validated_data['slug'] = slugify(serializer.validated_data['name'])
+            serializer.save()
+            return Response(status=status.HTTP_200_OK, data={'content': 'updated'})
+        else:
+            print(serializer.validated_data)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
+
+
+
+
