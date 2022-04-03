@@ -121,13 +121,13 @@ let couchImg = {
     x_offset: couchXOffset.value,
     y_offset: couchYOffset.value
 }
-const couchOffsetBlob = new Blob([JSON.stringify(contacts, null, 2)], {type : 'application/json'});
+const couchOffsetBlob = new Blob([JSON.stringify(couchImg, null, 2)], {type : 'application/json'});
 
 let logoImg = {
     x_offset: logoXOffset.value,
     y_offset: logoYOffset.value
 }
-const logoOffsetBlob = new Blob([JSON.stringify(contacts, null, 2)], {type : 'application/json'});
+const logoOffsetBlob = new Blob([JSON.stringify(logoImg, null, 2)], {type : 'application/json'});
 
 let contacts = {
     org_name: orgName.value,
