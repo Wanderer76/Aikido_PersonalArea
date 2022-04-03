@@ -62,4 +62,13 @@ class GetClub(APIView):
         return JsonResponse(serializer.data)
 
 
+class GetClubs(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def get(self, request):
+        serializer = Clubs_Serializer(Club.objects.all(), many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+
 
