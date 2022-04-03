@@ -42,13 +42,13 @@ inputCoach.addEventListener('change', function () {
 let coordinates = null;
 
 function initMap() {
-    var myMap = new ymaps.Map('map', {
+    let myMap = new ymaps.Map('map', {
         center: [56.838048312714704,60.60364972721357],
         zoom: 16,
         controls: []
     });
 
-    var searchControl = new ymaps.control.SearchControl({
+    let searchControl = new ymaps.control.SearchControl({
         options: {
             provider: 'yandex#map',
             noPlacemark: true
@@ -110,31 +110,24 @@ let orgName = document.getElementById('org-name');
 let orgPhone = document.getElementById('org-phone');
 let orgEmail = document.getElementById('org-email');
 
-
-let locationMap = {
-    center: [56.838048312714704,60.60364972721357],
-    zoom: 15
-}
-const locationMapBlob = new Blob([JSON.stringify(locationMap, null, 2)], {type : 'application/json'});
-
 let couchImg = {
     x_offset: couchXOffset.value,
     y_offset: couchYOffset.value
 }
-const couchOffsetBlob = new Blob([JSON.stringify(couchImg, null, 2)], {type : 'application/json'});
+const couchOffset = JSON.stringify(couchImg, null);
 
 let logoImg = {
     x_offset: logoXOffset.value,
     y_offset: logoYOffset.value
 }
-const logoOffsetBlob = new Blob([JSON.stringify(logoImg, null, 2)], {type : 'application/json'});
+const logoOffset = JSON.stringify(logoImg, null);
 
-let contacts = {
+let contact = {
     org_name: orgName.value,
     org_phone: orgPhone.value,
     org_email: orgEmail.value
 };
-const contactsBlob = new Blob([JSON.stringify(contacts, null, 2)], {type : 'application/json'});
+const contacts = JSON.stringify(contact, null);
 
 const url = "http://127.0.0.1:8000/api/v1/events/create/";
 let xhr = new XMLHttpRequest();
@@ -148,6 +141,7 @@ xhr.onreadystatechange = function () {
     location.href = '../html/admin-page-main.html';
 };
 
+let poster = new File([""], "../assets/empty-poster.png")
 createButton.onclick = function () {
     xhr.open('POST', url);
 
@@ -162,11 +156,11 @@ createButton.onclick = function () {
     formData.append("responsible_trainer", leadCoach.value);
     formData.append("max_rang", maxRang.value);
     formData.append("couch_img", couchImage.files[0]);
-    formData.append("coach_offset", couchOffsetBlob);
+    formData.append("coach_offset", couchOffset);
     formData.append("logo_img", logoImage.files[0]);
-    formData.append("logo_offset", logoOffsetBlob);
-    formData.append("location_map", locationMapBlob);
-    formData.append("contacts", contactsBlob);
+    formData.append("logo_offset", logoOffset);
+    formData.append("poster", poster);
+    formData.append("contacts", contacts);
 
     console.log(formData);
     xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
