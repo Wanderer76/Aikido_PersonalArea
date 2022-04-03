@@ -25,3 +25,5 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)
+urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)
+urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)

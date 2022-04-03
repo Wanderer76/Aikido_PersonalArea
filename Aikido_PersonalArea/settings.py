@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os.path
 from pathlib import Path
 import datetime
 
@@ -176,3 +177,8 @@ CORS_ALLOWED_ORIGINS = [
 
 POSTER_ROOT = os.path.join(BASE_DIR,'posters')
 POSTER_URL = '/posters/'
+
+COMPONENT_TRAINER = os.path.join(BASE_DIR,'posters/components/trainer')
+COMPONENT_TRAINER_URL = os.path.join(BASE_DIR,'posters/components/trainer/')
+COMPONENT_LOGO = os.path.join(BASE_DIR,'posters/components/trainer')
+COMPONENT_LOGO_URL = os.path.join(BASE_DIR,'posters/components/trainer/')
