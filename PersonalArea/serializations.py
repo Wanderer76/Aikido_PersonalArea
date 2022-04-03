@@ -46,6 +46,8 @@ class Events_ListSerializer(serializers.ModelSerializer):
 
 
 class Clubs_Serializer(serializers.ModelSerializer):
+    slug = serializers.SlugField(default="")
+
     class Meta:
         model = Club
         fields = '__all__'
