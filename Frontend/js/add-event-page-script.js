@@ -1,5 +1,4 @@
 // Скрипт для формы загрузки
-
 const inputLogo = document.getElementById('logo-icon');
 const previewLogo = document.getElementById('logo-icon-preview');
 inputLogo.addEventListener('change', function () {
@@ -8,11 +7,10 @@ inputLogo.addEventListener('change', function () {
         previewLogo.src = window.URL.createObjectURL(this.files[0]);
         previewLogo.setAttribute('height', '100%');
     } else {
-        previewLogo.setAttribute('height', '100px');
+        previewLogo.setAttribute('height', '100%');
         previewLogo.src = "../assets/empty-club-icon.png";
     }
 });
-
 
 const inputCoach = document.getElementById('coach-icon');
 const previewCoach = document.getElementById('coach-icon-preview');
@@ -22,7 +20,7 @@ inputCoach.addEventListener('change', function () {
         previewCoach.src = window.URL.createObjectURL(this.files[0]);
         previewCoach.setAttribute('height', '100%');
     } else {
-        previewCoach.setAttribute('height', '100px');
+        previewCoach.setAttribute('height', '100%');
         previewCoach.src = "../assets/empty-coach-icon.png";
     }
 });
@@ -89,14 +87,7 @@ function initMap() {
 
 ymaps.ready(initMap);
 
-//Отправка формы
-
-const url = "http://127.0.0.1:8000/api/v1/events/create/";
-let xhr = new XMLHttpRequest();
-xhr.responseType = 'json';
-let storage = window.sessionStorage;
-let token = storage.getItem('user_token');
-
+//formData
 let createButton = document.getElementById('create');
 
 let eventTitle = document.getElementById('event-name');
@@ -124,26 +115,32 @@ let locationMap = {
     center: [56.838048312714704,60.60364972721357],
     zoom: 15
 }
+const locationMapBlob = new Blob([JSON.stringify(locationMap, null, 2)], {type : 'application/json'});
 
 let couchImg = {
-    image: couchImage.value,
     x_offset: couchXOffset.value,
     y_offset: couchYOffset.value
 }
+const couchOffsetBlob = new Blob([JSON.stringify(contacts, null, 2)], {type : 'application/json'});
 
 let logoImg = {
-    image: logoImage.value,
     x_offset: logoXOffset.value,
     y_offset: logoYOffset.value
 }
+const logoOffsetBlob = new Blob([JSON.stringify(contacts, null, 2)], {type : 'application/json'});
 
 let contacts = {
     org_name: orgName.value,
     org_phone: orgPhone.value,
     org_email: orgEmail.value
 };
+const contactsBlob = new Blob([JSON.stringify(contacts, null, 2)], {type : 'application/json'});
 
-console.log("Enter")
+const url = "http://127.0.0.1:8000/api/v1/events/create/";
+let xhr = new XMLHttpRequest();
+xhr.responseType = 'json';
+let storage = window.sessionStorage;
+let token = storage.getItem('user_token');
 
 xhr.onreadystatechange = function () {
     let data = xhr.response;
@@ -154,20 +151,24 @@ xhr.onreadystatechange = function () {
 createButton.onclick = function () {
     xhr.open('POST', url);
 
-    let result = JSON.stringify({
-        "event_name": eventTitle.value,
-        "date_of_event": dateStart.value,
-        "end_of_event": dateEnd.value,
-        "address": locationField.value,
-        "coordinates": coordinates,
-        "responsible_club": respClub.value,
-        "responsible_trainer": leadCoach.value,
-        "max_rang": maxRang.value,
-        "location_map": locationMap,
-        "contacts": contacts
-    });
+    let formData = new FormData();
 
-    console.log(result);
+    formData.append("event_name", eventTitle.value);
+    formData.append("date_of_event", dateStart.value);
+    formData.append("end_of_event", dateEnd.value);
+    formData.append("address", locationField.value);
+    formData.append("coordinates", coordinates);
+    formData.append("responsible_club", respClub.value);
+    formData.append("responsible_trainer", leadCoach.value);
+    formData.append("max_rang", maxRang.value);
+    formData.append("couch_img", couchImage.files[0]);
+    formData.append("coach_offset", couchOffsetBlob);
+    formData.append("logo_img", logoImage.files[0]);
+    formData.append("logo_offset", logoOffsetBlob);
+    formData.append("location_map", locationMapBlob);
+    formData.append("contacts", contactsBlob);
+
+    console.log(formData);
     xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
-    xhr.send(result);
+    xhr.send(formData);
 }
