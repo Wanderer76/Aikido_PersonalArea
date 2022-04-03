@@ -49,5 +49,17 @@ class UpdateClub(APIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
 
 
+class GetClub(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def get(self, request, slug):
+        try:
+            club = Club.objects.get(slug=slug)
+        except Club.DoesNotExist:
+            return JsonResponse({'message': 'The club does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = Clubs_Serializer(club)
+        return JsonResponse(serializer.data)
+
 
 
