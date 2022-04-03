@@ -70,5 +70,15 @@ class GetClubs(APIView):
         return JsonResponse(serializer.data, safe=False)
 
 
+class DeleteClub(APIView):
+    permission_classes = (permissions.IsAdminUser,)
 
+    def delete(self, request, slug):
+        try:
+            club = Club.objects.get(slug=slug)
+        except Club.DoesNotExist:
+            return JsonResponse({'message': 'The club does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        club.delete()
+        return JsonResponse({'message': 'Club was deleted successfully!!!!!!'}, status=status.HTTP_204_NO_CONTENT)
 
