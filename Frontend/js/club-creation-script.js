@@ -14,7 +14,11 @@ function getAllInfo() {
     fd.append("name", clubName);
     fd.append("city", city);
     fd.append("area", area);
-    fd.append("main_trainers", '-1');
+    if (coaches.length !== 0)
+        for (let coach_id of coaches) {
+            fd.append("main_trainers", coach_id);
+        }
+
 
     return fd;
 
@@ -36,9 +40,13 @@ function sendAllInfo() {
     let parsed = JSON.parse(fd.get('jsonInfo'));
 
 
-        console.log('Sending was started!');
-        console.log(fd);
+    console.log('Sending was started!');
+    if (fd.get("name") === "" || fd.get("city") === "" || fd.get("area") === "")
+        document.getElementById("error-message").classList.remove('hidden');
+    else {
         postWithoutAnswer('http://localhost:8000/clubs/api/v1/create_club/', fd);
+        // location.href = "../html/clubs.html";
+    }
 
 }
 
