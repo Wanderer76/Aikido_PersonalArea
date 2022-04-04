@@ -32,12 +32,12 @@ const createElement = (template) => {
 
 // Разметка поля ввода в столбце дней.
 const createDayInputMarkup = (dayCount, participantCategory) => {
-    return `<input type="text" class="input-schedule" name="${participantCategory}" id="day-${dayCount}">`;
+    return `<input type="text" class="input-schedule" name="${participantCategory}" id="day-${dayCount}" placeholder="ДД месяц">`;
 };
 
 // Разметка поля ввода в столбце времени.
-const createTimeInputMarkup = () => {
-    return `<input type="text" class="input-schedule">`;
+const createTimeInputMarkup = (timeCount, exactDay) => {
+    return `<input type="text" class="input-schedule" name="${exactDay}" id="time-${timeCount}" placeholder="ЧЧ:ММ - ЧЧ:ММ">`;
 };
 
 // Элементы.
@@ -55,7 +55,7 @@ let timeInputCount = 0;
 let dayInputs = [];
 let timeInputs = [];
 
-let currentDayInput = null;
+let currentDayElement = null;
 
 
 
@@ -75,6 +75,7 @@ const addDay = () => {
 
         dayInputs.push(dayInputElement);
         render(dayColumn, dayInputElement, RenderPosition.AFTERBEGIN);
+        addHiddenClass();
         dayInputCount++;
 
         console.log(dayInputElement, dayInputCount);
@@ -88,9 +89,11 @@ const addDay = () => {
 const addDayClickListener = () => {
     for (let i = 0; i < dayInputs.length; i++) {
         dayInputs[i].addEventListener('click', function (event) {
+            addHiddenClass();
             removeCurrentDay();
             dayInputs[i].classList.add('chosen-schedule');
-            currentDayInput = dayInputs[i];
+            currentDayElement = dayInputs[i];
+            removeHiddenClass();
         })
     }
 }
@@ -100,11 +103,44 @@ const removeCurrentDay = () => {
     for (let j = 0; j < dayInputs.length; j++) {
         dayInputs[j].classList.remove('chosen-schedule');
     }
-    currentDayInput = null;
+    currentDayElement = null;
 }
 
 //Обработчик для кнопки "+" время.
 addTimeBtn.addEventListener('click', function (event) {
-    let timeInputElement = createElement(createTimeInputMarkup());
-    render(timeColumn, timeInputElement, RenderPosition.AFTERBEGIN);
+    addTime();
+
 })
+
+const addTime = () => {
+    if (currentDayElement) {
+        const count = timeInputCount;
+        const exactDay = currentDayElement.value;
+        const timeInputElement = createElement(createTimeInputMarkup(count, exactDay));
+
+        timeInputs.push(timeInputElement);
+        render(timeColumn, timeInputElement, RenderPosition.AFTERBEGIN);
+        timeInputCount++;
+
+        console.log(timeInputElement, timeInputCount);
+    }
+    else {
+        alert('Выберите день');
+    }
+}
+
+//Добавляет класс, скрывающий элемент
+const addHiddenClass = () => {
+    for (let j = 0; j < timeInputs.length; j++) {
+        timeInputs[j].classList.add('visually-hidden');
+    }
+}
+
+//Убирает класс, скрывающий элемент
+const removeHiddenClass = () => {
+    for (let j = 0; j < timeInputs.length; j++) {
+        if (timeInputs[j].name === currentDayElement.value) {
+            timeInputs[j].classList.remove('visually-hidden');
+        }
+    }
+}
