@@ -13,7 +13,7 @@ def get_club_info(club: Club) -> Dict[str, str]:
     return club_info
 
 
-def get_main_trainers(query) -> List[Any[int]]:
+def get_main_trainers(query) -> List[Any]:
     main_trainers = query.getlist('main_trainers', default=None)
     if len(main_trainers) != 0:
         query.pop('main_trainers')
