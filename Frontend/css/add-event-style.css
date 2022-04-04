@@ -191,7 +191,7 @@ main .create-butt{
 }
 
 main .add-schedule-butt {
-    width: 30%;
+    width: 80%;
     min-height: 30px;
     height: 45px;
 
@@ -207,6 +207,28 @@ main .add-schedule-butt {
     font-size: 30px;
 }
 
+main .input-schedule {
+    width: 80%;
+    min-height: 30px;
+    height: 45px;
+
+    margin-bottom: 20px;
+
+    color: gray;
+    border-style: solid;
+    background-color: white;
+    border-radius: 20px;
+    border-color: rgba(209, 209, 209, 0.3);
+    border-width: medium;
+
+    font-size: 30px;
+}
+
+main .chosen-schedule {
+    color: white;
+    background-color: royalblue;
+}
+
 main .save-butts {
     display: flex;
     justify-content: center;
@@ -214,6 +236,14 @@ main .save-butts {
 
 main .visually-hidden {
     display: none;
+}
+
+.day-column {
+    width: 50%;
+}
+
+.time-column {
+    width: 50%;
 }
 
 #map {

@@ -2,7 +2,7 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <script src="../js/go-to-auth-error-enter.js"></script>
+        <!--<script src="../js/go-to-auth-error-enter.js"></script>-->
         <script src="https://api-maps.yandex.ru/2.1/?apikey=1fc42576-f294-4305-baaf-9c78e6b88dcc&lang=ru_RU"
                 type="text/javascript">
         </script>
@@ -70,14 +70,18 @@
                         <label class="visually-hidden" for="participant-category">Категория</label>
                         <select title="Категория" name="participant-category" id="participant-category">
                             <option value="">-- Категория --</option>
-                            <option value="6kyu">Дети младшие пояса</option>
-                            <option value="5kyu">Дети старшие пояса</option>
-                            <option value="4kyu">Взрослые</option>
-                            <option value="3kyu">Аттестация</option>
+                            <option value="children-jun">Дети младшие пояса</option>
+                            <option value="children-sen">Дети старшие пояса</option>
+                            <option value="adults">Взрослые</option>
+                            <option value="qualify">Аттестация</option>
                         </select>
                         <div class="day-schedule">
-                            <button type="button" class="add-schedule-butt" title="Добавить день"  name="add-day-butt" id="add-day">+</button>
-                            <button type="button" class="add-schedule-butt" title="Добавить время" name="add-time-butt" id="add-time">+</button>
+                            <div class="day-column" id="day-column">
+                                <button type="button" class="add-schedule-butt" title="Добавить день"  name="add-day-butt" id="add-day">+</button>
+                            </div>
+                            <div class="time-column" id="time-column">
+                                <button type="button" class="add-schedule-butt" title="Добавить время" name="add-time-butt" id="add-time">+</button>
+                            </div>
                         </div>
                     </section>
                     <!-- Придумать структуру блока "Расписание мероприятия"-->
@@ -134,6 +138,7 @@
         </main>
         <script src="../js/menu-inserting.js"></script>
         <script src="../js/add-event-page-script.js"></script>
+        <script src="../js/add-event-schedule.js"></script>
     </body>
 </html>
 
