@@ -137,6 +137,7 @@ class CreateEvent(APIView):
                 datetime.date.fromisoformat(str(serializer.validated_data['date_of_event'])))
             serializer.validated_data['slug'] = slugify(serializer.validated_data['event_name'])
             serializer.save()
+
             return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
@@ -271,18 +272,5 @@ class EventView(APIView, IsTrainerPermission):
 @csrf_exempt
 def aikido_students_list(request):
     if request.method == 'GET':
-        try:
-            res = xls_parser.parseXlsToDb(r'C:\Users\Artyom\Desktop\test.xlsx')
-            return JsonResponse(data={"result": res})
-        except ArgumentError:
-            return JsonResponse(data={"result": "ошибка в заполнении таблицы"})
-        # students = Aikido_Member.objects.all()
-        # serializer = Aikido_MemberSerializer(students, many=True)
-        # return JsonResponse(serializer.data, safe=False)
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = Aikido_MemberSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+        Club.objects.get(name='Практика').delete()
+        return JsonResponse(data={'asd':"asd"})

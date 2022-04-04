@@ -16,7 +16,7 @@ class Aikido_MemberSerializer(serializers.ModelSerializer):
 class Profile_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Aikido_Member
-        fields = ['id', 'name', 'surname', 'birthdate', 'photo', 'club', 'region']
+        fields = ['id', 'name', 'surname','second_name' ,'birthdate', 'photo', 'club', 'region']
 
 
 # TODO изменить в дальнейшем
@@ -47,7 +47,6 @@ class Events_ListSerializer(serializers.ModelSerializer):
 
 class Clubs_Serializer(serializers.ModelSerializer):
     slug = serializers.SlugField(default="")
-
     class Meta:
         model = Club
         fields = '__all__'
