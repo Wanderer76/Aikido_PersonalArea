@@ -51,7 +51,7 @@ class UpdateClub(APIView):
             return Response(status=status.HTTP_200_OK, data={'content': 'updated'})
         else:
             print(serializer.validated_data)
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
+            return Response(status=status.HTTP_404_NOT_FOUND, data=serializer.errors)
 
 
 class GetClub(APIView):
