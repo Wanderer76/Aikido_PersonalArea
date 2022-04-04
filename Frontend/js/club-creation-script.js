@@ -14,8 +14,8 @@ function getAllInfo() {
     fd.append("name", clubName);
     fd.append("city", city);
     fd.append("area", area);
-    if (coaches.length !== 0)
-        for (let coach_id of coaches) {
+    if (coachesArr.length !== 0)
+        for (let coach_id of coachesArr) {
             fd.append("main_trainers", coach_id);
         }
 
