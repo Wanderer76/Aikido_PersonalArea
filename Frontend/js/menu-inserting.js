@@ -17,7 +17,7 @@ menu_inserting_element.innerHTML =
     '            </div>\n' +
     '            <div class="btn" id="admin-button">\n' +
     '                <div class="description"><a href="admin-page-main.html" class="text-a">Админка</a></div>\n' +
-    '                <div class="icon"><a href="admin-page-main.html"><img src="../assets/admin-icon.png"></a></div>\n' +
+    '                <div class="icon"><a href="admin-main-page.html"><img src="../assets/admin-icon.png"></a></div>\n' +
     '            </div>\n' +
     '            <img id="logo" src="../assets/logo_federation.png" alt="LOGO">\n' +
     '            <div class="exit-btn">\n' +

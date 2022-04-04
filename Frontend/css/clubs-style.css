@@ -32,6 +32,7 @@ h1 {
     margin-right: auto;
     margin-left: auto;
     justify-content: space-around;
+    margin-bottom: 2%;
 }
 
 .bordered-container.card {

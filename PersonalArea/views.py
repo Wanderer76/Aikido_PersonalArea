@@ -139,8 +139,7 @@ class CreateEvent(APIView):
             serializer.save()
             return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
         else:
-            print(serializer.validated_data)
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=serializer.errors)
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 
 
 class AikidoSeminarList(APIView):

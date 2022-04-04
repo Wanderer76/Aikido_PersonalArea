@@ -10,9 +10,12 @@ function getAllInfo() {
             coachesArr.push(item.value);
     });
 
-    let fd = createFormDataImage(currentImage, 'club-icon');
-    let json = {"name" : clubName, "city" : city, "area" : area, "main_trainers" : Array.from(new Set(coachesArr))};
-    fd.append('jsonInfo', JSON.stringify(json));
+    let fd = createFormDataImage(currentImage, 'logo');
+    fd.append("name", clubName);
+    fd.append("city", city);
+    fd.append("area", area);
+    fd.append("main_trainers", '-1');
+
     return fd;
 
 }
@@ -32,15 +35,11 @@ function sendAllInfo() {
     let fd = getAllInfo();
     let parsed = JSON.parse(fd.get('jsonInfo'));
 
-    if (parsed['name'] === "" || parsed['city'] === "" || parsed['area'] === "" || parsed['main_trainers'].length === 0) {
-        let message = document.getElementById("error-message");
-        message.classList.remove('hidden');
-    }
-    else {
+
         console.log('Sending was started!');
-        console.log(fd.get('club-icon'));
-        console.log(fd.get('jsonInfo'))
-    }
+        console.log(fd);
+        postWithoutAnswer('http://localhost:8000/clubs/api/v1/create_club/', fd);
+
 }
 
 

@@ -20,8 +20,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('clubs/', include('clubs.urls')),
     path('', include('PersonalArea.urls')),
-    path('clubs/', include('clubs.urls'))
 ]
 
+urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)
+urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)
 urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)

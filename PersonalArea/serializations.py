@@ -4,6 +4,8 @@ from rest_framework import serializers
 
 from PersonalArea.models import Aikido_Member, Achievements, Request, Events
 
+from clubs.models import Club
+
 
 class Aikido_MemberSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,6 +42,14 @@ class Member_InfoSerializer(serializers.ModelSerializer):
 class Events_ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Events
+        fields = '__all__'
+
+
+class Clubs_Serializer(serializers.ModelSerializer):
+    slug = serializers.SlugField(default="")
+
+    class Meta:
+        model = Club
         fields = '__all__'
 
 
