@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from clubs.utils import *
 
-from PersonalArea.serializations import Clubs_Serializer
+from clubs.serializators import Clubs_Serializer
 from clubs.models import Club
 
 
@@ -40,12 +40,10 @@ class UpdateClub(APIView):
             return JsonResponse({'message': 'The club does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
         main_trainers = get_main_trainers(request.data)
-        club_data = JSONParser().parse(request)
 
         serializer = Clubs_Serializer(club, data=request.data, partial=True)
 
         if serializer.is_valid():
-            Club.objects.filter(slug=slug).update(**club_data)
             serializer.validated_data['slug'] = slugify(serializer.validated_data['name'])
             set_main_trainers(main_trainers, serializer.save())
             return Response(status=status.HTTP_200_OK, data={'content': 'updated'})
