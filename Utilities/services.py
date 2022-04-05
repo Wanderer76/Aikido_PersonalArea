@@ -88,7 +88,7 @@ def create_row(request: Dict[str, str], event: models.Events, member=None) -> Li
         trainer.club.name,
         f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
         trainer.id,
-        event.start_record_date.date(), event.city,
+        event.start_record_date.date(), event.address,
         event.date_of_event, '', '', event.responsible_trainer]
 
 
