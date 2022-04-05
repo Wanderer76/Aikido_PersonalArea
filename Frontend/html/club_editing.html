@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Создание клуба</title>
+    <title>Редактирование клуба</title>
     <link rel="stylesheet" href="../css/club_creation-style.css">
 </head>
 <body>
     <div class="wrapper abc">
         <div class="container content center-block vh-100 d-flex flex-wrap">
-            <h1>Добавление клуба</h1>
+            <h1>Редактирование клуба</h1>
             <div class="forms">
                 <label class="logo-uploader center-block" for="logo-uploader">
                     <input type="file" name="logo-uploader" id="logo-uploader" accept="image/jpeg, image/png">
@@ -25,7 +25,7 @@
                 <button class="add" onclick="addMoreCoach()">+</button>
             </div>
             <div class="button-block">
-                <button class="send-button" id="send-button" onclick="sendAllInfo('http://localhost:8000/clubs/api/v1/create_club/')">Добавить клуб</button>
+                <button class="send-button" id="send-button" >Добавить клуб</button>
                 <p class="error-message hidden" id="error-message">Введены не все данные</p>
             </div>
         </div>
@@ -33,5 +33,6 @@
 </body>
 <script src="../js/menu-inserting.js"></script>
 <script src="../js/club-creation-script.js"></script>
+<script src="../js/club-editing-script.js"></script>
 <script src="../js/postWithoutAnswer.js"></script>
 </html>

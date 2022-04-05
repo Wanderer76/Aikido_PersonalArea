@@ -35,7 +35,7 @@ function hideErrorMessage() {
 }
 
 
-function sendAllInfo() {
+function sendAllInfo(url) {
     let fd = getAllInfo();
     let parsed = JSON.parse(fd.get('jsonInfo'));
 

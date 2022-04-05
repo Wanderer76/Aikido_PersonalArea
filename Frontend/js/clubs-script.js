@@ -46,7 +46,7 @@ function fillCard(cardNode, clubInfo) {
     html += '</div>\n' +
         '</div>' +
         '<div class="po">\n' +
-        '       <button type="button" class="deleteBut" name="delete">Удалить</button>\n' +
+        '       <button type="button" class="deleteBut" onclick="deleteClub(\''+ clubInfo["slug"] +'\', \''+ clubInfo["name"] +'\')" name="delete">Удалить</button>\n' +
         '       <button type="button" class="editBut" name="edit">Редактировать</button>\n' +
         '   </div>'
     cardNode.innerHTML = html;
@@ -56,8 +56,22 @@ function insertBefore(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode);
 }
 
-function getClubInfo() {
-    return JSON.parse(clubs);
-    // return [{"name": "Прайм", "city": "Екатеринбург", "area": "Свердловская область", "logo": "../assets/clubs_logo/Praim.png", "main_trainers": ["Некто Нектович Нектов", "Иванов Иван Иванович"]},
-    //     {"name": "Практика", "city": "Екатеринбург", "area": "Свердловская область", "logo": "../assets/clubs_logo/Практика.png", "main_trainers": ["Некто Нектович Нектов", "Иванов Иван Иванович"]}];
+function deleteClub(slug, name) {
+    let acceptBlock = document.getElementById('accept-block');
+    acceptBlock.classList.remove('hidden');
+    document.getElementById('accept-block').classList.remove('hidden');
+    document.getElementById('clubname-in-accept').textContent = '"'+ name +'"';
+    let acceptBut = document.getElementsByClassName('accept-button')[0];
+    acceptBut.onclick = function () {
+        postWithoutAnswer('http://localhost:8000/clubs/api/v1/delete_club/'+slug, undefined, "DELETE", function () {location.reload()});
+
+    }
 }
+
+function hideAcceptBlock() {
+    let acceptBlock = document.getElementById('accept-block');
+    acceptBlock.classList.add('hidden');
+}
+
+
+

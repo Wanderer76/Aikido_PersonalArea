@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="../css/menu-style.css">
 </head>
 <body>
+    <div class="accept-block hidden" id = "accept-block">
+        <h3>Вы действительно хотите удалить клуб?</h3>
+        <p id="clubname-in-accept">"Прайм"</p>
+        <button type="button" class="accept-button">Да</button>
+        <button type="button" class="cancel-button" onclick="hideAcceptBlock()">Нет</button>
+    </div>
     <div class="content">
         <br>
         <h1 class="title">Клубы</h1>
@@ -15,6 +21,7 @@
     </div>
 
 </body>
+<script src="../js/postWithoutAnswer.js"></script>
 <script src="../js/clubs-script.js"></script>
 <script src="../js/menu-inserting.js"></script>
 </html>
