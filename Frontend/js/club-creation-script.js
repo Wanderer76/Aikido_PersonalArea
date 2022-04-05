@@ -44,8 +44,7 @@ function sendAllInfo(url) {
     if (fd.get("name") === "" || fd.get("city") === "" || fd.get("area") === "")
         document.getElementById("error-message").classList.remove('hidden');
     else {
-        postWithoutAnswer('http://localhost:8000/clubs/api/v1/create_club/', fd);
-        // location.href = "../html/clubs.html";
+        postWithoutAnswer('http://localhost:8000/clubs/api/v1/create_club/', fd, "POST", function () {location.href = "../html/clubs.html"});
     }
 
 }

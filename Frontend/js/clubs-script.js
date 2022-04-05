@@ -63,7 +63,7 @@ function deleteClub(slug, name) {
     document.getElementById('clubname-in-accept').textContent = '"'+ name +'"';
     let acceptBut = document.getElementsByClassName('accept-button')[0];
     acceptBut.onclick = function () {
-        postWithoutAnswer('http://localhost:8000/clubs/api/v1/delete_club/'+slug, undefined, "DELETE", function () {location.reload()});
+        postWithoutAnswer('http://localhost:8000/clubs/api/v1/delete_club/'+slug+'/', undefined, "DELETE", function () {location.reload()});
 
     }
 }
