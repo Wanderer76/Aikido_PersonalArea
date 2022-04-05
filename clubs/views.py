@@ -62,7 +62,7 @@ class GetClub(APIView):
             return JsonResponse({'message': 'The club does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = Clubs_Serializer(club)
-        return JsonResponse(get_club_info(club))
+        return JsonResponse(get_club_info(club, is_detail=True))
 
 
 class GetClubs(APIView):
