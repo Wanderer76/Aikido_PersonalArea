@@ -6,17 +6,10 @@ from PersonalArea import views
 urlpatterns = [
     path('students/', views.aikido_students_list),
     path('api/v1/account/login/', csrf_exempt(views.LoginAPIView.as_view())),
-    path('api/v1/events/create/', csrf_exempt(views.CreateEvent.as_view())),
-    path('api/v1/events/requests/create/', csrf_exempt(views.CreateRequest.as_view())),
-    path('api/v1/events/requests/<str:event_name>/', views.TrainerEventRequest.as_view()),
     path('api/v1/account/profile/', csrf_exempt(views.StudentInfo.as_view())),
     path('api/v1/account/trainer_students/', csrf_exempt(views.TrainerHasbiks.as_view())),
-    path('api/v1/admin/seminar_statistic/', views.EventsList.as_view()),
-    path('api/v1/admin/event_statistic/<str:event_name>/', views.EventView.as_view()),
-    path('api/v1/admin/seminar/list/<str:seminar_url>/', csrf_exempt(views.AikidoSeminarList.as_view())),
     path('api/v1/admin/seminar/<str:event_name>/', views.SeminarStatistic.as_view()),
     path('api/v1/admin/members_info/', csrf_exempt(views.AikidoMembersInfo.as_view())),
-
 ]
 
 

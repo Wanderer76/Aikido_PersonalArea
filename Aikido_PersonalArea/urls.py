@@ -21,6 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('clubs/', include('clubs.urls')),
+    path('api/v1/events/', include('events.urls')),
     path('', include('PersonalArea.urls')),
 ]
 

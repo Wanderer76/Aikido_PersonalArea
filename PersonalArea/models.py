@@ -1,13 +1,10 @@
-import datetime
-
+from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-from django.utils import timezone
 
 from clubs.models import Club
 
@@ -95,16 +92,8 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 class Achievements(models.Model):
     event_name = models.CharField(name="event_name", max_length=100)
-    member = models.ForeignKey(Aikido_Member, on_delete=models.DO_NOTHING)
-    # club = models.CharField("club", max_length=30, null=False)
-    # trainer = models.CharField(name="trainer", null=False, max_length=100)
-    # city = models.CharField(name="city", null=False, max_length=30)
+    member = models.ForeignKey(Aikido_Member, on_delete=models.CASCADE)
     attestation_date = models.DateField(name="attestation_date", null=False)
-    # start_date = models.DateField(name="start_date", null=False)
-    # oldKu = models.IntegerField("oldKu", null=True)
-    # newKu = models.IntegerField("newKu", null=True, default=None, blank=True)
-    # isChild = models.BooleanField("isChild", null=False)
-    # examiner = models.CharField("examiner", null=False, max_length=100)
     received_ku = models.IntegerField(name="received_ku", null=True)
     is_child = models.BooleanField(name="is_child")
 
@@ -114,41 +103,3 @@ class Achievements(models.Model):
         get_latest_by = 'attestation_date'
 
 
-class Events(models.Model):
-    event_name = models.CharField(name="event_name", primary_key=True, max_length=100)
-    date_of_event = models.DateField(name="date_of_event", null=False, default=datetime.date.today)
-    end_of_event = models.DateField(name="end_of_event", null=False, default=datetime.date.today)
-    address = models.TextField(name="address")
-    coordinates = models.TextField(name="coordinates")
-    start_record_date = models.DateTimeField(name="start_record_date", default=datetime.datetime.now)
-    end_record_date = models.DateTimeField(name="end_record_date", default=datetime.datetime.now)
-    # city = models.CharField(name="city", null=False, max_length=30, default="None")
-    responsible_club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="responsible_club")
-    responsible_trainer = models.CharField(name='responsible_trainer', max_length=60, default="None")
-    max_rang = models.CharField(name="max_rang", max_length=15)
-    slug = models.SlugField(name='slug', max_length=150, unique=True, null=False)
-    couch_img = models.ImageField(name="couch_img", upload_to='posters/components/trainer/')
-    logo_img = models.ImageField(name="logo_img", upload_to='posters/components/logo/')
-    coach_offset = models.JSONField(name="coach_offset")
-    logo_offset = models.JSONField(name="logo_offset")
-    schedule = models.JSONField(name="schedule")
-    contacts = models.JSONField(name="contacts")
-    poster = models.ImageField(name="poster", upload_to='posters/')
-
-    class Meta:
-        db_table = "event"
-        managed = True
-
-
-class Request(models.Model):
-    name = models.CharField(name="name", max_length=25, default="None")
-    surname = models.CharField(name="surname", max_length=25, default="None")
-    second_name = models.CharField(name="second_name", max_length=25, blank=True, default='None')
-    member_id = models.IntegerField(name='member_id', null=True, blank=True)
-    birthdate = models.DateField(name="birthdate", default=timezone.now)
-    event_name = models.ForeignKey(Events, on_delete=models.CASCADE, related_name='event')
-    trainer_id = models.IntegerField(name="trainer_id")
-
-    class Meta:
-        db_table = "request"
-        managed = True

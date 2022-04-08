@@ -7,6 +7,7 @@ from django.db import transaction
 
 import PersonalArea.serializations
 from PersonalArea import models
+from events.models import *
 from Utilities import password_generantor
 from Utilities import services
 
@@ -74,9 +75,9 @@ def createXlsxFromRequests(event_slug: str) -> BinaryIO:
                        'Присвоенная степень', 'детский', 'Экзаменатор'])
 
     services.set_blue_row(work_sheet)
-    event = models.Events.objects.get(slug=event_slug)
+    event = Events.objects.get(slug=event_slug)
 
-    requests = models.Request.objects.filter(event_name=event.event_name)
+    requests = Request.objects.filter(event_name=event.event_name)
     if not requests.exists():
         raise ArgumentError('Заявок на мероприятие нет')
 

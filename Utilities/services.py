@@ -8,6 +8,7 @@ from openpyxl.styles import PatternFill, numbers
 from openpyxl.worksheet.worksheet import Worksheet
 
 from PersonalArea import models
+from events.models import *
 from ctypes import ArgumentError
 
 
@@ -62,7 +63,7 @@ def set_trainer_status(trainer_id: int) -> None:
         trainer.save()
 
 
-def create_row(request: Dict[str, str], event: models.Events, member=None) -> List[str]:
+def create_row(request: Dict[str, str], event: Events, member=None) -> List[str]:
     trainer = models.Aikido_Member.objects.get(id=request['trainer_id'])
     last = 0
     ku_suffix = ''
@@ -84,7 +85,7 @@ def create_row(request: Dict[str, str], event: models.Events, member=None) -> Li
     return [
         request['surname'], request['name'], second_name, parse_ku(last) + ku_suffix, member_id,
         request['birthdate'],
-        trainer.region,
+        '',
         trainer.club.name,
         f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
         trainer.id,
@@ -118,8 +119,8 @@ def delete_achievement_if_exists(event_name: str) -> None:
             achievements.get(member_id=i).delete()
 
 
-def find_event_by_slug(event_slug: str) -> Union[models.Events, None]:
-    return models.Events.objects.filter(slug=event_slug).first()
+def find_event_by_slug(event_slug: str) -> Union[Events, None]:
+    return Events.objects.filter(slug=event_slug).first()
 
 
 def set_date_format(work_sheet: Worksheet) -> None:
