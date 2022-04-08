@@ -1,0 +1,108 @@
+.content {
+    text-align: center;
+    padding-top: 2%;
+}
+
+h1 {
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+p {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 130%;
+}
+
+.text-block {
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
+
+.coach-selector {
+    width: 90%;
+    height: 7%;
+    border-radius: 25px;
+    border: 1px solid black;
+    margin-top: 0;
+    font-size: 120%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-block {
+    width: 100%;
+}
+
+input {
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 1%;
+}
+
+.base-info {
+    width: 20%;
+    margin: 1%;
+    font-size: 120%;
+}
+
+.form-block {
+    grid-template-areas: "surname name last-name birthdate"
+                        "rank attestation-date club club"
+                        "attestation-event-name attestation-event-name attestation-event-name attestation-event-name";
+}
+
+.base-info-selectors {
+    width: 20%;
+    margin: 1%;
+    border: 1px solid black;
+    border-radius: 25px;
+    font-size: 120%;
+    padding: 1%;
+}
+
+.club {
+    width: 43%;
+}
+
+.event-name {
+    width: 88%;
+    font-size: 120%;
+    grid-area: attestation-event-name;
+}
+
+#rank-selector {
+    grid-area: rank;
+}
+
+#attestation-date {
+    grid-area: attestation-date;
+}
+
+#club-selector {
+    grid-area: club;
+}
+
+@media all and (max-width: 600px) {
+    .form-block {
+        grid-template-areas: "surname surname name name"
+                        "last-name last-name birthdate birthdate"
+                        "rank rank attestation-date attestation-date"
+                        "attestation-event-name attestation-event-name attestation-event-name attestation-event-name"
+                        "club club club club";
+    }
+
+    .base-info {
+        width: 43%;
+    }
+
+    .base-info-selectors {
+        width: 43%;
+    }
+
+    .club {
+        width: 88%;
+    }
+}
