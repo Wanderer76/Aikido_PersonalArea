@@ -2,7 +2,7 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <!--<script src="../js/go-to-auth-error-enter.js"></script>-->
+        <script src="../js/go-to-auth-error-enter.js"></script>
         <script src="https://api-maps.yandex.ru/2.1/?apikey=1fc42576-f294-4305-baaf-9c78e6b88dcc&lang=ru_RU"
                 type="text/javascript">
         </script>
@@ -64,7 +64,6 @@
                         </div>
                     </section>
 
-                    <!-- Придумать структуру блока "Расписание мероприятия"-->
                     <section>
                         <h2>Расписание мероприятия</h2>
                         <label class="visually-hidden" for="participant-category">Категория</label>
@@ -83,8 +82,8 @@
                                 <button type="button" class="add-schedule-butt" title="Добавить время" name="add-time-butt" id="add-time">+</button>
                             </div>
                         </div>
+                        <h6>Чтобы лишняя ячейка не вошла в итоговое расписание — оставьте её пустой.</h6>
                     </section>
-                    <!-- Придумать структуру блока "Расписание мероприятия"-->
 
                     <section>
                         <h2>Афиша мероприятия</h2>
@@ -137,8 +136,8 @@
             </div>
         </main>
         <script src="../js/menu-inserting.js"></script>
-        <script src="../js/add-event-page-script.js"></script>
-        <script src="../js/add-event-schedule.js"></script>
+        <script type="module" src="../js/add-event-page-script.js"></script>
+        <script type="module" src="../js/add-event-schedule.js"></script>
     </body>
 </html>
 

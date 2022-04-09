@@ -29,6 +29,11 @@ main h2 {
     margin-bottom: 40px;
 }
 
+main h6 {
+    color: gray;
+}
+
+
 main section {
     display: flex;
     flex-direction: column;
@@ -221,7 +226,8 @@ main .input-schedule {
     border-color: rgba(209, 209, 209, 0.3);
     border-width: medium;
 
-    font-size: 30px;
+    font-size: 20px;
+    text-align: center;
 }
 
 main .chosen-schedule {

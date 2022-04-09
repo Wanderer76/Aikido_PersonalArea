@@ -1,3 +1,5 @@
+import {createSchedule} from "./add-event-schedule";
+
 // Скрипт для формы загрузки
 const inputLogo = document.getElementById('logo-icon');
 const previewLogo = document.getElementById('logo-icon-preview');
@@ -142,10 +144,14 @@ xhr.onreadystatechange = function () {
 };
 
 let poster = new File([""], "../assets/empty-poster.png")
+
 createButton.onclick = function () {
+
     xhr.open('POST', url);
 
     let formData = new FormData();
+
+    let schedule = JSON.stringify(createSchedule(), null);
 
     formData.append("event_name", eventTitle.value);
     formData.append("date_of_event", dateStart.value);
@@ -155,6 +161,7 @@ createButton.onclick = function () {
     formData.append("responsible_club", respClub.value);
     formData.append("responsible_trainer", leadCoach.value);
     formData.append("max_rang", maxRang.value);
+    formData.append("schedule", schedule);
     formData.append("couch_img", couchImage.files[0]);
     formData.append("coach_offset", couchOffset);
     formData.append("logo_img", logoImage.files[0]);
@@ -166,3 +173,4 @@ createButton.onclick = function () {
     xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
     xhr.send(formData);
 }
+
