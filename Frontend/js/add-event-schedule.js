@@ -176,7 +176,7 @@ const removeHiddenClass = (array, comparison) => {
 }
 
 //Функция формирования расписания
-function createSchedule(days, times) {
+export function createSchedule(days = dayInputs, times = timeInputs) {
     let result = {};
     for (let i = 0; i < days.length; i++) {
         if (days[i].value) {
@@ -196,6 +196,3 @@ function createSchedule(days, times) {
     console.log(result);
 }
 
-let crtButton = document.getElementById('create');
-
-crtButton.onclick = function() {createSchedule(dayInputs,  timeInputs)};

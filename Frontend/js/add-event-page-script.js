@@ -1,3 +1,5 @@
+import {createSchedule} from "./add-event-schedule";
+
 // Скрипт для формы загрузки
 const inputLogo = document.getElementById('logo-icon');
 const previewLogo = document.getElementById('logo-icon-preview');
@@ -147,6 +149,9 @@ createButton.onclick = function () {
     xhr.open('POST', url);
 
     let formData = new FormData();
+
+
+    let shudele = createSchedule();
 
     formData.append("event_name", eventTitle.value);
     formData.append("date_of_event", dateStart.value);
