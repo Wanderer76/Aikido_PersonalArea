@@ -85,7 +85,7 @@ def create_row(request: Dict[str, str], event: Events, member=None) -> List[str]
     return [
         request['surname'], request['name'], second_name, parse_ku(last) + ku_suffix, member_id,
         request['birthdate'],
-        '',
+        trainer.city,
         trainer.club.name,
         f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
         trainer.id,

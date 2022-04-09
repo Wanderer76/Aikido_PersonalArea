@@ -45,7 +45,7 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
                 'surname': row[0].value,
                 'second_name': row[2].value,
                 'birthdate': services.parse_eu_date_to_us(str(row[5].value)),
-                'region': int(row[6].value),
+                'city': str(row[6].value),
                 'club': row[7].value,
                 'photo': None,
                 'isTrainer': False,
@@ -71,7 +71,7 @@ def createXlsxFromRequests(event_slug: str) -> BinaryIO:
     wb = openpyxl.Workbook(iso_dates=True)
     work_sheet = wb.active
     work_sheet.append(['Фамилия', 'Имя', 'Отчество', 'степень кю/дан', '#ID', 'Дата рождения',
-                       'Регион', 'Клуб', 'Тренер', 'id тренера', 'семинар', 'место проведения', 'аттестация',
+                       'Город', 'Клуб', 'Тренер', 'id тренера', 'семинар', 'место проведения', 'аттестация',
                        'Присвоенная степень', 'детский', 'Экзаменатор'])
 
     services.set_blue_row(work_sheet)

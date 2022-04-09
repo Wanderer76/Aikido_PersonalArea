@@ -12,7 +12,7 @@ class Aikido_MemberSerializer(serializers.ModelSerializer):
 class Profile_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Aikido_Member
-        fields = ['id', 'name', 'surname', 'second_name', 'birthdate', 'photo', 'club', 'region']
+        fields = ['id', 'name', 'surname', 'second_name', 'birthdate', 'photo', 'club', 'city']
 
 
 # TODO изменить в дальнейшем
@@ -48,7 +48,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             surname=self.validated_data['surname'],
             second_name=self.validated_data['second_name'],
             birthdate=self.validated_data['birthdate'],
-            region=self.validated_data['region'],
+            city=self.validated_data['city'],
             club=self.validated_data['club'],
             photo=self.validated_data['photo'],
             isTrainer=self.validated_data['isTrainer'],
