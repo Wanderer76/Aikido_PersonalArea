@@ -177,22 +177,33 @@ const removeHiddenClass = (array, comparison) => {
 
 //Функция формирования расписания
 export function createSchedule(days = dayInputs, times = timeInputs) {
-    let result = {};
-    for (let i = 0; i < days.length; i++) {
-        if (days[i].value) {
-            result[days[i].value] = [];
-            for (let j = 0; j < times.length; j++) {
-                if (times[j].name === days[i].value && times[j].value) {
-                    result[days[i].value].push(times[j].value);
+    const categories = ["children-jun", "children-sen", "adults", "qualify"];
+    let schedule = {};
+
+    for (let i = 0; i < categories.length; i++) {
+        createCurrentGroupSchedule(categories[i], schedule);
+    }
+
+    function createCurrentGroupSchedule (currentGroup, schedule) {
+        let result = {};
+        for (let i = 0; i < days.length; i++) {
+            if (days[i].value && days[i].name === currentGroup){
+                result[days[i].value] = [];
+                for (let j = 0; j < times.length; j++) {
+                    if (times[j].name === days[i].value && times[j].value) {
+                        result[days[i].value].push(times[j].value);
+                    }
                 }
             }
         }
+        Object.keys(result).forEach(function(key) {
+            if (result[key].length === 0) {
+                delete result[key];
+            }
+        }, result);
+        schedule[currentGroup] = result;
     }
-    Object.keys(result).forEach(function(key) {
-        if (result[key].length === 0) {
-            delete result[key];
-        }
-    }, result);
-    console.log(result);
+    console.log(schedule);
+    return(schedule);
 }
 
