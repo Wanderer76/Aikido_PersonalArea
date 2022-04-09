@@ -96,8 +96,16 @@ class TrainerHasbiks(APIView):
             return Response(data={"error": "вы не тренер"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class TrainserSet(APIView):
+    permission_classes = (permissions.IsAdminUser,)
 
-
+    def get(self, request):
+        try:
+            trainers = Aikido_Member.objects.filter(isTrainer=True)
+            serializer = Profile_Serializer(trainers, many=True)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=e.args)
 
 
 class SeminarStatistic(APIView):
@@ -109,9 +117,8 @@ class SeminarStatistic(APIView):
         return Response(status=status.HTTP_200_OK, data=seminars)
 
 
-
 @csrf_exempt
 def aikido_students_list(request):
     if request.method == 'GET':
         Club.objects.get(name='Практика').delete()
-        return JsonResponse(data={'asd':"asd"})
+        return JsonResponse(data={'asd': "asd"})
