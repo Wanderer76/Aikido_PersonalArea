@@ -143,6 +143,7 @@ xhr.onreadystatechange = function () {
 
 let poster = new File([""], "../assets/empty-poster.png")
 createButton.onclick = function () {
+
     xhr.open('POST', url);
 
     let formData = new FormData();
