@@ -36,7 +36,6 @@ def set_main_trainers(main_trainers: List[int], club_obj: Club) -> None:
 
     for trainer_id in main_trainers:
         trainer = Aikido_Member.objects.get(id=trainer_id)
-        if trainer.club is None or not trainer.is_main_trainer:
-            trainer.club = club_obj
-            trainer.is_main_trainer = True
-            trainer.save()
+        trainer.club = club_obj
+        trainer.is_main_trainer = True
+        trainer.save()
