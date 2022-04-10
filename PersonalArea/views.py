@@ -103,6 +103,13 @@ class TrainserSet(APIView):
         try:
             trainers = Aikido_Member.objects.filter(isTrainer=True)
             serializer = Profile_Serializer(trainers, many=True)
+            for i in serializer.data:
+                last_achievement = Achievements.objects.filter(member__id=i['id']).order_by(
+                    'attestation_date').last()
+                print(last_achievement)
+                i['ku'] = last_achievement.received_ku if last_achievement is not None else ""
+                i['attestation_date'] = last_achievement.attestation_date if last_achievement is not None else ""
+
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST, data=e.args)
