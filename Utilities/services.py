@@ -1,4 +1,3 @@
-import datetime
 import os
 import tempfile
 from typing import List, Dict, Union, Optional, BinaryIO
@@ -7,7 +6,7 @@ from openpyxl import Workbook
 from openpyxl.styles import PatternFill, numbers
 from openpyxl.worksheet.worksheet import Worksheet
 
-from PersonalArea import models
+from PersonalArea.models import *
 from events.models import *
 from ctypes import ArgumentError
 
@@ -57,18 +56,18 @@ def parse_eu_date_to_us(record: str) -> str:
 
 
 def set_trainer_status(trainer_id: int) -> None:
-    if models.Aikido_Member.objects.filter(id=trainer_id).exists():
-        trainer = models.Aikido_Member.objects.get(id=trainer_id)
+    if Aikido_Member.objects.filter(id=trainer_id).exists():
+        trainer = Aikido_Member.objects.get(id=trainer_id)
         trainer.isTrainer = True
         trainer.save()
 
 
 def create_row(request: Dict[str, str], event: Events, member=None) -> List[str]:
-    trainer = models.Aikido_Member.objects.get(id=request['trainer_id'])
+    trainer = Aikido_Member.objects.get(id=request['trainer_id'])
     last = 0
     ku_suffix = ''
     if member is not None:
-        member_achievements = models.Achievements.objects.filter(member=member, received_ku__isnull=False).order_by(
+        member_achievements = Achievements.objects.filter(member=member, received_ku__isnull=False).order_by(
             'attestation_date')
         if member_achievements.exists():
             last = member_achievements.values_list('received_ku')[member_achievements.count() - 1][0]
@@ -93,6 +92,36 @@ def create_row(request: Dict[str, str], event: Events, member=None) -> List[str]
         event.date_of_event, '', '', event.responsible_trainer]
 
 
+def create_row_to_past(record: Achievements, event: Events):
+    member = record.member
+    trainer = Aikido_Member.objects.get(id=member.trainer_id)
+    ku_suffix = '+' if record.is_child is True else ''
+    member_achievements = Achievements.objects.filter(member=member).order_by('attestation_date').values('event_name',
+                                                                                                         'received_ku',
+                                                                                                         'is_child')
+    last_ku = ''
+    index = 0
+    for i in member_achievements:
+        if i.event_name == event.event_name:
+            break
+        index += 1
+
+    if index != 0:
+        last_ku = member_achievements[index]['received_ku']
+
+    return [
+        member.surname, member.name, member.second_name,
+        last_ku,
+        member.id,
+        member.birthdate,
+        member.city,
+        member.club.name,
+        f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
+        trainer.id,
+        event.start_record_date.date(), event.address,
+        event.date_of_event, parse_ku(record.received_ku), ku_suffix, event.responsible_trainer]
+
+
 def set_blue_row(work_sheet: Worksheet) -> None:
     for row in work_sheet.iter_rows(min_row=1, max_row=1):
         for cell in row:
@@ -100,22 +129,22 @@ def set_blue_row(work_sheet: Worksheet) -> None:
 
 
 def generate_id() -> int:
-    ids = sorted(models.Aikido_Member.objects.values_list("id", flat=True))
+    ids = sorted(Aikido_Member.objects.values_list("id", flat=True))
     limit = ids[-1]
     missing_numbers = list(set(range(1, limit + 3)) - set(ids))
     return missing_numbers[0]
 
 
 def delete_achievement_if_exists(event_name: str) -> None:
-    achievements = models.Achievements.objects.filter(event_name=event_name) \
+    achievements = Achievements.objects.filter(event_name=event_name) \
         .prefetch_related("member")
     if achievements.exists():
         hasbiks_id = achievements.values_list("member", flat=True)
 
         for i in hasbiks_id:
-            if models.Achievements.objects.filter(member_id=i).count() == 1:
+            if Achievements.objects.filter(member_id=i).count() == 1:
                 if achievements.filter(member_id=i).exists():
-                    models.Aikido_Member.objects.get(id=i).delete()
+                    Aikido_Member.objects.get(id=i).delete()
             achievements.get(member_id=i).delete()
 
 
