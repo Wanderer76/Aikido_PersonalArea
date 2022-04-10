@@ -10,7 +10,7 @@ function postWithoutAnswer(url, sendingFile, method="POST", func) {
 
 
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status > 200 && this.status < 400) {
+        if (this.readyState == 4 && this.status >= 200 && this.status < 400) {
             console.log(xhr.response);
             func();
         }

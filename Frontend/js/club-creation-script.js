@@ -1,3 +1,6 @@
+let coaches;
+getRequest('http://localhost:8000/api/v1/account/trainers/', fillCoaches);
+
 function getAllInfo() {
     let clubName = document.getElementById("club-name").value;
     let area = document.getElementById("area").value;
@@ -17,6 +20,7 @@ function getAllInfo() {
     if (coachesArr.length !== 0)
         for (let coach_id of coachesArr) {
             fd.append("main_trainers", coach_id);
+            console.log('add ' + coach_id + 'trainer');
         }
 
 
@@ -35,16 +39,14 @@ function hideErrorMessage() {
 }
 
 
-function sendAllInfo(url) {
+function sendAllInfo(url, method) {
     let fd = getAllInfo();
-    let parsed = JSON.parse(fd.get('jsonInfo'));
-
-
+    console.log()
     console.log('Sending was started!');
     if (fd.get("name") === "" || fd.get("city") === "" || fd.get("area") === "")
         document.getElementById("error-message").classList.remove('hidden');
     else {
-        postWithoutAnswer('http://localhost:8000/clubs/api/v1/create_club/', fd, "POST", function () {location.href = "../html/clubs.html"});
+        postWithoutAnswer(url, fd, method, function () {});
     }
 
 }
@@ -74,20 +76,22 @@ function changeGridAreaOnFirstElement(className, value) {
 }
 
 // Добавление нового селектора
-function addMoreCoach() {
+function addMoreCoach(selectedCoachId = undefined) {
+    console.log('selectedCoachId='+selectedCoachId);
     let form = document.getElementsByClassName('forms')[0];
     let newSelectObject = document.createElement('select')
     newSelectObject.classList.add('coach-selector');
     newSelectObject.classList.add('coach-selector-add');
     newSelectObject.name = 'coach-selector';
-    newSelectObject.innerHTML = "<option value=\"none\" selected>Выберите тренера</option>"
+    newSelectObject.innerHTML = '<option value="none" selected>Выберите тренера</option>'
+
 
     let selectors = document.getElementsByClassName('coach-selector');
     let butt = document.getElementsByClassName('add')[0];
     let lastSelector = selectors[selectors.length-1];
     lastSelector.classList.remove('coach-selector-add')
     butt.parentElement.insertBefore(newSelectObject, butt);
-    fillNewSelectors(newSelectObject);
+    fillNewSelectors(newSelectObject, selectedCoachId);
     let parameterString = ''
     for (let i =0; i < selectors.length-1; i++) {
         parameterString += '"coach-name' + i + ' coach-name' + i + ' coach-name'+i+'"';
@@ -100,13 +104,15 @@ function addMoreCoach() {
 
 
 
-function fillNewSelectors(selector) {
-    let coaches = [{id: '001', name: "Somebody Coach 1"}, {id: '002', name: "Somebody Coach 2"}]
+function fillNewSelectors(selector, coachId) {
     for (let i = 0; i < coaches.length; i++) {
         let option = document.createElement('option');
-
-            option.value = coaches[i].id;
-            option.textContent = coaches[i].name + " #" + coaches[i].id;
+        if (coachId !== undefined && Number(coachId) === coaches[i]['id']) {
+            console.log('Yes! Selected');
+            option.selected = true;
+        }
+        option.value = coaches[i]['id'];
+        option.textContent = coaches[i]['name'] + coaches[i]['surname'] + coaches[i]['second_name'] + " #" + coaches[i].id;
 
         insertAfter(option, selector.lastElementChild);
     }
@@ -116,4 +122,12 @@ function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
 
-fillNewSelectors(document.getElementsByClassName('coach-selector')[0]);
+
+function fillCoaches(data) {
+    coaches = JSON.parse(data)
+    fillNewSelectors(document.getElementsByClassName('coach-selector')[0]);
+}
+
+
+
+
