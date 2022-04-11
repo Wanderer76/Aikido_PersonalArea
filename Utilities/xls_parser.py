@@ -6,7 +6,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import transaction
 
 import PersonalArea.serializations
-from PersonalArea import models
+from PersonalArea.models import *
 from events.models import *
 from Utilities import password_generantor
 from Utilities import services
@@ -26,10 +26,10 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
 
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
         member_id = services.parse_id_from_xls(row[4].value)
-        if models.Achievements.objects.filter(event_name=event.event_name, member__id=member_id).exists():
+        if Achievements.objects.filter(event_name=event.event_name, member__id=member_id).exists():
             raise ArgumentError(f"Ячейка заполнена не правильно {row[4]}")
 
-        achievement = models.Achievements()
+        achievement = Achievements()
         achievement.event_name = event.event_name
         achievement.attestation_date = row[12].value
         achievement.received_ku = services.get_ku(row[13].value)
@@ -37,7 +37,7 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
 
         trainer_id = services.parse_id_from_xls(row[9].value)
         services.set_trainer_status(trainer_id)
-        if not (models.Aikido_Member.objects.filter(id=member_id).exists()):
+        if not (Aikido_Member.objects.filter(id=member_id).exists()):
             data = {
                 'id': int(member_id),
                 'password': password_generantor.generate_password(),
@@ -45,7 +45,7 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
                 'surname': row[0].value,
                 'second_name': row[2].value,
                 'birthdate': services.parse_eu_date_to_us(str(row[5].value)),
-                'region': int(row[6].value),
+                'city': str(row[6].value),
                 'club': row[7].value,
                 'photo': None,
                 'isTrainer': False,
@@ -59,7 +59,7 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
             else:
                 raise ArgumentError(f"Ошибка в строке {row}")
         else:
-            aikiboy = models.Aikido_Member.objects.get(id=member_id)
+            aikiboy = Aikido_Member.objects.get(id=member_id)
             achievement.member = aikiboy
             achievement.save()
 
@@ -71,22 +71,31 @@ def createXlsxFromRequests(event_slug: str) -> BinaryIO:
     wb = openpyxl.Workbook(iso_dates=True)
     work_sheet = wb.active
     work_sheet.append(['Фамилия', 'Имя', 'Отчество', 'степень кю/дан', '#ID', 'Дата рождения',
-                       'Регион', 'Клуб', 'Тренер', 'id тренера', 'семинар', 'место проведения', 'аттестация',
+                       'Город', 'Клуб', 'Тренер', 'id тренера', 'семинар', 'место проведения', 'аттестация',
                        'Присвоенная степень', 'детский', 'Экзаменатор'])
 
     services.set_blue_row(work_sheet)
     event = Events.objects.get(slug=event_slug)
 
-    requests = Request.objects.filter(event_name=event.event_name)
-    if not requests.exists():
-        raise ArgumentError('Заявок на мероприятие нет')
+    is_past = True if event.date_of_event.isoformat() <= datetime.date.today().isoformat() else False
 
-    for request in requests.values():
-        if request['member_id'] is not None:
-            member = models.Aikido_Member.objects.get(id=request['member_id'])
+    if is_past:
+        records = Achievements.objects.filter(event_name=event.event_name) \
+            .prefetch_related('member').prefetch_related('member__club')
+        for record in records:
+            work_sheet.append(services.create_row_to_past(record,event))
+
+    else:
+        requests = Request.objects.filter(event_name=event.event_name)
+        if not requests.exists():
+            raise ArgumentError('Заявок на мероприятие нет')
+
+        for request in requests.values():
+            member = None
+            if request['member_id'] is not None:
+                member = Aikido_Member.objects.get(id=request['member_id'])
             work_sheet.append(services.create_row(request, event, member))
-        else:
-            work_sheet.append(services.create_row(request, event))
 
     services.set_date_format(work_sheet)
+
     return services.get_xlsx_file_obj(wb, event_slug)

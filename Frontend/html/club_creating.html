@@ -19,19 +19,21 @@
                 <input type="text" id="city" onchange="hideErrorMessage()" placeholder="Город">
             </div>
             <div class="coach-selector-block">
-                <select name="coach-selector" onchange="hideErrorMessage()" class=" coach-selector coach-selector-add">
+                <select name="coach-selector" id="first-selector" onchange="hideErrorMessage()" class=" coach-selector coach-selector-add">
                     <option value="none" selected>Выберите главного тренера</option>
                 </select>
                 <button class="add" onclick="addMoreCoach()">+</button>
             </div>
             <div class="button-block">
-                <button class="send-button" id="send-button" onclick="sendAllInfo('http://localhost:8000/clubs/api/v1/create_club/')">Добавить клуб</button>
+                <button class="send-button" id="send-button" onclick="sendAllInfo('http://localhost:8000/api/v1/clubs/create_club/')">Добавить клуб</button>
                 <p class="error-message hidden" id="error-message">Введены не все данные</p>
             </div>
         </div>
     </div>
 </body>
 <script src="../js/menu-inserting.js"></script>
-<script src="../js/club-creation-script.js"></script>
 <script src="../js/postWithoutAnswer.js"></script>
+<script src="../js/getRequest.js"></script>
+<script src="../js/club-creation-script.js"></script>
+
 </html>

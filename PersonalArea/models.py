@@ -18,7 +18,7 @@ class Aikido_Account_Manager(BaseUserManager):
             surname=kwargs.get('surname'),
             second_name=kwargs.get("second_name"),
             birthdate=kwargs.get("birthdate"),
-            region=kwargs.get("region"),
+            city=kwargs.get("city"),
             club=Club.objects.get(name=kwargs.get("club")),
             photo=kwargs.get("photo"),
             isTrainer=kwargs.get("isTrainer"),
@@ -29,7 +29,7 @@ class Aikido_Account_Manager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, id, name, surname, second_name, birthdate, region, club, password):
+    def create_superuser(self, id, name, surname, second_name, birthdate, city, club, password):
         user = self.model(
             id=id,
             password=password,
@@ -37,7 +37,7 @@ class Aikido_Account_Manager(BaseUserManager):
             surname=surname,
             second_name=second_name,
             birthdate=birthdate,
-            region=region,
+            city=city,
             club=Club.objects.get(name=club),
             photo=None,
             isTrainer=True,
@@ -55,7 +55,7 @@ class Aikido_Member(AbstractBaseUser, PermissionsMixin):
     surname = models.CharField(name="surname", max_length=20, null=False)
     second_name = models.CharField(name="second_name", max_length=20, null=True)
     birthdate = models.DateField(name="birthdate", null=False)
-    region = models.IntegerField(name="region", null=False)
+    city = models.CharField(name="city", max_length=50, null=False,default='Екатеринбург')
     club = models.ForeignKey(Club, on_delete=models.SET_NULL, null=True)
     photo = models.ImageField(name="photo", null=True, blank=True)
     isTrainer = models.BooleanField(name="isTrainer", null=False, default=False, blank=True)
@@ -69,7 +69,7 @@ class Aikido_Member(AbstractBaseUser, PermissionsMixin):
         managed = True
 
     USERNAME_FIELD = 'id'
-    REQUIRED_FIELDS = ['name', 'surname', 'second_name', 'birthdate', 'region', 'club']
+    REQUIRED_FIELDS = ['name', 'surname', 'second_name', 'birthdate', 'city', 'club']
     objects = Aikido_Account_Manager()
 
     def __str__(self):
@@ -101,5 +101,3 @@ class Achievements(models.Model):
         db_table = "achievements"
         managed = True
         get_latest_by = 'attestation_date'
-
-

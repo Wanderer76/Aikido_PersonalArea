@@ -1,7 +1,6 @@
 let xhr = new XMLHttpRequest();
-const url = 'http://localhost:8000/clubs/api/v1/get_clubs/';
+const url = 'http://localhost:8000/api/v1/clubs/get_clubs/';
 let storage = window.sessionStorage;
-let data;
 xhr.open('GET', url);
 xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
 xhr.send();
@@ -10,11 +9,11 @@ xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         data = xhr.response;
         console.log(data);
-        createCards();
+        createCards(xhr.response);
     }
 }
 
-function createCards() {
+function createCards(data) {
     let clubs = JSON.parse(data);
     console.log(clubs);
     for (let club of clubs) {
@@ -47,7 +46,7 @@ function fillCard(cardNode, clubInfo) {
         '</div>' +
         '<div class="po">\n' +
         '       <button type="button" class="deleteBut" onclick="deleteClub(\''+ clubInfo["slug"] +'\', \''+ clubInfo["name"] +'\')" name="delete">Удалить</button>\n' +
-        '       <button type="button" class="editBut" name="edit">Редактировать</button>\n' +
+        '       <button type="button" class="editBut" name="edit" onclick="goToEditClubPage(\''+ clubInfo["slug"] +'\')">Редактировать</button>\n' +
         '   </div>'
     cardNode.innerHTML = html;
 }
@@ -63,7 +62,7 @@ function deleteClub(slug, name) {
     document.getElementById('clubname-in-accept').textContent = '"'+ name +'"';
     let acceptBut = document.getElementsByClassName('accept-button')[0];
     acceptBut.onclick = function () {
-        postWithoutAnswer('http://localhost:8000/clubs/api/v1/delete_club/'+slug+'/', undefined, "DELETE", function () {location.reload()});
+        postWithoutAnswer('http://localhost:8000/api/v1/clubs/delete_club/'+slug+'/', undefined, "DELETE", function () {location.reload()});
 
     }
 }
@@ -71,6 +70,11 @@ function deleteClub(slug, name) {
 function hideAcceptBlock() {
     let acceptBlock = document.getElementById('accept-block');
     acceptBlock.classList.add('hidden');
+}
+
+function goToEditClubPage(slug) {
+    window.sessionStorage.setItem('club_slug', slug);
+    location.href = "../html/club_editing.html";
 }
 
 
