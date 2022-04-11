@@ -32,12 +32,13 @@ const createElement = (template) => {
 
 // Разметка поля ввода в столбце дней.
 const createDayInputMarkup = (dayCount, participantCategory) => {
-    return `<input type="text" class="input-schedule" name="${participantCategory}" id="day-${dayCount}" placeholder="ДД месяц">`;
+    return `<input type="text" class="input-schedule" data-category="${participantCategory}" id="day-${dayCount}" placeholder="ДД месяц">`;
 };
 
 // Разметка поля ввода в столбце времени.
-const createTimeInputMarkup = (timeCount, exactDay) => {
-    return `<input type="text" class="input-schedule" name="${exactDay}" id="time-${timeCount}" placeholder="ЧЧ:ММ - ЧЧ:ММ">`;
+const createTimeInputMarkup = (timeCount, exactDay, participantCategory) => {
+    return `<input type="text" class="input-schedule" data-day="${exactDay}" 
+        data-category="${participantCategory}" id="time-${timeCount}" placeholder="ЧЧ:ММ - ЧЧ:ММ">`;
 };
 
 // Элементы.
@@ -65,8 +66,17 @@ participantSelect.addEventListener('change', function () {
     currentDayElement = null;
     addHiddenClass(dayInputs);
     addHiddenClass(timeInputs);
-    removeHiddenClass(dayInputs, participantSelect.value);
+    removeDayHiddenClass(dayInputs, participantSelect.value);
 })
+
+//Убирает класс, скрывающий элемент дня.
+const removeDayHiddenClass = (dayInputs, category) => {
+    for (let j = 0; j < dayInputs.length; j++) {
+        if (dayInputs[j].dataset.category === category) {
+            dayInputs[j].classList.remove('visually-hidden');
+        }
+    }
+}
 
 
 //Обработчик клика для кнопки "Добавить день".
@@ -86,13 +96,16 @@ const addDay = () => {
 
         dayInputs.push(dayInputElement);
         render(dayColumn, dayInputElement, RenderPosition.BEFOREEND);
+
+        removeCurrentDay();
         addHiddenClass(timeInputs);
+
         dayInputCount++;
 
-        console.log(dayInputElement, dayInputCount);
+        console.log(dayInputElement);
     }
     else {
-        alert('Выберите категорию');
+        alert('Выберите категорию.');
     }
 }
 
@@ -104,26 +117,36 @@ const dayClickListener = () => {
             removeCurrentDay();
             dayInputs[i].classList.add('chosen-schedule');
             currentDayElement = dayInputs[i];
-            removeHiddenClass(timeInputs, currentDayElement.value);
+            removeHoursHiddenClass(timeInputs, currentDayElement.value, participantSelect.value);
         })
     }
 }
+
+// Убирает класс, скрывающий элемент часов
+const removeHoursHiddenClass = (timeInputs, day, category) => {
+    for (let j = 0; j < timeInputs.length; j++) {
+        if (timeInputs[j].dataset.day === day && timeInputs[j].dataset.category === category) {
+            timeInputs[j].classList.remove('visually-hidden');
+        }
+    }
+}
+
 
 // Функция, навешивающая слушателя на изменение каждого элемента массива дней.
 const dayChangeListener = () => {
     for (let i = 0; i < dayInputs.length; i++) {
         dayInputs[i].addEventListener('change', function () {
             let changedDay = dayInputs[i];
-            changeDateData(timeInputs, changedDay.value);
+            changeDateData(timeInputs, changedDay);
         })
     }
 }
 
 // Функция замены поля измененной даты у выбранных дней.
-const changeDateData = (times, day) => {
-    for (let j = 0; j < times.length; j++) {
-        if (!times[j].classList.contains('visually-hidden')) {
-            times[j].name = day;
+const changeDateData = (timeInputs, dayInput) => {
+    for (let j = 0; j < timeInputs.length; j++) {
+        if (!timeInputs[j].classList.contains('visually-hidden') && timeInputs[j].dataset.category === dayInput.dataset.category) {
+            timeInputs[j].dataset.day = dayInput.value;
         }
     }
 }
@@ -137,16 +160,13 @@ const removeCurrentDay = () => {
 }
 
 //Обработчик для кнопки "+" время.
-addTimeBtn.addEventListener('click', function () {
-    addTime();
-
-})
+addTimeBtn.addEventListener('click', function () { addTime(); })
 
 const addTime = () => {
     if (currentDayElement) {
         const count = timeInputCount;
         const exactDay = currentDayElement.value;
-        const timeInputElement = createElement(createTimeInputMarkup(count, exactDay));
+        const timeInputElement = createElement(createTimeInputMarkup(count, exactDay, participantSelect.value));
 
         timeInputs.push(timeInputElement);
         render(timeColumn, timeInputElement, RenderPosition.BEFOREEND);
@@ -166,16 +186,39 @@ const addHiddenClass = (array) => {
         }
 }
 
-//Убирает класс, скрывающий элемент
-const removeHiddenClass = (array, comparison) => {
-    for (let j = 0; j < array.length; j++) {
-        if (array[j].name === comparison) {
-            array[j].classList.remove('visually-hidden');
-        }
-    }
-}
 
 //Функция формирования расписания
+// function createSchedule(days = dayInputs, times = timeInputs) {
+//     const categories = ["children-jun", "children-sen", "adults", "qualify"];
+//     let schedule = {};
+//
+//     for (let i = 0; i < categories.length; i++) {
+//         createCurrentGroupSchedule(categories[i], schedule);
+//     }
+//
+//     function createCurrentGroupSchedule (currentGroup, schedule) {
+//         let result = {};
+//         for (let i = 0; i < days.length; i++) {
+//             if (days[i].value && days[i].dataset.category === currentGroup){
+//                 result[days[i].value] = [];
+//                 for (let j = 0; j < times.length; j++) {
+//                     if (times[j].name === days[i].value && times[j].value) {
+//                         result[days[i].value].push(times[j].value);
+//                     }
+//                 }
+//             }
+//         }
+//         Object.keys(result).forEach(function(key) {
+//             if (result[key].length === 0) {
+//                 delete result[key];
+//             }
+//         }, result);
+//         schedule[currentGroup] = result;
+//     }
+//     console.log(schedule);
+//     return(schedule);
+// }
+
 function createSchedule(days = dayInputs, times = timeInputs) {
     const categories = ["children-jun", "children-sen", "adults", "qualify"];
     let schedule = {};
@@ -187,10 +230,10 @@ function createSchedule(days = dayInputs, times = timeInputs) {
     function createCurrentGroupSchedule (currentGroup, schedule) {
         let result = {};
         for (let i = 0; i < days.length; i++) {
-            if (days[i].value && days[i].name === currentGroup){
+            if (days[i].value && days[i].dataset.category === currentGroup) {
                 result[days[i].value] = [];
                 for (let j = 0; j < times.length; j++) {
-                    if (times[j].name === days[i].value && times[j].value) {
+                    if (times[j].value && times[j].dataset.day === days[i].value && times[j].dataset.category === currentGroup) {
                         result[days[i].value].push(times[j].value);
                     }
                 }
