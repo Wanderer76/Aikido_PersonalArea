@@ -34,14 +34,15 @@ function fillCard(cardNode, clubInfo) {
            '<div class="inf-list">' +
                '<p class="club_name">'+ clubInfo['name'] +'</p>' +
                '<p class="city">г.' + clubInfo['city'] + '</p>' +
-               '<p class="region">'+ clubInfo['area'] +'</p>' +
-                '<p class="fio">'+ clubInfo['main_trainer'] +'</p>';
+               '<p class="region">'+ clubInfo['area'] +'</p>';
 
-    //uncomment code down and delete 39 string when main_trainers will array
+    if (clubInfo['main_trainers'].length === 0)
+        html += '<p class="fio">Тренер не указан</p>';
+        else
+        for (let trainer of clubInfo['main_trainers']) {
+            html += '<p class="fio">'+ trainer +'</p>';
+        }
 
-    // for (let trainer of clubInfo['main_trainers']) {
-    //     html += '<p class="fio">'+ trainer +'</p>';
-    // }
     html += '</div>\n' +
         '</div>' +
         '<div class="po">\n' +
