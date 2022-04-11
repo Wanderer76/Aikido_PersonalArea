@@ -85,6 +85,34 @@ input {
     grid-area: club;
 }
 
+.error-message {
+    color: red;
+    font-size: 2vh;
+    margin-top: 2%;
+}
+
+.button-block {
+    text-align: center;
+    width: 80%;
+    align-self: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.send-button {
+    background: #134F8C;
+    align-self: center;
+    height: 8vh;
+    width: 40%;
+
+    border: none;
+    border-radius: 25px;
+
+    font-size: 3.7vh;
+    color: white;
+
+}
+
 @media all and (max-width: 600px) {
     .form-block {
         grid-template-areas: "surname surname name name"
