@@ -15,6 +15,12 @@ class Profile_Serializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'surname', 'second_name', 'birthdate', 'photo', 'club', 'city']
 
 
+class CandidatesToTrainerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Aikido_Member
+        fields = ['id', 'name', 'surname', 'second_name']
+
+
 # TODO изменить в дальнейшем
 class Achievements_Serializer(serializers.ModelSerializer):
     class Meta:

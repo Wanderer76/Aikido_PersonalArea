@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование клуба</title>
+    <title>Создание тренера</title>
     <link rel="stylesheet" href="../css/add_new_trainer.css">
 </head>
 <body>
 <div class="wrapper abc">
     <div class="container content center-block vh-100 d-flex flex-wrap">
         <h1>Добавить тренера</h1>
-        <select name="coach-selector" id="coach-selector" class="coach-selector">
+        <select name="coach-selector" id="coach-selector" class="coach-selector" onchange="hideErrorMessage()">
             <option value="none" selected>Выберите человека из базы</option>
         </select>
         <div class="text-block">
@@ -17,27 +17,45 @@
             <p>Создайте новый аккаунт</p>
         </div>
         <div class="form-block">
-            <input type="text" placeholder="Фамилия" class="base-info" id="surname">
-            <input type="text" placeholder="Имя" class="base-info" id="name">
-            <input type="text" placeholder="Отчество" class="base-info" id="second-name">
-            <input type="date" placeholder="Дата рождения" class="base-info" id="birthdate">
-            <select class="base-info-selectors" id="rank-selector">
+            <input type="text" placeholder="Фамилия" class="base-info" id="surname" onchange="hideErrorMessage()">
+            <input type="text" placeholder="Имя" class="base-info" id="name" onchange="hideErrorMessage()">
+            <input type="text" placeholder="Отчество" class="base-info" id="second-name" onchange="hideErrorMessage()">
+            <input type="date" placeholder="Дата рождения" class="base-info" id="birthdate" onchange="hideErrorMessage()">
+            <select class="base-info-selectors" id="rank-selector" onchange="hideErrorMessage()">
                 <option value="none" selected>Степень</option>
+                <option value="5">5 кю</option>
+                <option value="4">4 кю</option>
+                <option value="3">3 кю</option>
+                <option value="2">2 кю</option>
+                <option value="1">1 кю</option>
+                <option value="11">1 дан</option>
+                <option value="12">2 дан</option>
+                <option value="13">3 дан</option>
+                <option value="14">4 дан</option>
+                <option value="15">5 дан</option>
+                <option value="16">6 дан</option>
+                <option value="17">7 дан</option>
+                <option value="18">8 дан</option>
+                <option value="19">9 дан</option>
+
             </select>
-            <input type="date" class="base-info" id="attestation-date">
-            <select class="base-info-selectors club" id="club-selector">
+            <input type="date" class="base-info" id="attestation-date" onchange="hideErrorMessage()">
+            <select class="base-info-selectors club" id="club-selector" onchange="hideErrorMessage()">
                 <option value="none">Выберите клуб</option>
             </select>
-            <input type="text" placeholder="Название мероприятия аттестации" class="event-name" id="event-name">
-
-
+            <input type="text" placeholder="Название мероприятия аттестации" class="event-name" id="event-name" onchange="hideErrorMessage()">
+        </div>
+        <div class="button-block">
+            <button class="send-button" onclick="sendInfo()">Создать</button>
+            <p class="error-message hidden" id="error-message">Введите все данные</p>
         </div>
 
     </div>
 </div>
 </body>
 <script src="../js/menu-inserting.js"></script>
-<script src="../js/club-creation-script.js"></script>
-<script src="../js/club-editing-script.js"></script>
+<script src="../js/getRequest.js"></script>
 <script src="../js/postWithoutAnswer.js"></script>
+<script src="../js/add-new-trainer-script.js"></script>
+
 </html>

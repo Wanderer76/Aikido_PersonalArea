@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from django.http import JsonResponse
@@ -13,7 +15,7 @@ from rest_framework.views import APIView
 
 from PersonalArea.models import *
 from PersonalArea.serializations import *
-
+from Utilities import password_generantor, services
 
 class LoginAPIView(APIView):
     """json формат в котором нужно передавать данные
@@ -122,6 +124,57 @@ class SeminarStatistic(APIView):
         seminars = Achievements.objects.filter(event_name=event_name).values('received_ku').annotate(
             count=Count('received_ku'))
         return Response(status=status.HTTP_200_OK, data=seminars)
+
+
+class CreateTrainer(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def post(self, request, id=None):
+
+        if id is not None:
+            aikided = Aikido_Member.objects.get(id=id)
+            aikided.isTrainer = True
+            aikided.save()
+            return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
+
+        else:
+            data = JSONParser().parse(request)
+            if len(data) == 8:
+                club = Club.objects.get(name=data['club'])
+                id = services.generate_id()
+                trainer = Aikido_Member()
+                trainer.id = id
+                trainer.password = password_generantor.generate_password()
+                trainer.name = data['name']
+                trainer.surname = data['surname']
+                trainer.second_name = data['second_name']
+                trainer.birthdate = data['birthdate']
+                trainer.city = club.city
+                trainer.club = club
+                trainer.isTrainer = True
+                trainer.save()
+
+                achievement = Achievements()
+                achievement.event_name = data['event_name']
+                achievement.attestation_date = data['attestation_date']
+                achievement.received_ku = data['received_ku']
+                achievement.is_child = False
+                achievement.member = trainer
+                achievement.save()
+
+                return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "не все поля заполнены"})
+
+
+class CandidatesToTrainer(APIView):
+
+    def get(self, request):
+        current_year = datetime.date.today()
+        min_year = current_year.replace(current_year.year - 18, current_year.month, current_year.day)
+        members = Aikido_Member.objects.filter(birthdate__lte=min_year, isTrainer=False)
+        serializer = CandidatesToTrainerSerializer(members, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 @csrf_exempt
