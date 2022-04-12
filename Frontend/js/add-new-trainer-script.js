@@ -1,11 +1,11 @@
-getRequest('http://localhost:8000/api/v1/account/trainers/', fillTrainerSelector);
+getRequest('http://localhost:8000/api/v1/account/candidates/trainers/', fillTrainerSelector);
 getRequest('http://localhost:8000/api/v1/clubs/get_clubs/', fillClubSelector)
 
 function fillTrainerSelector(data) {
     let trainers = JSON.parse(data);
     let selector = document.getElementById('coach-selector');
     for (let trainer of trainers) {
-        selector.innerHTML += '<option value="'+ trainer['id'] + '">'+ trainer['name'] + ' #' + trainer['id'] +'</option>';
+        selector.innerHTML += '<option value="'+ trainer['id'] + '">'+ trainer['name'] + ' ' + trainer['surname'] + ' ' + trainer['second_name']  + ' #' + trainer['id'] +'</option>';
     }
 }
 
@@ -24,7 +24,6 @@ fillTrainerSelector(JSON.stringify([{'id' : '001', 'name': "Некто Нект�
 function getAllInfo() {
 
     if (document.getElementById('coach-selector').value !== 'none') {
-        console.log(document.getElementById('coach-selector').value);
         return {'id' : document.getElementById('coach-selector').value}
     }
     else {
@@ -32,9 +31,10 @@ function getAllInfo() {
                       'name' : document.getElementById('name').value,
                       'second_name' : document.getElementById('second-name').value,
                       'birthdate' : document.getElementById('birthdate').value,
-                      'rank' : document.getElementById('rank-selector').value,
+                      'received_ku' : document.getElementById('rank-selector').value,
                       'club' : document.getElementById('club-selector').value,
-                      'last_event' : document.getElementById('event-name').value
+                      'event_name' : document.getElementById('event-name').value,
+                      'attestation_date': document.getElementById('attestation-date').value
         }
 
     }
@@ -45,15 +45,17 @@ function hideErrorMessage() {
 }
 
 function sendInfo() {
-    let url = 'something url';
     let sending_data = getAllInfo();
-    if  (sending_data['surname'] !== '' && sending_data['name'] !== '' && sending_data['second_name'] !== '' &&
+    if (sending_data['id'] !== 'none' && sending_data['id'] !== undefined) {
+            console.log('sending id');
+            postWithoutAnswer('http://localhost:8000/api/v1/account/create_trainer/' + sending_data['id'] + '/', undefined, "POST", function () {location.href = '../html/federation_coaches.html'});
+        }
+    else if  (sending_data['surname'] !== '' && sending_data['name'] !== '' && sending_data['second_name'] !== '' &&
         sending_data['birthdate'] !== '' && sending_data['rank'] !== 'none' && sending_data['club'] !== 'none' &&
         sending_data['last_event'] !== '') {
-        // postWithoutAnswer();
+        console.log(sending_data);
+        postWithoutAnswer('http://localhost:8000/api/v1/account/create_trainer/', JSON.stringify(sending_data), "POST", function () {location.href = '../html/federation_coaches.html'});
     }
-    else if (sending_data['id'] !== 'none' && sending_data['id'] !== undefined)
-        // postWithoutAnswer()
     else {
         document.getElementById('error-message').classList.remove('hidden');
     }
