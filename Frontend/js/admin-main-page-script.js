@@ -1,4 +1,4 @@
-let url = "http://localhost:8000/api/v1/events/event_list/";
+let url = "http://localhost:8000/api/v1/admin/seminar_statistic/";
 let xhr = new XMLHttpRequest();
 let storage = window.sessionStorage;
 let data;
