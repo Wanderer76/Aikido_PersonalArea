@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from django.http import JsonResponse
@@ -163,6 +165,16 @@ class CreateTrainer(APIView):
                 return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "не все поля заполнены"})
+
+
+class CandidatesToTrainer(APIView):
+
+    def get(self, request):
+        current_year = datetime.date.today()
+        min_year = current_year.replace(current_year.year - 18, current_year.month, current_year.day)
+        members = Aikido_Member.objects.filter(birthdate__lte=min_year, isTrainer=False)
+        serializer = CandidatesToTrainerSerializer(members, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 @csrf_exempt
