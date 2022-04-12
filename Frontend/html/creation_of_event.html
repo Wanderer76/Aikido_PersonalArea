@@ -13,130 +13,133 @@
     <body>
     <div class="content">
     </div>
-        <main class="page-body__page-main">
-            <div class="page-body__container">
-                <form action="#" method="post">
-                    <h1>Создание мероприятия</h1>
-                    <section>
-                        <div class="event-title">
-                            <label class="visually-hidden" for="event-name">Название мероприятия</label>
-                            <input type="text" title="Название мероприятия" name="event-name" id="event-name" placeholder="Название мероприятия">
-                        </div>
-                        <div class="event-dates">
-                            <label class="visually-hidden" for="date-start">Дата начала</label>
-                            <input type="date" class="date" title="Дата начала" name="date-start" id="date-start" placeholder="Дата начала">
-                            <label class="visually-hidden" for="date-end">Дата окончания</label>
-                            <input type="date" class="date" title="Дата окончания" name="date-end" id="date-end" placeholder="Дата окончания">
-                        </div>
-                        <div class="event-address">
-                            <label class="visually-hidden" for="event-location">Адрес проведения</label>
-                            <input type="text" class="event-location" title="Адрес проведения" name="event-location" id="event-location" placeholder="Адрес проведения">
-                        </div>
-                        <div class="map" id="map">
-                        </div>
-
-                        <label class="visually-hidden" for="resp-club-select">Ответственный клуб</label>
-                        <select title="Ответственный клуб" name="resp-club" id="resp-club-select">
-                            <option value="Ромашки">-- Ответственный клуб --</option>
-                        </select>
-                        <div class="coach-and-rank">
-                            <label class="visually-hidden" for="lead-coach">ФИО ведущего тренера</label>
-                            <input type="text" class="lead-coach" title="ФИО ведущего тренера" name="lead-coach" id="lead-coach" placeholder="ФИО ведущего тренера">
-                            <label class="visually-hidden" for="max-rang-select">Макс. ранг</label>
-                            <select class="max-rang" title="Максимальный ранг" name="max-rang" id="max-rang-select">
-                                <option value="">-- Макс. ранг --</option>
-                                <option value="5kyu">5 кю</option>
-                                <option value="4kyu">4 кю</option>
-                                <option value="3kyu">3 кю</option>
-                                <option value="2kyu">2 кю</option>
-                                <option value="1kyu">1 кю</option>
-                                <option value="1dan">1 дан</option>
-                                <option value="2dan">2 дан</option>
-                                <option value="3dan">3 дан</option>
-                                <option value="4dan">4 дан</option>
-                                <option value="5dan">5 дан</option>
-                                <option value="6dan">6 дан</option>
-                                <option value="7dan">7 дан</option>
-                                <option value="8dan">8 дан</option>
-                                <option value="9dan">9 дан</option>
-
-                            </select>
-                        </div>
-                    </section>
-
-                    <section>
-                        <h2>Расписание мероприятия</h2>
-                        <label class="visually-hidden" for="participant-category">Категория</label>
-                        <select title="Категория" name="participant-category" id="participant-category">
-                            <option value="">-- Категория --</option>
-                            <option value="children-jun">Дети младшие пояса</option>
-                            <option value="children-sen">Дети старшие пояса</option>
-                            <option value="adults">Взрослые</option>
-                            <option value="qualify">Аттестация</option>
-                        </select>
-                        <div class="day-schedule">
-                            <div class="day-column" id="day-column">
-                                <button type="button" class="add-schedule-butt" title="Добавить день"  name="add-day-butt" id="add-day">+</button>
-                            </div>
-                            <div class="time-column" id="time-column">
-                                <button type="button" class="add-schedule-butt" title="Добавить время" name="add-time-butt" id="add-time">+</button>
-                            </div>
-                        </div>
-                        <h6>Чтобы лишняя ячейка не вошла в итоговое расписание — оставьте её пустой.</h6>
-                    </section>
-
-                    <section>
-                        <h2>Афиша мероприятия</h2>
-                        <div class="event-icons">
-                            <label class="icon-field" title="Поле загрузки фото тренера">
-                                <input type="file" name="coach-icon" id="coach-icon" accept="image/jpeg, image/png">
-                                <img src="../assets/empty-coach-icon.png" id="coach-icon-preview" alt="Фото тренера" height="100%">
-                            </label>
-                            <div class="image-offset" title="Смещение по горизонтали">
-                                <label for="coach-x-offset">
-                                    <input type="number" class="input-number" id="coach-x-offset" value="0"> X
-                                </label>
-                                <label for="coach-y-offset" title="Смещение по вертикали">
-                                    <input type="number" class="input-number" id="coach-y-offset" value="0"> Y
-                                </label>
-                            </div>
-                            <label class="icon-field" title="Поле загрузки логотипа клуба">
-                                <input type="file" name="logo-icon" id="logo-icon" accept="image/jpeg, image/png">
-                                <img src="../assets/empty-club-icon.png" id="logo-icon-preview" alt="Логотип клуба" height="100%">
-                            </label>
-                            <div class="image-offset">
-                                <label for="logo-x-offset" title="Смещение по горизонтали">
-                                    <input type="number" class="input-number" id="logo-x-offset" value="0"> X
-                                </label>
-                                <label for="logo-y-offset" title="Смещение по вертикали">
-                                    <input type="number" class="input-number" id="logo-y-offset" value="0"> Y
-                                </label>
-                            </div>
-                        </div>
-                        <div class="event-poster">
-                            <label class="icon-field" title="Поле загрузки афиши мероприятия">
-                                <input type="file" name="event-poster" id="event-poster" accept="image/jpeg, image/png">
-                                <img src="../assets/fon_nophoto.png" id="event-poster-preview" alt="Афиша мероприятия" >
-                            </label>
-                        </div>
-                    </section>
-                    <section>
-                        <h2>Контакты организатора</h2>
-                        <label class="visually-hidden"  for="org-name">ФИО организатора</label>
-                        <input type="text" title="ФИО организатора" name="organizer-name" id="org-name" placeholder="ФИО организатора">
-                        <label class="visually-hidden"  for="org-phone">Телефон</label>
-                        <input type="text" title="Телефон" name="organizer-phone" id="org-phone" placeholder="Телефон">
-                        <label class="visually-hidden" for="org-email">E-mail</label>
-                        <input type="text" title="E-mail" name="organizer-email" id="org-email" placeholder="E-mail">
-                    </section>
-                    <div class="save-butts">
-                        <button type="button" class="create-butt" name="create" id="create">Создать</button>
+    <main class="page-body__page-main">
+        <div class="page-body__container">
+            <form action="#" method="post">
+                <h1>Создание мероприятия</h1>
+                <section>
+                    <div class="event-title">
+                        <label class="visually-hidden" for="event-name">Название мероприятия</label>
+                        <input type="text" title="Название мероприятия" name="event-name" id="event-name" placeholder="Название мероприятия">
                     </div>
-                </form>
-            </div>
-        </main>
-        <script src="../js/menu-inserting.js"></script>
-        <script type="module" src="../js/add-event-page-script.js"></script>
+                    <div class="event-dates">
+                        <label class="visually-hidden" for="date-start">Дата начала</label>
+                        <input type="date" class="date" title="Дата начала" name="date-start" id="date-start" placeholder="Дата начала">
+                        <label class="visually-hidden" for="date-end">Дата окончания</label>
+                        <input type="date" class="date" title="Дата окончания" name="date-end" id="date-end" placeholder="Дата окончания">
+                    </div>
+                    <div class="event-address">
+                        <label class="visually-hidden" for="event-location">Адрес проведения</label>
+                        <input type="text" class="event-location" title="Адрес проведения" name="event-location" id="event-location" placeholder="Адрес проведения">
+                    </div>
+                    <div class="map" id="map">
+                    </div>
+
+                    <label class="visually-hidden" for="resp-club-select">Ответственный клуб</label>
+                    <select title="Ответственный клуб" name="resp-club" id="resp-club-select">
+                        <option value="Ромашки">-- Ответственный клуб --</option>
+                    </select>
+                    <div class="coach-and-rank">
+                        <label class="visually-hidden" for="lead-coach">ФИО ведущего тренера</label>
+                        <input type="text" class="lead-coach" title="ФИО ведущего тренера" name="lead-coach" id="lead-coach" placeholder="ФИО ведущего тренера">
+                        <label class="visually-hidden" for="max-rang-select">Макс. ранг</label>
+                        <select class="max-rang" title="Максимальный ранг" name="max-rang" id="max-rang-select">
+                            <option value="">-- Макс. ранг --</option>
+                            <option value="5kyu">5 кю</option>
+                            <option value="4kyu">4 кю</option>
+                            <option value="3kyu">3 кю</option>
+                            <option value="2kyu">2 кю</option>
+                            <option value="1kyu">1 кю</option>
+                            <option value="1dan">1 дан</option>
+                            <option value="2dan">2 дан</option>
+                            <option value="3dan">3 дан</option>
+                            <option value="4dan">4 дан</option>
+                            <option value="5dan">5 дан</option>
+                            <option value="6dan">6 дан</option>
+                            <option value="7dan">7 дан</option>
+                            <option value="8dan">8 дан</option>
+                            <option value="9dan">9 дан</option>
+
+                        </select>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Расписание мероприятия</h2>
+                    <label class="visually-hidden" for="participant-category">Категория</label>
+                    <select title="Категория" name="participant-category" id="participant-category">
+                        <option value="">-- Категория --</option>
+                        <option value="children-jun">Дети младшие пояса</option>
+                        <option value="children-sen">Дети старшие пояса</option>
+                        <option value="adults">Взрослые</option>
+                        <option value="qualify">Аттестация</option>
+                    </select>
+                    <div class="day-schedule">
+                        <div class="day-column" id="day-column">
+                            <button type="button" class="add-schedule-butt" title="Добавить день"  name="add-day-butt" id="add-day">+</button>
+                        </div>
+                        <div class="time-column" id="time-column">
+                            <button type="button" class="add-schedule-butt" title="Добавить время" name="add-time-butt" id="add-time">+</button>
+                        </div>
+                    </div>
+                    <h6>Чтобы лишняя ячейка не вошла в итоговое расписание — оставьте её пустой.</h6>
+                </section>
+
+                <section>
+                    <h2>Афиша мероприятия</h2>
+                    <div class="event-icons">
+                        <label class="icon-field" title="Поле загрузки фото тренера">
+                            <input type="file" name="coach-icon" id="coach-icon" accept="image/jpeg, image/png">
+                            <img src="../assets/empty-coach-icon.png" id="coach-icon-preview" alt="Фото тренера" height="100%">
+                        </label>
+                        <div class="image-offset" title="Смещение по горизонтали">
+                            <label for="coach-x-offset">
+                                <input type="number" class="input-number" id="coach-x-offset" value="0"> X
+                            </label>
+                            <label for="coach-y-offset" title="Смещение по вертикали">
+                                <input type="number" class="input-number" id="coach-y-offset" value="0"> Y
+                            </label>
+                        </div>
+                        <label class="icon-field" title="Поле загрузки логотипа клуба">
+                            <input type="file" name="logo-icon" id="logo-icon" accept="image/jpeg, image/png">
+                            <img src="../assets/empty-club-icon.png" id="logo-icon-preview" alt="Логотип клуба" height="100%">
+                        </label>
+                        <div class="image-offset">
+                            <label for="logo-x-offset" title="Смещение по горизонтали">
+                                <input type="number" class="input-number" id="logo-x-offset" value="0"> X
+                            </label>
+                            <label for="logo-y-offset" title="Смещение по вертикали">
+                                <input type="number" class="input-number" id="logo-y-offset" value="0"> Y
+                            </label>
+                        </div>
+                    </div>
+                    <div class="event-poster">
+                        <label class="icon-field" title="Поле загрузки афиши мероприятия">
+                            <input type="file" name="event-poster" id="event-poster" accept="image/jpeg, image/png">
+                            <img src="../assets/fon_nophoto.png" id="event-poster-preview" alt="Афиша мероприятия" >
+                        </label>
+                    </div>
+                </section>
+                <section>
+                    <h2>Контакты организатора</h2>
+                    <label class="visually-hidden"  for="org-name">ФИО организатора</label>
+                    <input type="text" title="ФИО организатора" name="organizer-name" id="org-name" placeholder="ФИО организатора">
+                    <label class="visually-hidden"  for="org-phone">Телефон</label>
+                    <input type="text" title="Телефон" name="organizer-phone" id="org-phone" placeholder="Телефон">
+                    <label class="visually-hidden" for="org-email">E-mail</label>
+                    <input type="text" title="E-mail" name="organizer-email" id="org-email" placeholder="E-mail">
+                </section>
+                <div class="save-butts">
+                    <button type="button" class="create-butt" name="create" id="create">Создать</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="../js/menu-inserting.js"></script>
+    <script src="../js/add-event-image-script.js"></script>
+    <script type="module" src="../js/add-event-map-script.js"></script>
+    <script type="module" src="../js/add-event-schedule-script.js"></script>
+    <script type="module" src="../js/add-event-page-script.js"></script>
     </body>
 </html>
 
