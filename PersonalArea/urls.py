@@ -11,4 +11,6 @@ urlpatterns = [
     path('trainer/students/', csrf_exempt(views.TrainerHasbiks.as_view())),
     path('admin/event/<str:event_name>/', views.SeminarStatistic.as_view()),
     path('admin/members_info/', csrf_exempt(views.AikidoMembersInfo.as_view())),
+    path('create_trainer/<int:id>/', csrf_exempt(views.CreateTrainer.as_view())),
+    path('create_trainer/', csrf_exempt(views.CreateTrainer.as_view())),
 ]
