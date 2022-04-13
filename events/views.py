@@ -38,11 +38,6 @@ class CreateEvent(APIView):
 
     @transaction.atomic
     def post(self, request):
-        # data = JSONParser().parse(request.data['data'])
-        # data['start_record_date'] = datetime.datetime.today()
-        # data['end_record_date'] = get_day_before(datetime.date.fromisoformat(data['date_of_event']))
-        # data['slug'] = slugify(data['event_name'])
-        # data['poster'] = file
 
         serializer = Events_Serializer(data=request.data)
         if serializer.is_valid():
@@ -56,10 +51,13 @@ class CreateEvent(APIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 
+    def put(self,request):
+        pass
+
 
 class EventInfoLoad(APIView):
     """вызов api/v1/admin/seminar/download/<str:seminar_name>/ """
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (permissions.AllowAny,)
     parser_classes = (JSONParser, FileUploadParser,)
 
     def get(self, request, seminar_url):
@@ -111,9 +109,10 @@ class CreateRequest(APIView, IsTrainerPermission):
 class TrainerEventRequest(APIView, IsTrainerPermission):
     permission_classes = (IsTrainerPermission,)
 
-    def get(self, request, event_name):
+    def get(self, request, event_slug):
         trainer_id = Token.objects.get(key=request.headers.get('Authorization')[6:]).user_id
-        requests = Request.objects.filter(trainer_id=trainer_id, event_name=event_name)
+        requests = Request.objects.filter(trainer_id=trainer_id,
+                                          event_name=Events.objects.get(slug=event_slug).event_name)
         serializer = Requests_Serializer(requests, many=True)
 
         return Response(status=status.HTTP_200_OK, data=serializer.data)
@@ -166,9 +165,9 @@ class EventsList(APIView, IsTrainerPermission):
 class EventView(APIView, IsTrainerPermission):
     permission_classes = (IsTrainerPermission,)
 
-    def get(self, request, event_name):
+    def get(self, request, event_slug):
         try:
-            event = Events_Serializer(Events.objects.get(event_name=event_name)).data
+            event = Events_Serializer(Events.objects.get(slug=event_slug)).data
             return JsonResponse(data={"result": event})
-        except:
+        except Events.DoesNotExist as e:
             return JsonResponse(data={"result": "события не существует"})
