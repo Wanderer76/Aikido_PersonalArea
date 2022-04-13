@@ -2,21 +2,24 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <script src="../js/go-to-auth-error-enter.js"></script>
+        <!--<script src="../js/go-to-auth-error-enter.js"></script>-->
         <script src="https://api-maps.yandex.ru/2.1/?apikey=1fc42576-f294-4305-baaf-9c78e6b88dcc&lang=ru_RU"
                 type="text/javascript">
         </script>
-        <title>Создание мероприятия</title>
+        <title>Информация о мероприятии</title>
         <link rel="stylesheet" href="../css/menu-style.css">
         <link rel="stylesheet" href="../css/add-event-style.css">
     </head>
     <body>
-    <div class="content">
-    </div>
+    <div class="content"></div>
     <main class="page-body__page-main">
         <div class="page-body__container">
             <form action="#" method="post">
-                <h1>Создание мероприятия</h1>
+                <h1>Информация о мероприятии</h1>
+                <div class="edit-btns">
+                    <button type="button" class="" name="" id="">Скачать список участников</button>
+                    <button type="button" class="" name="" id="">Загрузить отчёт</button>
+                </div>
                 <section>
                     <div class="event-title">
                         <label class="visually-hidden" for="event-name">Название мероприятия</label>
@@ -130,12 +133,13 @@
                     <input type="text" title="E-mail" name="organizer-email" id="org-email" placeholder="E-mail">
                 </section>
                 <div class="save-butts">
-                    <button type="button" class="create-butt" name="create" id="create">Создать</button>
+                    <button type="button" class="create-butt" name="create" id="create">Сохранить</button>
                 </div>
             </form>
         </div>
     </main>
     <script src="../js/menu-inserting.js"></script>
+    <script src="../js/edit-event-page-script.js"></script>
     <script src="../js/add-event-image-script.js"></script>
     <script type="module" src="../js/add-event-map-script.js"></script>
     <script type="module" src="../js/add-event-schedule-script.js"></script>
