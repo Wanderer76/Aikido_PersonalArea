@@ -6,7 +6,7 @@ from PersonalArea import views
 urlpatterns = [
     path('students/', views.aikido_students_list),
     path('login/', csrf_exempt(views.LoginAPIView.as_view())),
-    path('trainer/profile/', csrf_exempt(views.StudentInfo.as_view())),
+    path('profile/', csrf_exempt(views.StudentInfo.as_view())),
     path('trainers/', views.TrainserSet.as_view()),
     path('candidates/trainers/',views.CandidatesToTrainer.as_view()),
     path('trainer/students/', csrf_exempt(views.TrainerHasbiks.as_view())),
