@@ -62,6 +62,57 @@
   margin: 5%;
 }
 
+.card-block {
+  text-align: center;
+  margin: 2% auto 5%;
+}
+
+.card-block h3 {
+  font-weight: bolder;
+}
+
+.card {
+  box-shadow: 5px 5px 5px grey;
+  border: 1px solid lightgrey;
+  border-radius: 50px;
+  font-size: 140%;
+  height: 90%;
+}
+
+.prog{
+  background-color: #d8d8d8;
+  border-radius: 25px;
+  position: relative;
+  margin: 2% auto;
+  height: 30%;
+  width: 90%;
+}
+
+.progress-done {
+  border-radius: 25px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 0;
+  opacity: 0;
+  transition: 1s ease 0.3s;
+}
+
+.card p {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.date {
+  margin-bottom: 2%;
+  margin-top: auto;
+  font-weight: bolder;
+  font-size: 140%;
+}
+
+
 .achievment-table {
   justify-content: space-between;
 }

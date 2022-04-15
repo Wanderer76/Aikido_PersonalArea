@@ -29,7 +29,7 @@ function fillCoachesList(data){
             '<div class="col bordered-2">' + trainer['surname'] + ' ' + trainer['name'] + ' ' + trainer['second_name'] + '</div>' +
             '<div class="col bordered-2">' + setDateFormat(trainer['birthdate']) + '</div>' +
             '<div class="col bordered-2">' + parseKu(trainer['ku']) + '</div>' +
-            '<div class="col">' + trainer['attestation_date'] + '</div>';
+            '<div class="col">' + setDateFormat(trainer['attestation_date']) + '</div>';
         innerEl.parentElement.insertBefore(row, innerEl.nextSibling);
     }
 
