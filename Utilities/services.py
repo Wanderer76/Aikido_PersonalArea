@@ -102,7 +102,7 @@ def create_row_to_past(record: Achievements, event: Events):
     last_ku = ''
     index = 0
     for i in member_achievements:
-        if i.event_name == event.event_name:
+        if i['event_name'] == event.event_name:
             break
         index += 1
 

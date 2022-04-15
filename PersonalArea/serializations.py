@@ -1,15 +1,19 @@
 from rest_framework import serializers
 
 from PersonalArea.models import Aikido_Member, Achievements
+from clubs.serializators import ClubName_Serializer
 
 
 class Aikido_MemberSerializer(serializers.ModelSerializer):
+    club = ClubName_Serializer()
+
     class Meta:
         model = Aikido_Member
         exclude = ['password', 'photo']
 
 
 class Profile_Serializer(serializers.ModelSerializer):
+    club = ClubName_Serializer()
     class Meta:
         model = Aikido_Member
         fields = ['id', 'name', 'surname', 'second_name', 'birthdate', 'photo', 'club', 'city']
@@ -42,6 +46,7 @@ class Member_InfoSerializer(serializers.ModelSerializer):
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    #club = ClubName_Serializer()
     class Meta:
         model = Aikido_Member
         fields = '__all__'

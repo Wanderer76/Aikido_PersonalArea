@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 
 from Utilities import xls_parser
 from Utilities.services import get_day_before
+from clubs.models import Club
 from events.models import Request, Events
 from events.serializations import Events_ListSerializer, Events_Serializer, Requests_Serializer
 
@@ -34,11 +35,13 @@ class CreateEvent(APIView):
            }
     """
 
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (permissions.AllowAny,)
 
     @transaction.atomic
     def post(self, request):
-
+        club = Club.objects.get(name=request.data['responsible_club'])
+        request.data.pop('responsible_club')
+        request.data.update({"responsible_club": club.id})
         serializer = Events_Serializer(data=request.data)
         if serializer.is_valid():
             serializer.validated_data['start_record_date'] = datetime.datetime.today()
@@ -51,8 +54,38 @@ class CreateEvent(APIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 
-    def put(self,request):
-        pass
+
+class UpdateEvent(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    @transaction.atomic
+    def patch(self, request, event_slug):
+        try:
+            club = Club.objects.get(name=request.data['responsible_club'])
+            request.data.pop('responsible_club')
+            request.data.update({"responsible_club": club.id})
+            event = Events.objects.get(slug=event_slug)
+            serializer = Events_Serializer(event, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+        except Events.DoesNotExist as e:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class DeleteEvent(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    @transaction.atomic
+    def delete(self, request, event_slug):
+        try:
+            event = Events.objects.get(slug=event_slug)
+            event.delete()
+            return Response(status=status.HTTP_200_OK)
+        except Events.DoesNotExist as e:
+            return Response(status=status.HTTP_404_NOT_FOUND, data=e)
 
 
 class EventInfoLoad(APIView):
@@ -88,16 +121,22 @@ class CreateRequest(APIView, IsTrainerPermission):
           "trainer_id": ид тренера: int
           } ]"""
 
-    permission_classes = (IsTrainerPermission,)
+    permission_classes = (permissions.AllowAny,)
 
     @transaction.atomic
     def post(self, request):
         data = JSONParser().parse(request)
         trainer_id = data[0]['trainer_id']
-        current_trainer_requests = Request.objects.prefetch_related('event').filter(event_name=data[0]['event_name'],
+        club = Events.objects.get(event_name=data[0]['event_name'])
+        current_trainer_requests = Request.objects.prefetch_related('event').filter(event_name__event_name=club.id,
                                                                                     trainer_id=trainer_id)
+
         if current_trainer_requests.exists():
             current_trainer_requests.delete()
+
+        for i in data:
+            i['event_name'] = club.id
+
         serializer = Requests_Serializer(data=data, many=True)
         if serializer.is_valid():
             serializer.save()
@@ -112,10 +151,14 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
     def get(self, request, event_slug):
         trainer_id = Token.objects.get(key=request.headers.get('Authorization')[6:]).user_id
         requests = Request.objects.filter(trainer_id=trainer_id,
-                                          event_name=Events.objects.get(slug=event_slug).event_name)
-        serializer = Requests_Serializer(requests, many=True)
+                                          event_name=Events.objects.get(slug=event_slug).id)
 
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
+        event_name = Events.objects.get(slug=event_slug).event_name
+        serializer = Requests_Serializer(requests, many=True).data
+        for i in serializer:
+            i['event_name'] = event_name
+
+        return Response(status=status.HTTP_200_OK, data=serializer)
 
 
 class EventsList(APIView, IsTrainerPermission):
@@ -154,9 +197,16 @@ class EventsList(APIView, IsTrainerPermission):
         events = Events.objects.all()
         upcoming = Events_ListSerializer(
             events.filter(
-                end_record_date__gte=datetime.date.today()).order_by('start_record_date'), many=True).data
+                end_of_event__gte=datetime.date.today()).order_by('end_of_event'), many=True).data
+
         past = Events_ListSerializer(
-            events.filter(date_of_event__lt=datetime.date.today()).order_by('start_record_date'), many=True).data
+            events.filter(end_of_event__lt=datetime.date.today()).order_by('end_of_event'), many=True).data
+
+        for i in upcoming:
+            i['responsible_club'] = i['responsible_club']['name']
+
+        for i in past:
+            i['responsible_club'] = i['responsible_club']['name']
 
         result = {'upcoming': upcoming, 'past': past}
         return Response(status=status.HTTP_200_OK, data=result)

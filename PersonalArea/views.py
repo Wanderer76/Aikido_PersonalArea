@@ -78,7 +78,6 @@ class TrainerHasbiks(APIView):
             data = request.headers.get('Authorization')[6:]
             aiki_id = Token.objects.get(key=data).user_id
             aiki_chel = Aikido_Member.objects.get(id=aiki_id)
-
             if aiki_chel.is_trainer:
                 hasbiki = Deti_Serializer(Aikido_Member.objects
                                           .filter(trainer_id=aiki_chel.id), many=True).data
@@ -89,6 +88,7 @@ class TrainerHasbiks(APIView):
                                                                   received_ku__isnull=False).latest())
                     hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
                     hasbik["ku"] = seminar_boy.data["received_ku"]
+                    hasbik['club'] = hasbik['club']['name']
 
                 return Response(data={"список учеников": hasbiki}, status=status.HTTP_200_OK)
             else:
@@ -108,9 +108,9 @@ class TrainserSet(APIView):
             for i in serializer.data:
                 last_achievement = Achievements.objects.filter(member__id=i['id']).order_by(
                     'attestation_date').last()
-                print(last_achievement)
                 i['ku'] = last_achievement.received_ku if last_achievement is not None else ""
                 i['attestation_date'] = last_achievement.attestation_date if last_achievement is not None else ""
+               # i['club'] = i['club']['name']
 
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         except Exception as e:
