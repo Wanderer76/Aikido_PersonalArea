@@ -17,8 +17,8 @@
             <form action="#" method="post">
                 <h1>Информация о мероприятии</h1>
                 <div class="edit-btns">
-                    <button type="button" class="" name="" id="">Скачать список участников</button>
-                    <button type="button" class="" name="" id="">Загрузить отчёт</button>
+                    <button type="button" class="download-list-btn" name="" id="">Скачать список участников</button>
+                    <button type="button" class="upload-list-btn" name="" id="">Загрузить отчёт</button>
                 </div>
                 <section>
                     <div class="event-title">
@@ -40,7 +40,7 @@
 
                     <label class="visually-hidden" for="resp-club-select">Ответственный клуб</label>
                     <select title="Ответственный клуб" name="resp-club" id="resp-club-select">
-                        <option value="Ромашки">-- Ответственный клуб --</option>
+                        <option value="">-- Ответственный клуб --</option>
                     </select>
                     <div class="coach-and-rank">
                         <label class="visually-hidden" for="lead-coach">ФИО ведущего тренера</label>
@@ -143,10 +143,12 @@
     <script type="module" src="../js/add-event-map-script.js"></script>
 
     <script src="../js/getRequest.js"></script>
-    <script src="../js/edit-event-page-script.js"></script>
+    <script type="module" src="../js/event-page-add-clubs.js"></script>
 
     <script type="module" src="../js/add-event-schedule-script.js"></script>
     <script type="module" src="../js/add-event-page-script.js"></script>
+
+    <script type="module" src="../js/edit-event-page-script.js"></script>
     </body>
 </html>
 

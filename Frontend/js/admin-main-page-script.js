@@ -1,4 +1,4 @@
-let url = "http://localhost:8000/api/v1/admin/seminar_statistic/";
+let url = "http://localhost:8000/api/v1/events/event_list/";
 let xhr = new XMLHttpRequest();
 let storage = window.sessionStorage;
 let data;
@@ -23,7 +23,7 @@ function sendActivityName(button) {
     let buttonNum = button.id.split('-')[2];
     let name  = document.getElementById('name-' + buttonNum);
     sessionStorage.setItem("activityName", name.textContent);
-    location.href = "../html/seminar_statistic.html";
+    location.href = "../html/edit-event-page.html";
 }
 
 function addDataToTable(data, tagAfterInserting, tag) {

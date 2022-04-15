@@ -1,8 +1,12 @@
-getRequest('http://localhost:8000/api/v1/events/event_statistic/sorevnovanie-11/', fillInputs);
+import {createElement, render, RenderPosition} from "./add-event-render-script.js";
+import {dayInputs, hoursInputs, dayClickListener, dayChangeListener, addHiddenClass} from "./add-event-schedule-script.js";
+
+const eventSlug = sessionStorage.getItem('slug')
+getRequest(`http://localhost:8000/api/v1/events/event_statistic/sorevnovanie-11/`, fillInputs);
 
 function fillInputs(data) {
-    let parsed = JSON.parse(data)
-    console.log(parsed)
+    let parsed = JSON.parse(data)['result'];
+    console.log(parsed);
 
     document.getElementById('event-name').value = parsed['event_name'];
     document.getElementById('date-start').value = parsed['date_of_event'];
@@ -12,23 +16,79 @@ function fillInputs(data) {
     document.getElementById('lead-coach').value = parsed['responsible_trainer'];
     document.getElementById('max-rang-select').value = parsed['max_rang'];
 
-    // let couchImage = document.getElementById('coach-icon');
-    // let couchXOffset = document.getElementById('coach-x-offset');
-    // let couchYOffset = document.getElementById('coach-y-offset');
-    //
-    // let logoImage = document.getElementById('logo-icon');
-    // let logoXOffset = document.getElementById('logo-x-offset');
-    // let logoYOffset = document.getElementById('logo-y-offset');
-    //
-    // let posterImage = document.getElementById('event-poster');
-    //
-    // let orgName = document.getElementById('org-name');
-    // let orgPhone = document.getElementById('org-phone');
-    // let orgEmail = document.getElementById('org-email');
+    // не работает.
+    // document.getElementById('logo-icon').files[0] = parsed['logo_img'];
+    // document.getElementById('coach-icon').files[0] = parsed['couch_img'];
+    // document.getElementById('logo-icon').files.push(parsed['logo_img']);
+    // document.getElementById('coach-icon').files.push(parsed['couch_img']);
+    // document.getElementById('logo-icon-preview').src = parsed['logo_img'];
+    // document.getElementById('coach-icon-preview').src = parsed['couch_img'];
 
+
+    const coachOffset = parsed['coach_offset'];
+    document.getElementById('coach-x-offset').value = coachOffset['x_offset'];
+    document.getElementById('coach-y-offset').value = coachOffset['y_offset'];
+
+    const logoOffset = parsed['logo_offset'];
+    document.getElementById('logo-x-offset').value = logoOffset['x_offset'];
+    document.getElementById('logo-y-offset').value = logoOffset['y_offset'];
+
+    const contacts = parsed['contacts'];
+    document.getElementById('org-name').value = contacts['org_name'];
+    document.getElementById('org-phone').value = contacts['org_phone'];
+    document.getElementById('org-email').value = contacts['org_email'];
+
+    createSchedule(parsed['schedule']);
 }
+
+function createSchedule(schedule) {
+    for (let category in schedule) {
+        createCurrentCategorySchedule(category, schedule[category]);
+    }
+
+    dayClickListener();
+    dayChangeListener();
+    addHiddenClass(dayInputs);
+    addHiddenClass(hoursInputs);
+}
+
+function createCurrentCategorySchedule (category, categorySchedule) {
+    if (Object.keys(categorySchedule).length !== 0) {
+        for (let day in categorySchedule) {
+            createDay(category, day);
+            createHours(category, day, categorySchedule[day]);
+        }
+
+    }
+}
+
+function createDay (category, day) {
+    const markup = `<input type="text" class="input-schedule" data-category="${category}" placeholder="ДД месяц">`;
+    const dayInputElement = createElement(markup);
+    const dayColumn = document.getElementById('day-column');
+
+    dayInputElement.value = day;
+    dayInputs.push(dayInputElement);
+
+    render(dayColumn, dayInputElement, RenderPosition.BEFOREEND);
+}
+
+function createHours (category, day, hours) {
+    const markup = `<input type="text" class="input-schedule" data-day="${day}" data-category="${category}"  placeholder="ЧЧ:ММ - ЧЧ:ММ">`;
+    const hoursColumn = document.getElementById('time-column');
+
+    for (let i = 0; i < hours.length; i++) {
+        const hoursInputElement = createElement(markup);
+        hoursInputElement.value = hours[i];
+        hoursInputs.push(hoursInputElement);
+
+        render(hoursColumn, hoursInputElement, RenderPosition.BEFOREEND);
+    }
+}
+
 
 // function sendUpdatedInfo() {
 //     let url = 'http://localhost:8000/api/v1/clubs/update_club/' + window.sessionStorage.getItem('club_slug') + '/';
 //     sendAllInfo(url, "PATCH");
 // }
+

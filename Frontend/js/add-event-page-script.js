@@ -25,24 +25,33 @@ let orgName = document.getElementById('org-name');
 let orgPhone = document.getElementById('org-phone');
 let orgEmail = document.getElementById('org-email');
 
-let couchImg = {
-    x_offset: couchXOffset.value,
-    y_offset: couchYOffset.value
+function getCouchOffset(couchXOffset, couchYOffset) {
+    const couchImg = {
+        x_offset: couchXOffset.value,
+        y_offset: couchYOffset.value
+    }
+    console.log(couchImg);
+    return JSON.stringify(couchImg, null);
 }
-const couchOffset = JSON.stringify(couchImg, null);
 
-let logoImg = {
-    x_offset: logoXOffset.value,
-    y_offset: logoYOffset.value
+function getLogoOffset(logoXOffset, logoYOffset) {
+    const logoImg = {
+        x_offset: logoXOffset.value,
+        y_offset: logoYOffset.value
+    }
+    console.log(logoImg);
+    return JSON.stringify(logoImg, null);
 }
-const logoOffset = JSON.stringify(logoImg, null);
 
-let contact = {
-    org_name: orgName.value,
-    org_phone: orgPhone.value,
-    org_email: orgEmail.value
-};
-const contacts = JSON.stringify(contact, null);
+function getContacts(orgName, orgPhone, orgEmail) {
+    const contacts = {
+        org_name: orgName.value,
+        org_phone: orgPhone.value,
+        org_email: orgEmail.value
+    };
+    console.log(contacts);
+    return JSON.stringify(contacts, null);;
+}
 
 const url = "http://127.0.0.1:8000/api/v1/events/create/";
 let xhr = new XMLHttpRequest();
@@ -74,11 +83,11 @@ createButton.onclick = function () {
     formData.append("max_rang", maxRang.value);
     formData.append("schedule", schedule);
     formData.append("couch_img", couchImage.files[0]);
-    formData.append("coach_offset", couchOffset);
+    formData.append("coach_offset", getCouchOffset(couchXOffset, couchYOffset));
     formData.append("logo_img", logoImage.files[0]);
-    formData.append("logo_offset", logoOffset);
+    formData.append("logo_offset", getLogoOffset(logoXOffset, logoYOffset));
     formData.append("poster", posterImage.files[0]);
-    formData.append("contacts", contacts);
+    formData.append("contacts", getContacts(orgName, orgPhone, orgEmail));
 
     console.log(formData);
     xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));

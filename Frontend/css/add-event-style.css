@@ -187,7 +187,7 @@ main .create-butt{
     min-height: 20px;
 
     color: white;
-    background-color: royalblue;
+    background-color: #134F8C;
     border-radius: 10px;
     border-color: rgba(209, 209, 209, 0.3);
     border-width: medium;
@@ -232,7 +232,7 @@ main .input-schedule {
 
 main .chosen-schedule {
     color: white;
-    background-color: royalblue;
+    background-color: #134F8C;
 }
 
 main .save-butts {
@@ -261,5 +261,49 @@ main .visually-hidden {
 
     border: medium solid rgba(209, 209, 209, 0.3);
     border-radius: 20px;
+}
+
+/* К странице редактирования */
+
+.edit-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    margin-bottom: 40px;
+}
+
+.download-list-btn {
+    display: block;
+    position: relative;
+
+    width: 40%;
+    height: 50px;
+    min-height: 40px;
+
+    color: white;
+    background-color: green;
+    border-radius: 20px;
+    border-color: rgba(209, 209, 209, 0.3);
+    border-width: medium;
+
+    font-size: 20px;
+}
+
+.upload-list-btn {
+    display: block;
+    position: relative;
+
+    width: 40%;
+    height: 50px;
+    min-height: 40px;
+
+    color: white;
+    background-color: #134F8C;
+    border-radius: 20px;
+    border-color: rgba(209, 209, 209, 0.3);
+    border-width: medium;
+
+    font-size: 20px;
 }
 

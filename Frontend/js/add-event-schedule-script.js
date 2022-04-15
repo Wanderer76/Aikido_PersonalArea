@@ -21,13 +21,13 @@ const addHoursBtn = document.getElementById('add-time');
 
 // Счётчики элементов дней и времени.
 
-let dayInputCount = 0;
-let hoursInputCount = 0;
+export let dayInputCount = 0;
+export let hoursInputCount = 0;
 
 // Массивы для хранения элементов дней и времени.
 
-let dayInputs = [];
-let hoursInputs = [];
+export let dayInputs = [];
+export let hoursInputs = [];
 
 let currentDayElement = null;
 
@@ -79,7 +79,7 @@ const addDay = () => {
 }
 
 // Функция, навешивающая слушателя на клик каждого элемента массива дней.
-const dayClickListener = () => {
+export const dayClickListener = () => {
     for (let i = 0; i < dayInputs.length; i++) {
         dayInputs[i].addEventListener('click', function () {
             addHiddenClass(hoursInputs);
@@ -101,7 +101,7 @@ const removeHoursHiddenClass = (hours, chosenDay, category) => {
 }
 
 // Функция, навешивающая слушателя на изменение каждого элемента массива дней.
-const dayChangeListener = () => {
+export const dayChangeListener = () => {
     for (let i = 0; i < dayInputs.length; i++) {
         dayInputs[i].addEventListener('change', function () {
             let changedDay = dayInputs[i];
@@ -149,7 +149,7 @@ const addHours = () => {
 }
 
 //Добавляет класс, скрывающий элемент
-const addHiddenClass = (array) => {
+export const addHiddenClass = (array) => {
     for (let j = 0; j < array.length; j++) {
             array[j].classList.add('visually-hidden');
         }
@@ -183,7 +183,6 @@ export function createSchedule(days = dayInputs, hours = hoursInputs) {
         }, result);
         schedule[currentCategory] = result;
     }
-    //console.log(schedule);
     return(schedule);
 }
 
