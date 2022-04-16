@@ -40,8 +40,12 @@ function getAllInfo() {
     }
 }
 
-function hideErrorMessage() {
+function hideErrorMessage(node, defaultValue) {
     document.getElementById('error-message').classList.add('hidden');
+    if (node.value === '') {
+        changeType(node, 'text', defaultValue)
+    }
+
 }
 
 function sendInfo() {
@@ -60,4 +64,10 @@ function sendInfo() {
         document.getElementById('error-message').classList.remove('hidden');
     }
 
+}
+
+function changeType(inputNode, type, defaultValue) {
+    inputNode.type = type;
+    if (defaultValue !== undefined)
+        inputNode.placeholder = defaultValue;
 }
