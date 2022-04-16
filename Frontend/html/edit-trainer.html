@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование тренера</title>
+    <link rel="stylesheet" href="../css/add_new_trainer.css">
+</head>
+<body>
+<div class="wrapper abc">
+    <div class="accept-block hidden" id = "accept-block">
+        <h3>Вы действительно хотите лишить человека статуса тренера?</h3>
+        <button type="button" class="accept-button">Да</button>
+        <button type="button" class="cancel-button" onclick="hideAcceptBlock()">Нет</button>
+    </div>
+    <div class="container content center-block vh-100 d-flex flex-wrap">
+        <h1>Редактирование тренера</h1>
+        <div class="form-block">
+            <input type="text" placeholder="Фамилия" class="base-info" id="surname" onchange="hideErrorMessage()">
+            <input type="text" placeholder="Имя" class="base-info" id="name" onchange="hideErrorMessage()">
+            <input type="text" placeholder="Отчество" class="base-info" id="second-name" onchange="hideErrorMessage()">
+            <input type="text" placeholder="Дата рождения" class="base-info" id="birthdate" onchange="hideErrorMessage()" onclick="changeType(this, 'date', 'Дата рождения')">
+            <select class="base-info-selectors" id="rank-selector" onchange="hideErrorMessage()">
+                <option value="none" selected>Степень</option>
+                <option value="5">5 кю</option>
+                <option value="4">4 кю</option>
+                <option value="3">3 кю</option>
+                <option value="2">2 кю</option>
+                <option value="1">1 кю</option>
+                <option value="11">1 дан</option>
+                <option value="12">2 дан</option>
+                <option value="13">3 дан</option>
+                <option value="14">4 дан</option>
+                <option value="15">5 дан</option>
+                <option value="16">6 дан</option>
+                <option value="17">7 дан</option>
+                <option value="18">8 дан</option>
+                <option value="19">9 дан</option>
+
+            </select>
+            <input type="text" class="base-info" id="attestation-date" onchange="hideErrorMessage()" onclick="changeType(this, 'date')" placeholder="Дата получения">
+            <select class="base-info-selectors club" id="club-selector" onchange="hideErrorMessage()">
+                <option value="none">Выберите клуб</option>
+            </select>
+            <input type="text" placeholder="Название мероприятия аттестации" class="event-name" id="event-name" onchange="hideErrorMessage()">
+        </div>
+        <div class="button-block">
+            <button class="send-button" onclick="sendInfo()">Сохранить</button>
+            <button class="send-button delete-button" onclick="deleteCoach()">Удалить</button>
+
+            <p class="error-message hidden" id="error-message">Введите все данные</p>
+        </div>
+
+    </div>
+</div>
+</body>
+<script src="../js/menu-inserting.js"></script>
+<script src="../js/getRequest.js"></script>
+<script src="../js/postWithoutAnswer.js"></script>
+<script src="../js/edit-trainer.js"></script>
+<script src="../js/add-new-trainer-script.js"></script>
+
+</html>
