@@ -55,10 +55,11 @@
             </div>
           </div>
 
+<!--          Tile scheme of achievments-->
           <div class="row container achievment">
-            <h2 class="row">История достижений</h2>
+            <h2 class="row hide-block-header" id="achievement-story-header" onclick="showBlock(this, document.getElementsByClassName('achievment-table')[0], 'История достижений')">История достижений ▼</h2>
 
-            <div class="row achievment-table">
+            <div class="row achievment-table visually-hidden">
 
               <div class="col-12 col-md-4">
                 <h3>Профессионал</h3>
@@ -199,18 +200,217 @@
                 </div>
               </div>
             </div> 
-          </div>           
+          </div>
 
+          <h2 class="table-name">Ближайшие соревнования</h2>
           <div class="seminar-table">
-            <table id="seminar-table">
-              <tr id="seminar-header">
-                <td class="heading">Дата</td>
-                <td class="heading unvisible bordered">Город</td>
-                <td class="heading unvisible bordered">Ответственный клуб</td>
-                <td  class="heading">Результат</td>
-              </tr>
-              <!-- Here wil be new rows with info about seminar. It's add with JS. -->
-            </table>
+            <div class="scroll">
+              <table id="future-seminar-table">
+                <tr id="future-seminar-header">
+                  <td class="heading">Дата</td>
+                  <td class="heading unvisible bordered">Город</td>
+                  <td class="heading unvisible bordered">Ответственный клуб</td>
+                  <td  class="heading">Результат</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <!-- Here wil be new rows with info about seminar. It's add with JS. -->
+              </table>
+            </div>
+          </div>
+
+
+          <h2 class="hide-block-header" onclick="showBlock(this, document.getElementsByClassName('seminar-table')[1], 'История соревнований')">История соревнований ▼</h2>
+          <div class="seminar-table visually-hidden">
+            <div class="scroll">
+              <table id="seminar-table">
+                <tr id="seminar-header">
+                  <td class="heading">Дата</td>
+                  <td class="heading unvisible bordered">Город</td>
+                  <td class="heading unvisible bordered">Ответственный клуб</td>
+                  <td  class="heading">Результат</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <!-- Here wil be new rows with info about seminar. It's add with JS. -->
+              </table>
+            </div>
           </div>
           
         </div>
