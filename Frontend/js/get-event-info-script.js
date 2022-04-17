@@ -1,7 +1,7 @@
 import {createElement, render, RenderPosition} from "./add-event-render-script.js";
 import {dayInputs, hoursInputs, dayClickListener, dayChangeListener, addHiddenClass} from "./add-event-schedule-script.js";
 
-const eventSlug = sessionStorage.getItem('slug')
+export const eventSlug = sessionStorage.getItem('slug')
 getRequest(`http://localhost:8000/api/v1/events/event_statistic/${eventSlug}/`, fillInputs);
 
 function fillInputs(data) {
@@ -23,7 +23,6 @@ function fillInputs(data) {
     // document.getElementById('coach-icon').files.push(parsed['couch_img']);
     // document.getElementById('logo-icon-preview').src = parsed['logo_img'];
     // document.getElementById('coach-icon-preview').src = parsed['couch_img'];
-
 
     const coachOffset = parsed['coach_offset'];
     document.getElementById('coach-x-offset').value = coachOffset['x_offset'];
@@ -87,8 +86,4 @@ function createHours (category, day, hours) {
 }
 
 
-// function sendUpdatedInfo() {
-//     let url = 'http://localhost:8000/api/v1/clubs/update_club/' + window.sessionStorage.getItem('club_slug') + '/';
-//     sendAllInfo(url, "PATCH");
-// }
 
