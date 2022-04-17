@@ -177,12 +177,11 @@ class Modificate_Trainer(APIView):
             return JsonResponse({'message': 'такого тренера не существует'}, status=status.HTTP_404_NOT_FOUND)
 
         achievement = Achievements.objects.get(member=trainer)
-        trainer_data = request.data
-        aboba = {k: trainer_data.pop(k) for k in list(trainer_data.keys()) if k == 'event_name'
+        aboba = {k: request.data.pop(k) for k in list(request.data.keys()) if k == 'event_name'
                  or k == 'attestation_date'
                  or k == 'received_ku'}
 
-        serializer = Trainer_Serializer(data=trainer_data, instance=trainer, partial=True)
+        serializer = Trainer_Serializer(data=request.data, instance=trainer, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
