@@ -46,7 +46,7 @@ function sendAllInfo(url, method) {
     if (fd.get("name") === "" || fd.get("city") === "" || fd.get("area") === "")
         document.getElementById("error-message").classList.remove('hidden');
     else {
-        postWithoutAnswer(url, fd, method, function () {location.href = "../html/clubs.html"});
+        postWithoutAnswer(url, fd, method, function () {});
     }
 
 }

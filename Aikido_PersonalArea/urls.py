@@ -26,7 +26,5 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-urlpatterns += static(settings.COMPONENT_TRAINER_URL, document_root=settings.COMPONENT_TRAINER)
-urlpatterns += static(settings.COMPONENT_LOGO_URL, document_root=settings.COMPONENT_LOGO)
+urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)
+urlpatterns += static(settings.POSTER_URL, document_root=settings.POSTER_ROOT)

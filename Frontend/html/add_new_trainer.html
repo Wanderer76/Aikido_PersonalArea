@@ -20,7 +20,7 @@
             <input type="text" placeholder="Фамилия" class="base-info" id="surname" onchange="hideErrorMessage()">
             <input type="text" placeholder="Имя" class="base-info" id="name" onchange="hideErrorMessage()">
             <input type="text" placeholder="Отчество" class="base-info" id="second-name" onchange="hideErrorMessage()">
-            <input type="text" placeholder="Дата рождения" class="base-info" id="birthdate" onchange="hideErrorMessage()" onclick="changeType(this, 'date', 'Дата рождения')">
+            <input type="date" placeholder="Дата рождения" class="base-info" id="birthdate" onchange="hideErrorMessage()">
             <select class="base-info-selectors" id="rank-selector" onchange="hideErrorMessage()">
                 <option value="none" selected>Степень</option>
                 <option value="5">5 кю</option>
@@ -39,7 +39,7 @@
                 <option value="19">9 дан</option>
 
             </select>
-            <input type="text" class="base-info" id="attestation-date" onchange="hideErrorMessage()" onclick="changeType(this, 'date')" placeholder="Дата получения">
+            <input type="date" class="base-info" id="attestation-date" onchange="hideErrorMessage()">
             <select class="base-info-selectors club" id="club-selector" onchange="hideErrorMessage()">
                 <option value="none">Выберите клуб</option>
             </select>

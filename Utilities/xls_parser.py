@@ -46,7 +46,7 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
                 'second_name': row[2].value,
                 'birthdate': services.parse_eu_date_to_us(str(row[5].value)),
                 'city': str(row[6].value),
-                'club': Club.objects.get(name=row[7].value).id,
+                'club': row[7].value,
                 'photo': None,
                 'isTrainer': False,
                 'trainer_id': trainer_id
@@ -77,16 +77,16 @@ def createXlsxFromRequests(event_slug: str) -> BinaryIO:
     services.set_blue_row(work_sheet)
     event = Events.objects.get(slug=event_slug)
 
-    is_past = True if event.date_of_event <= datetime.date.today() else False
+    is_past = True if event.date_of_event.isoformat() <= datetime.date.today().isoformat() else False
 
     if is_past:
         records = Achievements.objects.filter(event_name=event.event_name) \
             .prefetch_related('member').prefetch_related('member__club')
         for record in records:
-            work_sheet.append(services.create_row_to_past(record, event))
+            work_sheet.append(services.create_row_to_past(record,event))
 
     else:
-        requests = Request.objects.filter(event_name=event.id)
+        requests = Request.objects.filter(event_name=event.event_name)
         if not requests.exists():
             raise ArgumentError('Заявок на мероприятие нет')
 

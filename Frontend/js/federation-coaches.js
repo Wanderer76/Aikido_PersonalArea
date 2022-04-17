@@ -24,13 +24,12 @@ function fillCoachesList(data){
         let row = document.createElement('div');
         row.classList.add('row');
         row.classList.add('inf-coaches');
-        row.setAttribute('onclick', 'goToEditPage('+ trainer['id']+  ')');
         let innerEl = document.getElementsByClassName('row')[document.getElementsByClassName('row').length-1];
         row.innerHTML =
             '<div class="col bordered-2">' + trainer['surname'] + ' ' + trainer['name'] + ' ' + trainer['second_name'] + '</div>' +
             '<div class="col bordered-2">' + setDateFormat(trainer['birthdate']) + '</div>' +
             '<div class="col bordered-2">' + parseKu(trainer['ku']) + '</div>' +
-            '<div class="col">' + setDateFormat(trainer['attestation_date']) + '</div>';
+            '<div class="col">' + trainer['attestation_date'] + '</div>';
         innerEl.parentElement.insertBefore(row, innerEl.nextSibling);
     }
 
@@ -53,10 +52,5 @@ function setDateFormat(strDate) {
     let day = date.getDate()
     if (day < 10) {day = '0' + day}
     return day + '.' + month + '.' + date.getFullYear();
-}
-
-function goToEditPage(id) {
-    window.sessionStorage.setItem('trainer_id', id);
-    location.href = "../html/edit-trainer.html";
 }
 

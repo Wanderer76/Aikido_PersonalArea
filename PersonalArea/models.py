@@ -19,7 +19,7 @@ class Aikido_Account_Manager(BaseUserManager):
             second_name=kwargs.get("second_name"),
             birthdate=kwargs.get("birthdate"),
             city=kwargs.get("city"),
-            club=Club.objects.get(id=kwargs.get("club")),
+            club=Club.objects.get(name=kwargs.get("club")),
             photo=kwargs.get("photo"),
             isTrainer=kwargs.get("isTrainer"),
             trainer_id=kwargs.get("trainer_id")
@@ -38,7 +38,7 @@ class Aikido_Account_Manager(BaseUserManager):
             second_name=second_name,
             birthdate=birthdate,
             city=city,
-            club=Club.objects.get(id=club),
+            club=Club.objects.get(name=club),
             photo=None,
             isTrainer=True,
             is_superuser=True,

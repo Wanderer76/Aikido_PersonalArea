@@ -1,7 +1,3 @@
-body {
-    overflow-x: hidden;
-}
-
 .content {
     transition: 0.5s;
     position: relative;
@@ -20,9 +16,6 @@ h1 {
     margin-left: 8%;
     margin-top: 3%;
     padding-bottom: 2%;
-    padding-left: 2%;
-    padding-right: 2%;
-
 }
 
 .align-items-start{
@@ -65,8 +58,4 @@ h1 {
 .inf-coaches {
     font-size: larger;
     text-align: center;
-}
-
-.inf-coaches:hover {
-    background-color: rgba(0, 110, 217, 0.4);
 }
