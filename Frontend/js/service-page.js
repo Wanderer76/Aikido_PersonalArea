@@ -13,12 +13,9 @@ trainer_xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_t
 trainer_xhr.send();
 
 function setTrainerBaseInfo(data){
-    let rang = data.seminars[0].newKu < 10 ? data.seminars[0].newKu + ' кю' : data.seminars[0].newKu % 10 + ' дан';
     document.getElementById('name').textContent = data.name;
     document.getElementById('surname').textContent = data.surname;
     document.getElementById('id').textContent = 'ID #' + data.id;
-    document.getElementById('license-num').textContent = data.license;
-    document.getElementById('attestation-level').textContent = rang;
     document.getElementById('region').textContent = data.region;
     document.getElementById('city').textContent = data.seminars[0].city;
     document.getElementById('club').textContent = data.club;
