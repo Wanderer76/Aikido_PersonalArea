@@ -1,9 +1,7 @@
-import datetime
 from argparse import ArgumentError
 
 from django.db import transaction
 from django.http import JsonResponse, FileResponse
-from pytils.translit import slugify
 from rest_framework import permissions, status
 from rest_framework.authtoken.models import Token
 from rest_framework.parsers import FileUploadParser, JSONParser
@@ -14,8 +12,7 @@ from rest_framework.views import APIView
 from Utilities import xls_parser
 from Utilities.services import get_day_before
 from clubs.models import Club
-from events.models import Request, Events
-from events.serializations import Events_ListSerializer, Events_Serializer, Requests_Serializer
+from events.serializations import *
 
 
 class IsTrainerPermission(BasePermission):
@@ -61,11 +58,12 @@ class UpdateEvent(APIView):
     @transaction.atomic
     def patch(self, request, event_slug):
         try:
+
             club = Club.objects.get(name=request.data['responsible_club'])
-            request.data.pop('responsible_club')
-            request.data.update({"responsible_club": club.id})
+            request.data['responsible_club'] = club.id
+
             event = Events.objects.get(slug=event_slug)
-            serializer = Events_Serializer(event, data=request.data, partial=True)
+            serializer = UpdateEvents_Serializer(event, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 return Response(status=status.HTTP_200_OK)
