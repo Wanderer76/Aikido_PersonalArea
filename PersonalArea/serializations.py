@@ -19,6 +19,34 @@ class Profile_Serializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'surname', 'second_name', 'birthdate', 'photo', 'club', 'city']
 
 
+class Trainer_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Aikido_Member
+        fields = ('name', 'surname', 'second_name', 'birthdate', 'club')
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get("name", instance.name)
+        instance.surname = validated_data.get("surname", instance.surname)
+        instance.second_name = validated_data.get("second_name", instance.second_name)
+        instance.birthdate = validated_data.get("birthdate", instance.birthdate)
+        instance.club = validated_data.get("club", instance.club)
+        instance.save()
+        return instance
+
+
+class Achievement_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Achievements
+        fields = ['event_name', 'attestation_date', 'received_ku']
+
+    def update(self, instance, validated_data):
+        instance.event_name = validated_data.get("event_name", instance.event_name)
+        instance.attestation_date = validated_data.get("attestation_date", instance.attestation_date)
+        instance.received_ku = validated_data.get("received_ku", instance.received_ku)
+        instance.save()
+        return instance
+
+
 class CandidatesToTrainerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aikido_Member
