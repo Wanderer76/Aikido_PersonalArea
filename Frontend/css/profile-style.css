@@ -62,6 +62,66 @@
   margin: 5%;
 }
 
+.card-block {
+  text-align: center;
+  margin: 2% auto 7%;
+}
+
+.card-block h3 {
+  font-weight: bolder;
+}
+
+.card {
+  box-shadow: 5px 5px 5px grey;
+  border: 1px solid lightgrey;
+  border-radius: 50px;
+  font-size: 140%;
+  height: 90%;
+}
+
+.prog{
+  background-color: #d8d8d8;
+  border-radius: 25px;
+  position: relative;
+  margin: 2% auto;
+  height: 30%;
+  width: 90%;
+}
+
+.progress-done {
+  border-radius: 25px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 0;
+  opacity: 0;
+  transition: 1s ease 0.3s;
+}
+
+.card p {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.date {
+  margin-bottom: 2%;
+  margin-top: auto;
+  font-weight: bolder;
+  font-size: 140%;
+}
+
+.header-block {
+  width: 100%;
+}
+
+.header-block button {
+  width: 5%;
+  background-color: white;
+  border: none;
+}
+
 .achievment-table {
   justify-content: space-between;
 }
@@ -72,8 +132,14 @@
   margin-bottom: 3%;
 }
 
-.achievment h2 {
+.hide-block-header {
+  margin-bottom: 2%;
+  margin-top: 2%;
   font-weight: bold;
+}
+
+.hide-block-header:hover {
+  text-decoration: underline;
 }
 
 .achievment-block {
@@ -136,12 +202,27 @@
 }
 
 
+
+/*Styles for events tables*/
+
+.table-name {
+  text-align: center;
+  margin-top: 4%;
+  font-weight: bolder;
+}
+
+.scroll {
+  max-height: 300px;
+  overflow: auto;
+}
+
+
 .seminar-table {
   border: 1px solid black;
   border-radius: 20px;
 
-  margin: 5% 0;
-  padding: 2% 0;
+  margin: 2% 0;
+  padding: 2% 1%;
 
   text-align: center;
   font-size: 1.5vw;
@@ -158,6 +239,7 @@
 .heading {
   font-size: 1.7vw;
   font-weight: bolder;
+
 }
 
 .bordered {

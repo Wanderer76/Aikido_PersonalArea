@@ -78,7 +78,6 @@ class TrainerHasbiks(APIView):
             data = request.headers.get('Authorization')[6:]
             aiki_id = Token.objects.get(key=data).user_id
             aiki_chel = Aikido_Member.objects.get(id=aiki_id)
-
             if aiki_chel.is_trainer:
                 hasbiki = Deti_Serializer(Aikido_Member.objects
                                           .filter(trainer_id=aiki_chel.id), many=True).data
@@ -89,6 +88,7 @@ class TrainerHasbiks(APIView):
                                                                   received_ku__isnull=False).latest())
                     hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
                     hasbik["ku"] = seminar_boy.data["received_ku"]
+                    hasbik['club'] = hasbik['club']['name']
 
                 return Response(data={"список учеников": hasbiki}, status=status.HTTP_200_OK)
             else:
@@ -108,9 +108,9 @@ class TrainserSet(APIView):
             for i in serializer.data:
                 last_achievement = Achievements.objects.filter(member__id=i['id']).order_by(
                     'attestation_date').last()
-                print(last_achievement)
                 i['ku'] = last_achievement.received_ku if last_achievement is not None else ""
                 i['attestation_date'] = last_achievement.attestation_date if last_achievement is not None else ""
+               # i['club'] = i['club']['name']
 
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         except Exception as e:
@@ -165,6 +165,42 @@ class CreateTrainer(APIView):
                 return Response(status=status.HTTP_201_CREATED, data={'content': 'created'})
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "не все поля заполнены"})
+
+
+class Modificate_Trainer(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def patch(self, request, id):
+        try:
+            trainer = Aikido_Member.objects.get(id=id)
+        except Aikido_Member.DoesNotExist:
+            return JsonResponse({'message': 'такого тренера не существует'}, status=status.HTTP_404_NOT_FOUND)
+
+        achievement = Achievements.objects.get(member=trainer)
+        aboba = {k: request.data.pop(k) for k in list(request.data.keys()) if k == 'event_name'
+                 or k == 'attestation_date'
+                 or k == 'received_ku'}
+
+        serializer = Trainer_Serializer(data=request.data, instance=trainer, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        serializer2 = Achievement_Serializer(data=aboba, instance=achievement, partial=True)
+        serializer2.is_valid(raise_exception=True)
+        serializer2.save()
+
+        return Response(status=status.HTTP_200_OK, data={'content': 'updated'})
+
+    def delete(self, request, id):
+        try:
+            trainer = Aikido_Member.objects.get(id=id)
+        except Aikido_Member.DoesNotExist:
+            return JsonResponse({'message': 'такого тренера не существует'}, status=status.HTTP_404_NOT_FOUND)
+
+        trainer.isTrainer = False
+        trainer.save()
+
+        return JsonResponse({'message': ' etot chelovek bolshe ne trainer !!!!!!'}, status=status.HTTP_204_NO_CONTENT)
 
 
 class CandidatesToTrainer(APIView):

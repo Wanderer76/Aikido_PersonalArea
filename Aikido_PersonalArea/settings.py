@@ -101,17 +101,15 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%d.%m.%Y %H:%M:%S",
 }
 
-
 DJOSER = {
-     'SEND_ACTIVATION_EMAIL': False,
-     # 'SEND_CONFIRMATION_EMAIL': True,
-     'ACTIVATION_URL': '#/activate/{uid}/{token}/',
-     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': False,
-     'PASSWORD_RESET_CONFIRM_URL': 'auth/reset/confirm/{uid}/{token}/',
-     'TOKEN_MODEL': None,
-     'SERIALIZERS': {}
- }
-
+    'SEND_ACTIVATION_EMAIL': False,
+    # 'SEND_CONFIRMATION_EMAIL': True,
+    'ACTIVATION_URL': '#/activate/{uid}/{token}/',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': False,
+    'PASSWORD_RESET_CONFIRM_URL': 'auth/reset/confirm/{uid}/{token}/',
+    'TOKEN_MODEL': None,
+    'SERIALIZERS': {}
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -159,6 +157,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/logo_images/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'logo_images')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -172,10 +172,13 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
 ]
 
-POSTER_ROOT = os.path.join(BASE_DIR,'posters')
+CLUB_LOGO_ROOT = os.path.join(BASE_DIR, 'logo_images')
+CLUB_LOGO_URL = '/logo_images/'
+
+POSTER_ROOT = os.path.join(BASE_DIR, 'posters')
 POSTER_URL = '/posters/'
 
-COMPONENT_TRAINER = os.path.join(BASE_DIR,'posters/components/trainer')
-COMPONENT_TRAINER_URL = os.path.join(BASE_DIR,'posters/components/trainer/')
-COMPONENT_LOGO = os.path.join(BASE_DIR,'posters/components/trainer')
-COMPONENT_LOGO_URL = os.path.join(BASE_DIR,'posters/components/trainer/')
+COMPONENT_TRAINER = os.path.join(BASE_DIR, 'posters/components/trainer')
+COMPONENT_TRAINER_URL = os.path.join(BASE_DIR, 'posters/components/trainer/')
+COMPONENT_LOGO = os.path.join(BASE_DIR, 'posters/components/trainer')
+COMPONENT_LOGO_URL = os.path.join(BASE_DIR, 'posters/components/trainer/')

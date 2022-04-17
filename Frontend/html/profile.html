@@ -4,12 +4,13 @@
       <meta charset="UTF-8">
       <title>Мой профиль</title>
       <link rel="stylesheet" href="../css/profile-style.css">
-      <script src="../js/go-to-auth-error-enter.js"></script>
+<!--      <script src="../js/go-to-auth-error-enter.js"></script>-->
 </head>
   <body>
      <div class="wrapper">
        <!-- Menu inserting here by JS -->
         <div class="container content">
+<!--          Base info about people-->
           <div class="row base-info">
             <img src="../assets/photo1.jpg" alt="" class="col-sm-6 col-md-3 photo" id="photo">
             <div class="col-6 md-col-2 fio"> 
@@ -25,10 +26,40 @@
               <button class="col-4 col-md-12" id="id-button">ID #0000</button>
             </div>
           </div>
-          <div class="row container achievment">
-            <h2 class="row">История достижений</h2>
 
-            <div class="row achievment-table">
+<!--          Block with current and next rank-->
+          <div class="row container current-achievment">
+            <div class="col-md-5 card-block">
+              <h3>Текущий ранг</h3>
+              <div class="card">
+                <div class="prog">
+                  <div class="progress-done" data-done="100">
+                    3 кю
+                  </div>
+                </div>
+                <p>X центральный семинар по прикладному айкидо</p>
+                <p class="date">12.12.2022</p>
+              </div>
+            </div>
+            <div class="col-md-5 card-block">
+              <h3>Следующий ранг</h3>
+              <div class="card">
+                <div class="prog">
+                  <div class="progress-done" data-done="80">
+                    2 кю
+                  </div>
+                </div>
+                <p>Дата возможности получения:</p>
+                <p class="date">12.12.2022</p>
+              </div>
+            </div>
+          </div>
+
+<!--          Tile scheme of achievments-->
+          <div class="row container achievment">
+            <h2 class="row hide-block-header" id="achievement-story-header" onclick="showBlock(this, document.getElementsByClassName('achievment-table')[0], 'История достижений')">История достижений ▼</h2>
+
+            <div class="row achievment-table visually-hidden">
 
               <div class="col-12 col-md-4">
                 <h3>Профессионал</h3>
@@ -37,8 +68,8 @@
                     1 дан
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="2dan">
@@ -46,8 +77,8 @@
                     2 дан
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="3dan">
@@ -55,8 +86,8 @@
                     3 дан
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="4dan">
@@ -64,8 +95,8 @@
                     4 дан
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
               </div>
@@ -78,8 +109,8 @@
                     1 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="2ku">
@@ -87,8 +118,8 @@
                     2 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="3ku">
@@ -96,8 +127,8 @@
                     3 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="4ku">
@@ -105,8 +136,8 @@
                     4 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="5ku">
@@ -114,8 +145,8 @@
                     5 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
               </div>
@@ -127,8 +158,8 @@
                     1 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="2ku-child">
@@ -136,8 +167,8 @@
                     2 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="3ku-child">
@@ -145,8 +176,8 @@
                     3 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="4ku-child">
@@ -154,8 +185,8 @@
                     4 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
-                    <p id ="date">Не определено</p>
+                    <p name="name">Нет в базе</p>
+                    <p name ="date">Не определено</p>
                   </div>
                 </div>
                 <div class="achievment-block not-reached row" id="5ku-child">
@@ -163,24 +194,223 @@
                     5 кю
                   </div>
                   <div class="achievment-info col-9">
-                    <p id="name">Нет в базе</p>
+                    <p name="name">Нет в базе</p>
                     <p id ="date">Не определено</p>
                   </div>
                 </div>
               </div>
             </div> 
-          </div>           
+          </div>
 
+          <h2 class="table-name">Ближайшие соревнования</h2>
           <div class="seminar-table">
-            <table id="seminar-table">
-              <tr id="seminar-header">
-                <td class="heading">Дата</td>
-                <td class="heading unvisible bordered">Город</td>
-                <td class="heading unvisible bordered">Ответственный клуб</td>
-                <td  class="heading">Результат</td>
-              </tr>
-              <!-- Here wil be new rows with info about seminar. It's add with JS. -->
-            </table>
+            <div class="scroll">
+              <table id="future-seminar-table">
+                <tr id="future-seminar-header">
+                  <td class="heading">Дата</td>
+                  <td class="heading unvisible bordered">Город</td>
+                  <td class="heading unvisible bordered">Ответственный клуб</td>
+                  <td  class="heading">Результат</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <!-- Here wil be new rows with info about seminar. It's add with JS. -->
+              </table>
+            </div>
+          </div>
+
+
+          <h2 class="hide-block-header" onclick="showBlock(this, document.getElementsByClassName('seminar-table')[1], 'История соревнований')">История соревнований ▼</h2>
+          <div class="seminar-table visually-hidden">
+            <div class="scroll">
+              <table id="seminar-table">
+                <tr id="seminar-header">
+                  <td class="heading">Дата</td>
+                  <td class="heading unvisible bordered">Город</td>
+                  <td class="heading unvisible bordered">Ответственный клуб</td>
+                  <td  class="heading">Результат</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <tr>
+                  <td class="">12.12.2012</td>
+                  <td class="unvisible bordered">Екатеринбург</td>
+                  <td class="unvisible bordered">Клуба мана</td>
+                  <td  class="">Сдано</td>
+                </tr>
+                <!-- Here wil be new rows with info about seminar. It's add with JS. -->
+              </table>
+            </div>
           </div>
           
         </div>

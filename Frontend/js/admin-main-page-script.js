@@ -19,10 +19,8 @@ xhr.onreadystatechange = function() {
     }
 }
 
-function sendActivityName(button) {
-    let buttonNum = button.id.split('-')[2];
-    let name  = document.getElementById('name-' + buttonNum);
-    sessionStorage.setItem("activityName", name.textContent);
+function sendActivityName(slug) {
+    sessionStorage.setItem("slug", slug);
     location.href = "../html/edit-event-page.html";
 }
 
@@ -49,12 +47,12 @@ function addDataToTable(data, tagAfterInserting, tag) {
             '       '+ createDateOutput(activity.date_of_event, activity.end_of_event) + '\n' +
             '   </div>\n' +
             '   <div class="col">\n' +
-            '       г.'+ activity.city +'\n' +
+            '       г.'+ activity.address +'\n' +
             '   </div>\n' +
             '   <div class="col">\n' + activity.responsible_club +
             '   </div>\n' +
             '   <div class="col">\n' +
-            '       <button type="button" name="more_details" class="more_details" id="more-button-'+ num +'" onclick="sendActivityName(this)">Подробнее</button>\n' +
+            '       <button type="button" name="more_details" class="more_details" id="more-button-'+ num +'" onclick="sendActivityName(\''+ activity.slug +'\')">Подробнее</button>\n' +
             '   </div>\n';
 
         tagAfterInserting.parentElement.insertBefore(output, tagAfterInserting.nextSibling);

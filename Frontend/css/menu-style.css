@@ -6,6 +6,20 @@ body {
 
 /*styles for fucking sidebar menu*/
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(180deg, #00c6fb, #134F8C);
+}
+
 .wrapper {
     position: relative;
     overflow-x: hidden;

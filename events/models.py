@@ -7,7 +7,7 @@ from clubs.models import Club
 
 
 class Events(models.Model):
-    event_name = models.CharField(name="event_name", primary_key=True, max_length=100)
+    event_name = models.CharField(name="event_name", unique=True, max_length=100)
     date_of_event = models.DateField(name="date_of_event", null=False, default=datetime.date.today)
     end_of_event = models.DateField(name="end_of_event", null=False, default=datetime.date.today)
     address = models.TextField(name="address")

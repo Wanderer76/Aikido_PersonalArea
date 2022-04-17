@@ -44,7 +44,7 @@ class UpdateClub(APIView):
         serializer = Clubs_Serializer(club, data=request.data, partial=True)
 
         if serializer.is_valid():
-            serializer.validated_data['slug'] = slugify(serializer.validated_data['name'])
+            #serializer.validated_data['slug'] = slugify(serializer.validated_data['name'])
             set_main_trainers(main_trainers, serializer.save())
             return Response(status=status.HTTP_200_OK, data={'content': 'updated'})
         else:

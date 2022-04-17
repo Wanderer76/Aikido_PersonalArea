@@ -2,20 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Создание тренера</title>
+    <title>Редактирование тренера</title>
     <link rel="stylesheet" href="../css/add_new_trainer.css">
 </head>
 <body>
 <div class="wrapper abc">
+    <div class="accept-block hidden" id = "accept-block">
+        <h3>Вы действительно хотите лишить человека статуса тренера?</h3>
+        <button type="button" class="accept-button">Да</button>
+        <button type="button" class="cancel-button" onclick="hideAcceptBlock()">Нет</button>
+    </div>
     <div class="container content center-block vh-100 d-flex flex-wrap">
-        <h1>Добавить тренера</h1>
-        <select name="coach-selector" id="coach-selector" class="coach-selector" onchange="hideErrorMessage()">
-            <option value="none" selected>Выберите человека из базы</option>
-        </select>
-        <div class="text-block">
-            <p>ИЛИ</p>
-            <p>Создайте новый аккаунт</p>
-        </div>
+        <h1>Редактирование тренера</h1>
         <div class="form-block">
             <input type="text" placeholder="Фамилия" class="base-info" id="surname" onchange="hideErrorMessage()">
             <input type="text" placeholder="Имя" class="base-info" id="name" onchange="hideErrorMessage()">
@@ -46,7 +44,9 @@
             <input type="text" placeholder="Название мероприятия аттестации" class="event-name" id="event-name" onchange="hideErrorMessage()">
         </div>
         <div class="button-block">
-            <button class="send-button" onclick="sendInfo()">Создать</button>
+            <button class="send-button" onclick="sendInfo()">Сохранить</button>
+            <button class="send-button delete-button" onclick="deleteCoach()">Удалить</button>
+
             <p class="error-message hidden" id="error-message">Введите все данные</p>
         </div>
 
@@ -56,6 +56,7 @@
 <script src="../js/menu-inserting.js"></script>
 <script src="../js/getRequest.js"></script>
 <script src="../js/postWithoutAnswer.js"></script>
+<script src="../js/edit-trainer.js"></script>
 <script src="../js/add-new-trainer-script.js"></script>
 
 </html>

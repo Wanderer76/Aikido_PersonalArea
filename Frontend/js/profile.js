@@ -162,3 +162,27 @@ function setDateFormat(strDate) {
     return day + '.' + month + '.' + date.getFullYear();
 }
 
+
+function fillBar(progress) {
+    progress.style.width = progress.getAttribute('data-done') + '%';
+    progress.style.opacity = 1;
+}
+
+function changeBarColor(progressBar, color) {
+    progressBar.style.background = color;
+}
+
+function showBlock(button, block, textValue) {
+    if (button.textContent === textValue +  ' ▼')
+        button.textContent = textValue + ' ▲';
+    else
+        button.textContent = textValue + ' ▼';
+    block.classList.toggle('visually-hidden');
+
+}
+
+fillBar(document.getElementsByClassName('progress-done')[0]);
+changeBarColor(document.getElementsByClassName('progress-done')[0], '#0417b4');
+fillBar(document.getElementsByClassName('progress-done')[1]);
+changeBarColor(document.getElementsByClassName('progress-done')[1], '#9e4700');
+
