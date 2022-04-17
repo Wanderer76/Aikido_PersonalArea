@@ -218,6 +218,7 @@ class EventView(APIView, IsTrainerPermission):
     def get(self, request, event_slug):
         try:
             event = Events_Serializer(Events.objects.get(slug=event_slug)).data
+            event['responsible_club'] = event['responsible_club']['name']
             return JsonResponse(data={"result": event})
         except Events.DoesNotExist as e:
             return JsonResponse(data={"result": "события не существует"})
