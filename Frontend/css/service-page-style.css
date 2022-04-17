@@ -425,6 +425,11 @@ th{
     text-align: left;
 }
 
+.scroll {
+    max-height: 300px;
+    overflow: auto;
+}
+
 /*.theTOP{
     display: grid;
     grid-template-areas: '. h3 . . club_info club_info club_info club_info'
