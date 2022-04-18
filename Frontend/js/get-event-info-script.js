@@ -17,12 +17,9 @@ function fillInputs(data) {
     document.getElementById('max-rang-select').value = parsed['max_rang'];
 
     // не работает.
-    // document.getElementById('logo-icon').files[0] = parsed['logo_img'];
-    // document.getElementById('coach-icon').files[0] = parsed['couch_img'];
-    // document.getElementById('logo-icon').files.push(parsed['logo_img']);
-    // document.getElementById('coach-icon').files.push(parsed['couch_img']);
-    // document.getElementById('logo-icon-preview').src = parsed['logo_img'];
-    // document.getElementById('coach-icon-preview').src = parsed['couch_img'];
+    document.getElementById('logo-icon-preview').src = parsed['logo_img'];
+    document.getElementById('coach-icon-preview').src = parsed['couch_img'];
+    document.getElementById('event-poster-preview').src = parsed['poster'];
 
     const coachOffset = parsed['coach_offset'];
     document.getElementById('coach-x-offset').value = coachOffset['x_offset'];

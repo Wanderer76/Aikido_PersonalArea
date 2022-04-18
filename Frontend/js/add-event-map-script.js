@@ -30,7 +30,12 @@ function initMap() {
     myMap.controls.add(searchControl);
 
     let eventLocation = document.getElementById('event-location');
-    eventLocation.addEventListener('change', function() {
+
+    if (eventLocation.value) {
+        searchControl.search(eventLocation.value);
+    }
+
+    eventLocation.addEventListener('input', function() {
         update();
     })
 
