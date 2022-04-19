@@ -177,6 +177,8 @@ class Modificate_Trainer(APIView):
         except Aikido_Member.DoesNotExist:
             return JsonResponse({'message': 'такого тренера не существует'}, status=status.HTTP_404_NOT_FOUND)
 
+        club = Club.objects.get(name=request.data['club'])
+        request.data['club'] = club.id
         achievement = Achievements.objects.get(member=trainer)
         aboba = {k: request.data.pop(k) for k in list(request.data.keys()) if k == 'event_name'
                  or k == 'attestation_date'
