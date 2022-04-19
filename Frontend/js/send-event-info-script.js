@@ -9,8 +9,12 @@ let storage = window.sessionStorage;
 let token = storage.getItem('user_token');
 
 xhr.onreadystatechange = function () {
-    let data = xhr.response;
-    //location.href = '../html/admin-page-main.html';
+    if (xhr.status >= 200 && xhr.status < 300) {
+        let data = xhr.response;
+        location.href = '../html/admin-page-main.html';
+    } else {
+        alert('Не все поля заполнены верно!');
+    }
 };
 
 createButton.onclick = function () {
