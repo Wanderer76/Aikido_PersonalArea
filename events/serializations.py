@@ -3,6 +3,7 @@ import datetime
 from pytils.translit import slugify
 from rest_framework import serializers
 
+from clubs.models import Club
 from clubs.serializators import ClubName_Serializer
 from events.models import Events, Request
 
@@ -31,8 +32,6 @@ class Events_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Events
         fields = '__all__'
-
-
 
     def update(self, instance: Events, validated_data):
         instance.poster.delete()
@@ -71,9 +70,17 @@ class UpdateEvents_Serializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def update(self, instance: Events, validated_data):
-        instance.poster.delete()
-        instance.logo_img.delete()
-        instance.couch_img.delete()
+        if validated_data.__contains__('poster') and validated_data.get('poster') != 'undefined':
+            instance.poster.delete()
+            instance.poster = validated_data.get('poster', instance.poster)
+
+        if validated_data.__contains__('logo_img') and validated_data.get('logo_img') != 'undefined':
+            instance.logo_img.delete()
+            instance.logo_img = validated_data.get('logo_img', instance.logo_img)
+
+        if validated_data.__contains__('couch_img') and validated_data.get('couch_img') != 'undefined':
+            instance.couch_img.delete()
+            instance.couch_img = validated_data.get('couch_img', instance.couch_img)
 
         instance.event_name = validated_data.get('event_name', instance.event_name)
         instance.date_of_event = validated_data.get('date_of_event', instance.date_of_event)
@@ -82,16 +89,15 @@ class UpdateEvents_Serializer(serializers.ModelSerializer):
         instance.coordinates = validated_data.get('coordinates', instance.coordinates)
         instance.start_record_date = instance.start_record_date
         instance.end_record_date = instance.end_record_date
-        instance.responsible_club = validated_data.get('responsible_club', instance.responsible_club)
+        instance.responsible_club = Club.objects.get(id=validated_data.get('responsible_club', instance.responsible_club))
         instance.responsible_trainer = validated_data.get('responsible_trainer', instance.responsible_trainer)
         instance.max_rang = validated_data.get('max_rang', instance.max_rang)
         instance.slug = slugify(instance.event_name)
-        instance.couch_img = validated_data.get('couch_img', instance.couch_img)
+
         instance.coach_offset = validated_data.get('coach_offset', instance.coach_offset)
-        instance.logo_img = validated_data.get('logo_img', instance.logo_img)
         instance.logo_offset = validated_data.get('coach_offset', instance.logo_offset)
         instance.schedule = validated_data.get('schedule', instance.schedule)
         instance.contacts = validated_data.get('contacts', instance.contacts)
-        instance.poster = validated_data.get('poster', instance.poster)
+
         instance.save()
         return instance
