@@ -1,9 +1,7 @@
 import {coordinates} from "./add-event-map-script.js";
 import {createSchedule} from "./add-event-schedule-script.js";
-import {eventSlug} from "./get-event-info-script.js";
 
 const createButton = document.getElementById('create');
-const editButton = document.getElementById('edit');
 
 let xhr = new XMLHttpRequest();
 xhr.responseType = 'json';
@@ -19,20 +17,12 @@ createButton.onclick = function () {
 
     xhr.open('POST', "http://127.0.0.1:8000/api/v1/events/create/");
     const formData = createFormData();
-
+    console.log(formData);
     xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
     xhr.send(formData);
 }
 
-editButton.onclick = function () {
-    xhr.open('PATCH', `http://127.0.0.1:8000/api/v1/events/update/${eventSlug}/`);
-    const formData = createFormData();
-
-    xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
-    xhr.send(formData);
-}
-
-function createFormData() {
+export function createFormData() {
     const eventTitle = document.getElementById('event-name');
     const dateStart = document.getElementById('date-start');
     const dateEnd = document.getElementById('date-end');
