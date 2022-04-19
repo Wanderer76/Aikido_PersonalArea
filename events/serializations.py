@@ -25,11 +25,14 @@ class Events_Serializer(serializers.ModelSerializer):
     start_record_date = datetime.datetime.today()
     end_record_date = datetime.datetime.today()
     slug = serializers.SlugField(default="")
-    responsible_club = ClubName_Serializer()
+
+    # responsible_club = ClubName_Serializer()
 
     class Meta:
         model = Events
         fields = '__all__'
+
+
 
     def update(self, instance: Events, validated_data):
         instance.poster.delete()
