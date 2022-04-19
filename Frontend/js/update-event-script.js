@@ -1,5 +1,3 @@
-//для обновления мероприятия
-
 import {createFormData} from "./send-event-info-script.js";
 import {eventSlug} from "./get-event-info-script.js";
 
@@ -9,12 +7,14 @@ let storage = window.sessionStorage;
 let token = storage.getItem('user_token');
 
 xhr.onreadystatechange = function () {
-    if (xhr.status >= 200 && xhr.status < 300) {
-        let data = xhr.response;
-        location.href = '../html/admin-page-main.html';
-    } else {
-        alert('Не все поля заполнены верно!');
-    }
+    // if (xhr.status >= 200 && xhr.status < 300) {
+    //     let data = xhr.response;
+    //     //location.href = '../html/admin-page-main.html';
+    // } else {
+    //     alert('Не все поля заполнены верно!');
+    // }
+    let data = xhr.response;
+    //location.href = '../html/admin-page-main.html';
 };
 
 const editButton = document.getElementById('edit');
