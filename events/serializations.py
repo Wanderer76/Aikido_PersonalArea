@@ -1,7 +1,9 @@
 import datetime
+import json
 
 from pytils.translit import slugify
 from rest_framework import serializers
+from rest_framework.parsers import JSONParser
 
 from clubs.models import Club
 from clubs.serializators import ClubName_Serializer
@@ -72,15 +74,15 @@ class UpdateEvents_Serializer(serializers.ModelSerializer):
     def update(self, instance: Events, validated_data):
         if validated_data.__contains__('poster') and validated_data.get('poster') != 'undefined':
             instance.poster.delete()
-            instance.poster = validated_data.get('poster', instance.poster)
+            instance.poster = validated_data.get('poster')
 
         if validated_data.__contains__('logo_img') and validated_data.get('logo_img') != 'undefined':
             instance.logo_img.delete()
-            instance.logo_img = validated_data.get('logo_img', instance.logo_img)
+            instance.logo_img = validated_data.get('logo_img')
 
         if validated_data.__contains__('couch_img') and validated_data.get('couch_img') != 'undefined':
             instance.couch_img.delete()
-            instance.couch_img = validated_data.get('couch_img', instance.couch_img)
+            instance.couch_img = validated_data.get('couch_img')
 
         instance.event_name = validated_data.get('event_name', instance.event_name)
         instance.date_of_event = validated_data.get('date_of_event', instance.date_of_event)
@@ -89,15 +91,14 @@ class UpdateEvents_Serializer(serializers.ModelSerializer):
         instance.coordinates = validated_data.get('coordinates', instance.coordinates)
         instance.start_record_date = instance.start_record_date
         instance.end_record_date = instance.end_record_date
-        instance.responsible_club = Club.objects.get(id=validated_data.get('responsible_club', instance.responsible_club))
+        instance.responsible_club = Club.objects.get(name=validated_data.get('responsible_club'))
         instance.responsible_trainer = validated_data.get('responsible_trainer', instance.responsible_trainer)
         instance.max_rang = validated_data.get('max_rang', instance.max_rang)
         instance.slug = slugify(instance.event_name)
 
-        instance.coach_offset = validated_data.get('coach_offset', instance.coach_offset)
-        instance.logo_offset = validated_data.get('coach_offset', instance.logo_offset)
-        instance.schedule = validated_data.get('schedule', instance.schedule)
-        instance.contacts = validated_data.get('contacts', instance.contacts)
-
+        instance.coach_offset = json.loads(validated_data.get('coach_offset', instance.coach_offset))
+        instance.logo_offset = json.loads(validated_data.get('coach_offset', instance.logo_offset))
+        instance.schedule = json.loads(validated_data.get('schedule', instance.schedule))
+        instance.contacts = json.loads(validated_data.get('contacts', instance.contacts))
         instance.save()
         return instance

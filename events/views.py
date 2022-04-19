@@ -11,7 +11,6 @@ from rest_framework.views import APIView
 
 from Utilities import xls_parser
 from Utilities.services import get_day_before
-from clubs.models import Club
 from events.serializations import *
 
 
@@ -21,17 +20,6 @@ class IsTrainerPermission(BasePermission):
 
 
 class CreateEvent(APIView):
-    """ json формат в котором нужно передавать данные
-           {
-           "event_name":"название мероприятия",
-           "date_of_event":"дата начала семинара в формате гггг-мм-дд",
-           "end_of_event":"дата конца семинара в формате гггг-мм-дд",
-           "city":"город",
-           "responsible_club":"ответственный клуб"
-           "responsible_trainer":"фио ответственного тренера"
-           }
-    """
-
     permission_classes = (permissions.AllowAny,)
 
     @transaction.atomic
@@ -59,8 +47,6 @@ class UpdateEvent(APIView):
     def patch(self, request, event_slug):
         try:
             data = request.data.copy()
-            club = Club.objects.get(name=data['responsible_club'])
-            data['responsible_club'] = club.id
             event = Events.objects.get(slug=event_slug)
             serializer = UpdateEvents_Serializer()
             serializer.update(event, data)
