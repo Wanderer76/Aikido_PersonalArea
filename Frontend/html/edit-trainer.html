@@ -35,7 +35,6 @@
                 <option value="17">7 дан</option>
                 <option value="18">8 дан</option>
                 <option value="19">9 дан</option>
-
             </select>
             <input type="text" class="base-info" id="attestation-date" onchange="hideErrorMessage()" onclick="changeType(this, 'date')" placeholder="Дата получения">
             <select class="base-info-selectors club" id="club-selector" onchange="hideErrorMessage()">
@@ -44,7 +43,7 @@
             <input type="text" placeholder="Название мероприятия аттестации" class="event-name" id="event-name" onchange="hideErrorMessage()">
         </div>
         <div class="button-block">
-            <button class="send-button" onclick="sendInfo()">Сохранить</button>
+            <button class="send-button" onclick="sendEditInfo()">Сохранить</button>
             <button class="send-button delete-button" onclick="deleteCoach()">Удалить</button>
 
             <p class="error-message hidden" id="error-message">Введите все данные</p>
@@ -56,7 +55,7 @@
 <script src="../js/menu-inserting.js"></script>
 <script src="../js/getRequest.js"></script>
 <script src="../js/postWithoutAnswer.js"></script>
-<script src="../js/edit-trainer.js"></script>
 <script src="../js/add-new-trainer-script.js"></script>
+<script src="../js/edit-trainer.js"></script>
 
 </html>

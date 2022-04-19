@@ -11,19 +11,18 @@ function fillTrainerSelector(data) {
 
 function fillClubSelector(data) {
     let clubs = JSON.parse(data);
+    console.log(clubs);
     let selector = document.getElementById('club-selector');
     for (let club of clubs) {
         selector.innerHTML += '<option value="'+ club['name'] + '">'+ club['name'] +'</option>';
     }
 }
 
-fillClubSelector(JSON.stringify([{'name' : "Something club name1", 'logo': 'dsvndufvbid'}, {'name' : "Something club name2", 'logo': 'dsvndufvbid'}]))
-fillTrainerSelector(JSON.stringify([{'id' : '001', 'name': "Некто Нектович Нектов"}, {'id' : '002', 'name': "Башмачкин Акакий Акакиевич"}]));
 
 
-function getAllInfo() {
+function getAllInfo(flag) {
 
-    if (document.getElementById('coach-selector').value !== 'none') {
+    if (flag && document.getElementById('coach-selector').value !== 'none') {
         return {'id' : document.getElementById('coach-selector').value}
     }
     else {
@@ -48,15 +47,19 @@ function hideErrorMessage(node, defaultValue) {
 
 }
 
+function checkInputsInSendingData(sendingData) {
+    return (sendingData['surname'] !== '' && sendingData['name'] !== '' && sendingData['second_name'] !== '' &&
+        sendingData['birthdate'] !== '' && sendingData['rank'] !== 'none' && sendingData['club'] !== 'none' &&
+        sendingData['last_event'] !== '')
+}
+
 function sendInfo() {
-    let sending_data = getAllInfo();
+    let sending_data = getAllInfo(true);
     if (sending_data['id'] !== 'none' && sending_data['id'] !== undefined) {
             console.log('sending id');
             postWithoutAnswer('http://localhost:8000/api/v1/account/create_trainer/' + sending_data['id'] + '/', undefined, "POST", function () {location.href = '../html/federation_coaches.html'});
         }
-    else if  (sending_data['surname'] !== '' && sending_data['name'] !== '' && sending_data['second_name'] !== '' &&
-        sending_data['birthdate'] !== '' && sending_data['rank'] !== 'none' && sending_data['club'] !== 'none' &&
-        sending_data['last_event'] !== '') {
+    else if (checkInputsInSendingData(sending_data)) {
         console.log(sending_data);
         postWithoutAnswer('http://localhost:8000/api/v1/account/create_trainer/', JSON.stringify(sending_data), "POST", function () {location.href = '../html/federation_coaches.html'});
     }
