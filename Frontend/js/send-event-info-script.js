@@ -10,7 +10,7 @@ let token = storage.getItem('user_token');
 
 xhr.onreadystatechange = function () {
     let data = xhr.response;
-    location.href = '../html/admin-page-main.html';
+    //location.href = '../html/admin-page-main.html';
 };
 
 createButton.onclick = function () {
