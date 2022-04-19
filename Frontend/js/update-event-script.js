@@ -1,3 +1,5 @@
+//для обновления мероприятия
+
 import {createFormData} from "./send-event-info-script.js";
 import {eventSlug} from "./get-event-info-script.js";
 
