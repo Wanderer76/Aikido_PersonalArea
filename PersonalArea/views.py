@@ -17,6 +17,7 @@ from PersonalArea.models import *
 from PersonalArea.serializations import *
 from Utilities import password_generantor, services
 
+
 class LoginAPIView(APIView):
     """json формат в котором нужно передавать данные
     {
@@ -110,7 +111,7 @@ class TrainserSet(APIView):
                     'attestation_date').last()
                 i['ku'] = last_achievement.received_ku if last_achievement is not None else ""
                 i['attestation_date'] = last_achievement.attestation_date if last_achievement is not None else ""
-               # i['club'] = i['club']['name']
+            # i['club'] = i['club']['name']
 
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         except Exception as e:
@@ -176,6 +177,8 @@ class Modificate_Trainer(APIView):
         except Aikido_Member.DoesNotExist:
             return JsonResponse({'message': 'такого тренера не существует'}, status=status.HTTP_404_NOT_FOUND)
 
+        club = Club.objects.get(name=request.data['club'])
+        request.data['club'] = club.id
         achievement = Achievements.objects.get(member=trainer)
         aboba = {k: request.data.pop(k) for k in list(request.data.keys()) if k == 'event_name'
                  or k == 'attestation_date'
@@ -211,6 +214,22 @@ class CandidatesToTrainer(APIView):
         members = Aikido_Member.objects.filter(birthdate__lte=min_year, isTrainer=False)
         serializer = CandidatesToTrainerSerializer(members, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class TrainerBaseInfo(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def get(self, request, id):
+        trainer = Aikido_Member.objects.get(id=id)
+        if not trainer.isTrainer:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        first_achievment = Achievements.objects.order_by('attestation_date').first()
+        trainer_ser = Trainer_Serializer(trainer).data
+        trainer_ser['club'] = Club.objects.get(id=trainer_ser['club']).name
+        achievement_ser = Achievement_Serializer(first_achievment).data
+        trainer_ser.update(achievement_ser)
+        return Response(data=trainer_ser, status=status.HTTP_200_OK)
 
 
 @csrf_exempt

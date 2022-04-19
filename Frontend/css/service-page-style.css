@@ -283,7 +283,7 @@ body {
     padding-left: 2%;
     margin-top: -25%;*/
     grid-area: club_info;
-    margin-top: -15%;
+    margin-top: 3%;
     margin-left: 40%;
 
 }
@@ -361,7 +361,7 @@ th{
 
 .table-button {
     justify-self: center;
-    margin-left: 30%;
+    margin-left: 33%;
     margin-right: auto;
     margin-bottom: 10%;
     min-height: 30%;
@@ -423,6 +423,11 @@ th{
 .fio-2{
     font-size: larger;
     text-align: left;
+}
+
+.scroll {
+    max-height: 300px;
+    overflow: auto;
 }
 
 /*.theTOP{

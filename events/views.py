@@ -37,8 +37,8 @@ class CreateEvent(APIView):
     @transaction.atomic
     def post(self, request):
         club = Club.objects.get(name=request.data['responsible_club'])
-        request.data.pop('responsible_club')
-        request.data.update({"responsible_club": club.id})
+
+        request.data['responsible_club'] = club.id
         serializer = Events_Serializer(data=request.data)
         if serializer.is_valid():
             serializer.validated_data['start_record_date'] = datetime.datetime.today()
@@ -216,7 +216,8 @@ class EventView(APIView, IsTrainerPermission):
     def get(self, request, event_slug):
         try:
             event = Events_Serializer(Events.objects.get(slug=event_slug)).data
-            event['responsible_club'] = event['responsible_club']['name']
+            club = Club.objects.get(id=event['responsible_club'])
+            event['responsible_club'] = club.name
             return JsonResponse(data={"result": event})
         except Events.DoesNotExist as e:
             return JsonResponse(data={"result": "события не существует"})
