@@ -2,13 +2,13 @@ import {createElement, render, RenderPosition} from "./add-event-render-script.j
 
 // Разметка поля ввода в столбце дней.
 const createDayInputMarkup = (dayCount, participantCategory) => {
-    return `<input type="text" class="input-schedule" data-category="${participantCategory}" id="day-${dayCount}" placeholder="ДД месяц">`;
+    return `<input type="text" class="input-schedule" data-category="${participantCategory}" id="day-${dayCount}" placeholder="ДД месяц" autocomplete="off">`;
 };
 
 // Разметка поля ввода в столбце времени.
 const createHoursInputMarkup = (hoursCount, exactDay, participantCategory) => {
     return `<input type="text" class="input-schedule" data-day="${exactDay}" 
-        data-category="${participantCategory}" id="time-${hoursCount}" placeholder="ЧЧ:ММ - ЧЧ:ММ">`;
+        data-category="${participantCategory}" id="time-${hoursCount}" placeholder="ЧЧ:ММ - ЧЧ:ММ" autocomplete="off">`;
 };
 
 // Элементы.

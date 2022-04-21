@@ -59,7 +59,7 @@ function createCurrentCategorySchedule (category, categorySchedule) {
 }
 
 function createDay (category, day) {
-    const markup = `<input type="text" class="input-schedule" data-category="${category}" placeholder="ДД месяц">`;
+    const markup = `<input type="text" class="input-schedule" data-category="${category}" placeholder="ДД месяц" autocomplete="off">`;
     const dayInputElement = createElement(markup);
     const dayColumn = document.getElementById('day-column');
 
@@ -70,7 +70,7 @@ function createDay (category, day) {
 }
 
 function createHours (category, day, hours) {
-    const markup = `<input type="text" class="input-schedule" data-day="${day}" data-category="${category}"  placeholder="ЧЧ:ММ - ЧЧ:ММ">`;
+    const markup = `<input type="text" class="input-schedule" data-day="${day}" data-category="${category}"  placeholder="ЧЧ:ММ - ЧЧ:ММ" autocomplete="off">`;
     const hoursColumn = document.getElementById('time-column');
 
     for (let i = 0; i < hours.length; i++) {

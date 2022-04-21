@@ -6,15 +6,13 @@ xhr.responseType = 'json';
 let storage = window.sessionStorage;
 const userToken = storage.getItem('user_token');
 
-xhr.onreadystatechange = function () {
-    // if (xhr.status >= 200 && xhr.status < 300) {
-    //     let data = xhr.response;
-    //     //location.href = '../html/admin-page-main.html';
-    // } else {
-    //     alert('Не все поля заполнены верно!');
-    // }
-    let data = xhr.response;
-    //location.href = '../html/admin-page-main.html';
+xhr.onload = function () {
+    if ((xhr.status >= 200 && xhr.status < 300)) {
+        location.href = '../html/admin-page-main.html';
+    } else {
+        console.log(xhr.response);
+        alert(`Вы упустили некоторые поля или заполнили их неверно! \n Статус ответа: ${xhr.status}. \n Обратите внимание! \n Вы не можете создать мероприятие с одним и тем же названием, если оно имеется в списке мероприятий. \n Файлы изображений можно заменить при необходимости. \n Все текстовые поля, ввод дат и выпадающие списки являются обязательными. \n Расписание соревнований можно оставить пустым до дальнейшего редактирования.`);
+    }
 };
 
 const editButton = document.getElementById('edit');

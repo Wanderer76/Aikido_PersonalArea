@@ -8,23 +8,20 @@ xhr.responseType = 'json';
 let storage = window.sessionStorage;
 let token = storage.getItem('user_token');
 
-xhr.onreadystatechange = function () {
-    // if (xhr.status >= 200 && xhr.status < 300) {
-    //     let data = xhr.response;
-    //     //location.href = '../html/admin-page-main.html';
-    // } else {
-    //     alert('Не все поля заполнены верно!');
-    // }
-    let data = xhr.response;
-    //location.href = '../html/admin-page-main.html';
+xhr.onload = function () {
+    if ((xhr.status >= 200 && xhr.status < 300)) {
+        location.href = '../html/admin-page-main.html';
+    } else {
+        console.log(xhr.response);
+        alert(`Вы упустили некоторые поля или заполнили их неверно! \n Статус ответа: ${xhr.status}. \n Обратите внимание! \n Вы не можете создать мероприятие с одним и тем же названием, если оно имеется в списке мероприятий. \n Поля загрузки изображений: фото тренера, логотипа клуба и афишы являютя обязательными. \n Все текстовые поля, ввод дат и выпадающие списки являются обязательными. \n Расписание соревнований можно оставить пустым до дальнейшего редактирования.`);
+    }
 };
 
 createButton.onclick = function () {
 
     xhr.open('POST', "http://127.0.0.1:8000/api/v1/events/create/");
     const formData = createFormData();
-    console.log(formData);
-    xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
+    xhr.setRequestHeader('Authorization', 'Token ' + token);
     xhr.send(formData);
 }
 
@@ -99,7 +96,6 @@ export function createFormData() {
     formData.append("poster", posterImage.files[0]);
     formData.append("contacts", getContacts(orgName, orgPhone, orgEmail));
 
-    console.log(formData);
     return formData;
 }
 
