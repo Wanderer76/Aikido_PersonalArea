@@ -158,7 +158,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/logo_images/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'logo_images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'logo_images')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -167,10 +167,28 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'PersonalArea.Aikido_Member'
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+"""CORS_ALLOWED_ORIGINS = [
     "http://localhost:63342",
     'http://localhost:8000',
-]
+]"""
 
 CLUB_LOGO_ROOT = os.path.join(BASE_DIR, 'logo_images')
 CLUB_LOGO_URL = '/logo_images/'

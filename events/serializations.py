@@ -3,7 +3,6 @@ import json
 
 from pytils.translit import slugify
 from rest_framework import serializers
-from rest_framework.parsers import JSONParser
 
 from clubs.models import Club
 from clubs.serializators import ClubName_Serializer
@@ -23,6 +22,11 @@ class Requests_Serializer(serializers.ModelSerializer):
         model = Request
         exclude = ['id']
 
+
+class BaseInfoForTrainer_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Events
+        fields =['event_name','end_record_date','address','date_of_event']
 
 class Events_Serializer(serializers.ModelSerializer):
     start_record_date = datetime.datetime.today()

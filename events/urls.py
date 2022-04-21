@@ -10,6 +10,7 @@ urlpatterns = [
     path('requests/create/', csrf_exempt(views.CreateRequest.as_view())),
     path('trainer/requests/<str:event_slug>/', views.TrainerEventRequest.as_view()),
     path('event_list/', views.EventsList.as_view()),
+    path('base_for_trainer/<str:event_slug>/', views.BaseInfoForTrainer.as_view()),
     path('event_statistic/<str:event_slug>/', views.EventView.as_view()),
     path('file/upload/<str:seminar_url>/', csrf_exempt(views.EventInfoLoad.as_view())),
     path('file/download/<str:seminar_url>/', csrf_exempt(views.EventInfoLoad.as_view())),

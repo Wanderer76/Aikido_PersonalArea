@@ -141,6 +141,20 @@ class TrainerEventRequest(APIView, IsTrainerPermission):
         return Response(status=status.HTTP_200_OK, data=serializer)
 
 
+class BaseInfoForTrainer(APIView):
+    permission_classes = (IsTrainerPermission,)
+
+    def get(self, request, event_slug):
+        try:
+            event = Events.objects.get(slug=event_slug)
+            count = Request.objects.filter(event_name=event.id).count()
+            result = BaseInfoForTrainer_Serializer(event).data
+            result['count'] = count
+            return Response(data=result, status=status.HTTP_200_OK)
+        except Events.DoesNotExist as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 class EventsList(APIView, IsTrainerPermission):
     """
     Возвращает данные в следующем формате
