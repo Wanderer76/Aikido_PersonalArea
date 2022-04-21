@@ -26,7 +26,8 @@ class Requests_Serializer(serializers.ModelSerializer):
 class BaseInfoForTrainer_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Events
-        fields =['event_name','end_record_date','address','date_of_event']
+        fields = ['event_name', 'end_record_date', 'address', 'date_of_event', 'end_of_event']
+
 
 class Events_Serializer(serializers.ModelSerializer):
     start_record_date = datetime.datetime.today()
