@@ -65,10 +65,10 @@ class StudentInfo(APIView):
             Achievements.objects.filter(member__id=aiki_id, received_ku__isnull=False).order_by("attestation_date"),
             many=True).data
         aiki_ser["seminars"] = aiki_seminars
-
+        aiki_ser["club"] = aiki_ser["club"]["name"]
         if aiki_chel.is_trainer:
             aiki_ser["members"] = Aikido_Member.objects.filter(trainer_id=aiki_id).count()
-            aiki_ser["license"] = None
+            aiki_ser["area"] = aiki_chel.club.area
 
         return Response(aiki_ser, status=status.HTTP_200_OK)
 
