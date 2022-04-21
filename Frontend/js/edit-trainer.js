@@ -48,7 +48,7 @@ function sendEditInfo() {
     if (checkInputsInSendingData(sendingData)) {
         console.log("Отправка файла...")
         console.log(JSON.stringify(sendingData));
-        postWithoutAnswer(url, JSON.stringify(sendingData), "PATCH", function () {});
+        postWithoutAnswer(url, JSON.stringify(sendingData), "PATCH", function () {location.href = '../html/federation_coaches.html'}, 'json');
 
     }
     else {

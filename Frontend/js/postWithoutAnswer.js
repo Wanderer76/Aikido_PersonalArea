@@ -1,8 +1,10 @@
-function postWithoutAnswer(url, sendingFile, method="POST", func) {
+function postWithoutAnswer(url, sendingFile, method="POST", func, datatype = undefined) {
     let xhr = new XMLHttpRequest();
     let storage = window.sessionStorage;
     xhr.open(method, url);
     xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
+    if (datatype == 'json')
+        xhr.setRequestHeader('Content-type', 'application/json');
     if (sendingFile !== undefined)
         xhr.send(sendingFile);
     else
