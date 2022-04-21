@@ -1,7 +1,7 @@
 import {createElement, render, RenderPosition} from "./add-event-render-script.js";
 import {dayInputs, hoursInputs, dayClickListener, dayChangeListener, addHiddenClass} from "./add-event-schedule-script.js";
 
-export const eventSlug = sessionStorage.getItem('slug')
+export const eventSlug = sessionStorage.getItem('slug');
 getRequest(`http://localhost:8000/api/v1/events/event_statistic/${eventSlug}/`, fillInputs);
 
 function fillInputs(data) {
@@ -59,7 +59,7 @@ function createCurrentCategorySchedule (category, categorySchedule) {
 }
 
 function createDay (category, day) {
-    const markup = `<input type="text" class="input-schedule" data-category="${category}" placeholder="ДД месяц">`;
+    const markup = `<input type="text" class="input-schedule" data-category="${category}" placeholder="ДД месяц" autocomplete="off">`;
     const dayInputElement = createElement(markup);
     const dayColumn = document.getElementById('day-column');
 
@@ -70,7 +70,7 @@ function createDay (category, day) {
 }
 
 function createHours (category, day, hours) {
-    const markup = `<input type="text" class="input-schedule" data-day="${day}" data-category="${category}"  placeholder="ЧЧ:ММ - ЧЧ:ММ">`;
+    const markup = `<input type="text" class="input-schedule" data-day="${day}" data-category="${category}"  placeholder="ЧЧ:ММ - ЧЧ:ММ" autocomplete="off">`;
     const hoursColumn = document.getElementById('time-column');
 
     for (let i = 0; i < hours.length; i++) {
@@ -81,6 +81,4 @@ function createHours (category, day, hours) {
         render(hoursColumn, hoursInputElement, RenderPosition.BEFOREEND);
     }
 }
-
-
 

@@ -9,6 +9,7 @@
         <title>Информация о мероприятии</title>
         <link rel="stylesheet" href="../css/menu-style.css">
         <link rel="stylesheet" href="../css/add-event-style.css">
+        <link rel="stylesheet" href="../css/edit-event-page-style.css">
     </head>
     <body>
     <div class="content"></div>
@@ -16,24 +17,29 @@
         <div class="page-body__container">
             <form action="#" method="post">
                 <h1>Информация о мероприятии</h1>
-                <div class="edit-btns">
-                    <button type="button" class="download-list-btn" name="" id="">Скачать список участников</button>
-                    <button type="button" class="upload-list-btn" name="" id="">Загрузить отчёт</button>
+
+                <div class="row edit-btns" id="buttons-block">
+                    <a class="download col-6 col-md-6 col-lg-6" id="download">Скачать список участников</a>
+                    <input type="file" class="input-file" id="upload">
+                    <label for="upload" class="form-control-file upload col-6 col-md-6 col-lg-6">
+                        <span>Загрузить список участников</span>
+                    </label>
                 </div>
+
                 <section>
                     <div class="event-title">
                         <label class="visually-hidden" for="event-name">Название мероприятия</label>
-                        <input type="text" title="Название мероприятия" name="event-name" id="event-name" placeholder="Название мероприятия">
+                        <input type="text" title="Название мероприятия" name="event-name" id="event-name" placeholder="Название мероприятия" autocomplete="off">
                     </div>
                     <div class="event-dates">
                         <label class="visually-hidden" for="date-start">Дата начала</label>
-                        <input type="date" class="date" title="Дата начала" name="date-start" id="date-start" placeholder="Дата начала">
+                        <input type="date" class="date" title="Дата начала" name="date-start" id="date-start" placeholder="Дата начала" autocomplete="off">
                         <label class="visually-hidden" for="date-end">Дата окончания</label>
-                        <input type="date" class="date" title="Дата окончания" name="date-end" id="date-end" placeholder="Дата окончания">
+                        <input type="date" class="date" title="Дата окончания" name="date-end" id="date-end" placeholder="Дата окончания" autocomplete="off">
                     </div>
                     <div class="event-address">
                         <label class="visually-hidden" for="event-location">Адрес проведения</label>
-                        <input type="text" class="event-location" title="Адрес проведения" name="event-location" id="event-location" placeholder="Адрес проведения">
+                        <input type="text" class="event-location" title="Адрес проведения" name="event-location" id="event-location" placeholder="Адрес проведения" autocomplete="off">
                     </div>
                     <div class="map" id="map">
                     </div>
@@ -44,7 +50,7 @@
                     </select>
                     <div class="coach-and-rank">
                         <label class="visually-hidden" for="lead-coach">ФИО ведущего тренера</label>
-                        <input type="text" class="lead-coach" title="ФИО ведущего тренера" name="lead-coach" id="lead-coach" placeholder="ФИО ведущего тренера">
+                        <input type="text" class="lead-coach" title="ФИО ведущего тренера" name="lead-coach" id="lead-coach" placeholder="ФИО ведущего тренера" autocomplete="off">
                         <label class="visually-hidden" for="max-rang-select">Макс. ранг</label>
                         <select class="max-rang" title="Максимальный ранг" name="max-rang" id="max-rang-select">
                             <option value="">-- Макс. ранг --</option>
@@ -126,11 +132,11 @@
                 <section>
                     <h2>Контакты организатора</h2>
                     <label class="visually-hidden"  for="org-name">ФИО организатора</label>
-                    <input type="text" title="ФИО организатора" name="organizer-name" id="org-name" placeholder="ФИО организатора">
+                    <input type="text" title="ФИО организатора" name="organizer-name" id="org-name" placeholder="ФИО организатора" autocomplete="off">
                     <label class="visually-hidden"  for="org-phone">Телефон</label>
-                    <input type="text" title="Телефон" name="organizer-phone" id="org-phone" placeholder="Телефон">
+                    <input type="text" title="Телефон" name="organizer-phone" id="org-phone" placeholder="Телефон" autocomplete="off">
                     <label class="visually-hidden" for="org-email">E-mail</label>
-                    <input type="text" title="E-mail" name="organizer-email" id="org-email" placeholder="E-mail">
+                    <input type="text" title="E-mail" name="organizer-email" id="org-email" placeholder="E-mail" autocomplete="off">
                 </section>
                 <div class="save-butts">
                     <button type="button" class="create-butt visually-hidden" name="create" id="create">Создать</button>
@@ -147,10 +153,12 @@
     <script type="module" src="../js/event-page-add-clubs.js"></script>
 
     <script type="module" src="../js/add-event-schedule-script.js"></script>
-    <!--<script type="module" src="../js/send-event-info-script.js"></script>-->
 
     <script type="module" src="../js/get-event-info-script.js"></script>
     <script type="module" src="../js/update-event-script.js"></script>
+
+    <script type="module" src="../js/download-report.js"></script>
+    <script type="module" src="../js/upload-report.js"></script>
     </body>
 </html>
 
