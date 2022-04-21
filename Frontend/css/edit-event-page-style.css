@@ -1,0 +1,46 @@
+.download, .upload {
+    width: 20%;
+    margin: auto;
+
+    font-size: 120%;
+    color: white;
+    border-radius: 20px;
+    border: 1px solid white;
+    text-align: center;
+    padding-right: 5%;
+
+}
+
+.download {
+    text-decoration: none;
+    background: #05861A;
+    background-image: url("../assets/excel.png");
+    background-size: 15%;
+    background-repeat: no-repeat;
+    background-position: 90%;
+    padding-top: 1.2%;
+    padding-bottom: 1.2%;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+    }
+
+#buttons-block a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.upload {
+    background: #134F8C;
+    padding-top: 1.2%;
+    padding-bottom: 1.2%;
+    background-image: url("../assets/download.png");
+    background-size: 15%;
+    background-repeat: no-repeat;
+    background-position: 90%;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+}
+
+.input-file {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}

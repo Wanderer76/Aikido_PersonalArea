@@ -4,7 +4,7 @@ import {eventSlug} from "./get-event-info-script.js";
 let xhr = new XMLHttpRequest();
 xhr.responseType = 'json';
 let storage = window.sessionStorage;
-let token = storage.getItem('user_token');
+const userToken = storage.getItem('user_token');
 
 xhr.onreadystatechange = function () {
     // if (xhr.status >= 200 && xhr.status < 300) {
@@ -23,7 +23,7 @@ editButton.onclick = function () {
     xhr.open('PATCH', `http://127.0.0.1:8000/api/v1/events/update/${eventSlug}/`);
     const formData = createFormData();
 
-    xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
+    xhr.setRequestHeader('Authorization', 'Token ' + userToken);
     xhr.send(formData);
 }
 

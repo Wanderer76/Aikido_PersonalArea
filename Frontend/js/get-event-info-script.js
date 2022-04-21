@@ -1,7 +1,7 @@
 import {createElement, render, RenderPosition} from "./add-event-render-script.js";
 import {dayInputs, hoursInputs, dayClickListener, dayChangeListener, addHiddenClass} from "./add-event-schedule-script.js";
 
-export const eventSlug = sessionStorage.getItem('slug')
+export const eventSlug = sessionStorage.getItem('slug');
 getRequest(`http://localhost:8000/api/v1/events/event_statistic/${eventSlug}/`, fillInputs);
 
 function fillInputs(data) {
@@ -81,6 +81,4 @@ function createHours (category, day, hours) {
         render(hoursColumn, hoursInputElement, RenderPosition.BEFOREEND);
     }
 }
-
-
 
