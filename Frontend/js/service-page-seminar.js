@@ -1,27 +1,11 @@
-let seminar_url = "http://localhost:8000/api/v1/admin/seminar_statistic/";
-let seminar_xhr = new XMLHttpRequest();
-let data;
-let comingActivitiesHeader = document.getElementById('coming-activities-header');
-let previewActivitiesHeader = document.getElementById('preview-activities-header');
+let seminar_url = "http://localhost:8000/api/v1/events/event_list/";
+getRequest(seminar_url, fillSeminarTables);
+
 let num=0;
 
-seminar_xhr.open('GET', seminar_url);
-seminar_xhr.setRequestHeader('Authorization', 'Token ' + window.sessionStorage.getItem('user_token'))
-seminar_xhr.send();
-
-seminar_xhr.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        data = seminar_xhr.response;
-        console.log(data);
-        addDataToTable(data, comingActivitiesHeader, 'upcoming');
-        addDataToTable(data, previewActivitiesHeader, 'past');
-    }
-}
-
-function sendActivityName(button, action) {
+function sendActivityName(button, action, slug) {
     let buttonNum = button.id.split('-')[2];
-    let name  = document.getElementById('name-' + buttonNum);
-    sessionStorage.setItem("activityName", name.textContent);
+    sessionStorage.setItem("slug", slug);
     if (action == 'download') {
         let seminarName = window.sessionStorage.getItem("activityName");
         let downloadUrl = 'http://localhost:8000/api/v1/admin/seminar/download/'+ seminarName + '/';
@@ -43,8 +27,17 @@ function sendActivityName(button, action) {
         location.href = "../html/create_aplication.html";
 }
 
+function fillSeminarTables(data) {
+    let comingActivitiesHeader = document.getElementById('coming-activities-header');
+    let previewActivitiesHeader = document.getElementById('preview-activities-header');
+    addDataToTable(data, comingActivitiesHeader, 'upcoming');
+    addDataToTable(data, previewActivitiesHeader, 'past');
+
+}
+
 function addDataToTable(data, tagAfterInserting, tag) {
     let activities = JSON.parse(data);
+    console.log(activities)
     let array;
 
     if (tag == 'upcoming')
@@ -66,7 +59,7 @@ function addDataToTable(data, tagAfterInserting, tag) {
                ' <td class="bordered-3">'+ activity.city +'</td>' +
                 '<td class="bordered-3">'+ activity.responsible_club +'</td>' +
                 '<td class="bordered-3">' +
-                   ' <button type="button" name="apply" class="apply" id="more-button-'+ num + '"  onclick="sendActivityName(this, \'apply\')">Подать \ Изменить заявку' +
+                   ' <button type="button" name="apply" class="apply" id="more-button-'+ num + '"  onclick="sendActivityName(this, \'apply\', \'' + activity.slug + '\')">Подать \ Изменить заявку' +
                    ' </button>' +
                 '</td>' +
             '</tr>';

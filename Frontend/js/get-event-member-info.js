@@ -3,7 +3,7 @@ eventMemberRequest.responseType = 'json';
 
 let studentsInfoRequest = new XMLHttpRequest();
 studentsInfoRequest.responseType = 'json';
-const stud_url = "http://localhost:8000/api/v1/account/trainer_students/";
+const stud_url = "http://localhost:8000/api/v1/account/trainer/students/";
 
 let studentList;
 let eventCheckedMemmbers;
@@ -11,7 +11,7 @@ let havePreviewRequest;
 LoadMemberEventInfo();
 
 function LoadMemberEventInfo() {
-    let urlEventInfo = 'http://localhost:8000/api/v1/events/requests/'+ storage.getItem("activityName") +'/';
+    let urlEventInfo = 'http://localhost:8000/api/v1/events/trainer/requests/'+ storage.getItem("slug") +'/';
     eventMemberRequest.open('GET', urlEventInfo);
     eventMemberRequest.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
     eventMemberRequest.send();

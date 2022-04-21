@@ -1,23 +1,10 @@
 let storage = window.sessionStorage;
 let baseInfoRequest = new XMLHttpRequest();
-SendSeminarInfoRequest('http://localhost:8000/api/v1/admin/event_statistic/' + storage.getItem("activityName") + '/', baseInfoRequest);
-
-function SendSeminarInfoRequest(url) {
-
-    baseInfoRequest.open('GET', url);
-    baseInfoRequest.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
-    baseInfoRequest.send();
-}
-
-baseInfoRequest.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        let data = baseInfoRequest.response;
-        setInfoToHeader(data);
-    }
-}
+getRequest('http://localhost:8000/api/v1/events/base_for_trainer/' + storage.getItem("slug") + '/', setInfoToHeader);
 
 function setInfoToHeader(data) {
-    let info = JSON.parse(data).result;
+    console.log(data);
+    let info = JSON.parse(data);
     let output = document.createElement('div');
     let beforeInsertingElement = document.getElementById('buttons-block');
     output.classList.add('container');
@@ -25,10 +12,8 @@ function setInfoToHeader(data) {
     output.innerHTML =
                 '<h1 id="event-name">' + info.event_name + '</h1>\n' +
         '        <p>Дата: <span class="changeable-params">' + createDateOutput(info.date_of_event, info.end_of_event) + '</span></p>\n' +
-        '        <p>Место: <span class="changeable-params">'+ info.city +'</span></p>\n' +
-        '        <p>Ответственный клуб: <span class="changeable-params">'+ info.responsible_club +'</span></p>' +
-        '        <p>Ответственный тренер: <span class="changeable-params">' + info.responsible_trainer + '</span></p>' +
-        '        <p>Количество заявленных участников: <span class="changeable-params">111</span></p>\n' +
+        '        <p>Место: <span class="changeable-params">'+ info.address +'</span></p>\n' +
+        '        <p>Количество заявленных участников: <span class="changeable-params">'+ info.count+ '</span></p>\n' +
         '        <p>Окончание записи через сайт: <span class="changeable-params">'+ info.end_record_date +'</span></p>';
     beforeInsertingElement.parentElement.insertBefore(output, beforeInsertingElement);
 }

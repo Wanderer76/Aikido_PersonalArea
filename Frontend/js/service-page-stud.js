@@ -1,4 +1,4 @@
-const stud_url = "http://localhost:8000/api/v1/account/trainer_students/";
+const stud_url = "http://localhost:8000/api/v1/account/trainer/students/";
 let stud_xhr = new XMLHttpRequest();
 let d = document;
 let last_id = 0;

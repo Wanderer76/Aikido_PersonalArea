@@ -4,13 +4,15 @@ let participants = [];
 sendButton.onclick = function () {
     let checkboxes = document.querySelectorAll('.checkbox');
     checkboxes.forEach(element => getRowInfo(element));
-    let sender = new XMLHttpRequest();
-    let url = 'http://localhost:8000/api/v1/events/requests/create/';
-    sender.open('POST', url);
-    sender.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
-    // console.log(JSON.stringify(participants));
-    sender.send(JSON.stringify(participants));
-    location.href = '../html/service_page.html';
+    // let sender = new XMLHttpRequest();
+    // let url = 'http://localhost:8000/api/v1/events/requests/create/';
+    // sender.open('POST', url);
+    // sender.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'));
+    // // console.log(JSON.stringify(participants));
+    // sender.send(JSON.stringify(participants));
+    // location.href = '../html/service_page.html';
+    console.log(participants)
+    postWithoutAnswer('http://localhost:8000/api/v1/events/requests/create/', JSON.stringify(participants), "POST", function () {location.href = '../html/service_page.html'});
 }
 
 function getRowInfo(checkbox) {

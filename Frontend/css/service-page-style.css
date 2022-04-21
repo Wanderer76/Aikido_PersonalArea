@@ -179,6 +179,7 @@ body {
 .bordered{
     border: 1px solid black;
     border-radius: 30px;
+    padding: 1%;
 }
 .heading{
     font-size: xx-large;

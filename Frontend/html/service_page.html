@@ -47,16 +47,18 @@
                         Предстоящие семинары
                     </p>
                 </div>
-                <div class="bordered upcom_sem scroll">
-                    <table>
-                        <tr id="coming-activities-header">
-                            <th style="width: 180px;">Дата</th>
-                            <th style="width: 200px;">Название</th>
-                            <th style="width: 240px;">Город</th>
-                            <th style="width: 350px;">Ответственный клуб</th>
-                            <th style="width: 180px;"></th>
-                        </tr>
-                    </table>
+                <div class="bordered upcom_sem">
+                    <div class="scroll">
+                        <table>
+                            <tr id="coming-activities-header">
+                                <th style="width: 180px;">Дата</th>
+                                <th style="width: 200px;">Название</th>
+                                <th style="width: 240px;">Город</th>
+                                <th style="width: 350px;">Ответственный клуб</th>
+                                <th style="width: 180px;"></th>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -66,16 +68,18 @@
                         Прошедшие семинары
                     </div>
                 </div>
-                <div class="bordered past_sem scroll">
-                    <table>
-                        <tr id="preview-activities-header">
-                            <th style="width: 180px;">Дата</th>
-                            <th style="width: 200px;">Название</th>
-                            <th style="width: 240px;">Город</th>
-                            <th style="width: 350px;">Ответственный клуб</th>
-                            <th style="width: 180px;"></th>
-                        </tr>
-                    </table>
+                <div class="bordered past_sem">
+                    <div class="scroll">
+                        <table>
+                            <tr id="preview-activities-header">
+                                <th style="width: 180px;">Дата</th>
+                                <th style="width: 200px;">Название</th>
+                                <th style="width: 240px;">Город</th>
+                                <th style="width: 350px;">Ответственный клуб</th>
+                                <th style="width: 180px;"></th>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="container">
@@ -84,12 +88,14 @@
                         Список учеников
                     </div>
                 </div>
-                <div class="bordered list_stud scroll">
-                    <table id="students">
-                        <tr id="default-row">
-                           <td id="default_value"></td>
-                        </tr>
-                    </table>
+                <div class="bordered list_stud">
+                    <div class="scroll">
+                        <table id="students">
+                            <tr id="default-row">
+                               <td id="default_value"></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <button class="table-button" onclick="location.href = 'show-all-studs-data.html'">Посмотреть все данные учеников</button>
             </div>
@@ -98,8 +104,10 @@
 
 </body>
 <script src="../js/menu-inserting.js"></script>
+<script src="../js/getRequest.js"></script>
+
 <script src="../js/service-page.js"></script>
 <script src="../js/service-page-seminar.js"></script>
 <script src="../js/service-page-stud.js"></script>
-<!--<script src="../js/set-status-ability-to-menu.js"></script>-->
+<script src="../js/set-status-ability-to-menu.js"></script>
 </html>
