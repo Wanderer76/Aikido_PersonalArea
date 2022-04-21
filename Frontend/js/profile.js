@@ -1,23 +1,13 @@
-let xhr = new XMLHttpRequest();
+getRequest('http://localhost:8000/api/v1/account/profile/', setOutputParams);
+
 let storage = window.sessionStorage;
-let url = 'http://localhost:8000/api/v1/account/profile/';
-
-xhr.open('GET', url);
-xhr.setRequestHeader('Authorization', 'Token ' + storage.getItem('user_token'))
-xhr.send();
-
-xhr.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        let data = xhr.response;
-        setOutputParams(data);
-    }
-}
 
 function setOutputParams(jsonData) {
+    console.log(jsonData);
     jsonData = JSON.parse(jsonData);
     setBaseInfo(jsonData);
     setAchievmentStory(jsonData);
-    setAchievmentStoryInTable(jsonData);
+    setAchievmentStoryInTable(jsonData.seminars, document.getElementById('seminar-header'));
     setBelt(jsonData);
 }
 
@@ -62,76 +52,43 @@ function getMaxKu(seminars, isChild) {
 }
 
 function setAchievmentStory(data) {
-    for (var i = 0; i < data.seminars.length; i++) {
+    for (let i = 0; i < data.seminars.length; i++) {
         displayAchievment(data.seminars[i]);
     }
 }
 
 function displayAchievment(achievment) {
-    let id = getAchievmentBlockId(achievment);
+    let id = achievment.is_child ? achievment.received_ku + '-child' : achievment.received_ku;
+    console.log(id);
     if (id == null)
         return;
-    let num = id.substring(0, 1);
-    let name = id.substring(1, id.length);
-    for (var i = num; i < 6; i++) {
-        let block = document.getElementById(i + name);
-        block.classList.remove('not-reached');
-        if (i == num) {
-            block.children[1].children[0].textContent = achievment.name;
-            block.children[1].children[1].textContent = setDateFormat(achievment.attestation_date);
-        }
-    }
-}
-
-function getAchievmentBlockId(achievment) {
-    let id;
-    if (achievment.isChild) {
-        if (achievment.newKu > 10) {
-            console.log("Error achievment: dan was assigned to child");
-            return;
-        }
-        if (achievment.newKu < 0 || achievment.newKu > 5) {
-            console.log("Uncorrect degree: " + achievment.newKu + 'was');
-            return;
-        }
-        else
-            id = achievment.newKu + 'ku-child';
-    }
-
-    else {
-        if (achievment.newKu > 10)
-            id = achievment.newKu % 10 + 'dan';
-        else {
-            if (achievment.newKu < 0 || achievment.newKu > 5) {
-                console.log("Uncorrect degree: " + achievment.newKu + 'was');
-                return;
-            }
-            else
-                id = achievment.newKu + 'ku';
-        }
-    }
-    return id;
+    let block = document.getElementById(id);
+    block.classList.remove('visually-hidden');
+    block.classList.remove('not-reached');
+    console.log(achievment.event_name);
+    block.children[1].children[0].textContent = achievment.event_name;
+    block.children[1].children[1].textContent = setDateFormat(achievment.attestation_date);
 }
 
 
-function setAchievmentStoryInTable(data) {
-    let header = document.getElementById('seminar-header');
-    for (var i = 0; i < data.seminars.length; i++) {
+function setAchievmentStoryInTable(events, tableHeader) {
+    console.log(events);
+    for (var i = 0; i < events.length; i++) {
         let output = document.createElement('tr');
 
-        result = data.seminars[i].newKu == data.seminars[i].oldKu ? 0 : data.seminars[i].newKu;
+        let result = events[i].received_ku;
         if (result > 10) {
             result = result % 10 + ' дан';
-        } else {
+        } else if (result < 6) {
             result = result + ' кю';
         }
 
         output.innerHTML =
-            '<td>' + setDateFormat(data.seminars[i].attestation_date) + '</td>' +
-            '<td class="unvisible bordered">' + data.seminars[i].city + '</td>' +
-            '<td class="unvisible bordered">' + data.seminars[i].club + '</td>' +
+            '<td>' + setDateFormat(events[i].attestation_date) + '</td>' +
+            '<td class="unvisible bordered">' + events[i].event_name + '</td>' +
+            '<td class="unvisible bordered">' + events[i].address + '</td>' +
             '<td>' + result + '</td>';
-        header.parentElement.insertBefore(output, header.nextSibling);
+        tableHeader.parentElement.insertBefore(output, tableHeader.nextSibling);
     }
 }
 
