@@ -77,8 +77,8 @@ class EventInfoLoad(APIView):
         try:
             stream_file = xls_parser.createXlsxFromRequests(seminar_url)
             return FileResponse(stream_file, as_attachment=True, status=status.HTTP_200_OK)
-        except ArgumentError as exception:
-            return JsonResponse(data={'result': exception.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as exception:
+            return JsonResponse(data={'result': exception.args}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, seminar_url):
         data = request.data['file']
