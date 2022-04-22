@@ -140,12 +140,12 @@ def delete_achievement_if_exists(event_name: str) -> None:
         .prefetch_related("member")
     if achievements.exists():
         hasbiks_id = achievements.values_list("member", flat=True)
-
         for i in hasbiks_id:
             if Achievements.objects.filter(member_id=i).count() == 1:
                 if achievements.filter(member_id=i).exists():
                     Aikido_Member.objects.get(id=i).delete()
-            achievements.get(member_id=i).delete()
+            else:
+                achievements.get(member_id=i).delete()
 
 
 def find_event_by_slug(event_slug: str) -> Union[Events, None]:

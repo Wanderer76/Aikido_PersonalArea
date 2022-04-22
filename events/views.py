@@ -85,8 +85,8 @@ class EventInfoLoad(APIView):
         try:
             result = xls_parser.parseXlsToDb(seminar_url, data)
             return Response(data={'result': result}, status=status.HTTP_200_OK)
-        except ArgumentError as error:
-            return Response(data={'result': error.args}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as exception:
+            return Response(data={'result': exception.args}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateRequest(APIView, IsTrainerPermission):
@@ -211,9 +211,13 @@ class EventView(APIView, IsTrainerPermission):
 
     def get(self, request, event_slug):
         try:
+
             event = Events_Serializer(Events.objects.get(slug=event_slug)).data
             club = Club.objects.get(id=event['responsible_club'])
             event['responsible_club'] = club.name
+            event['couch_img'] = request.build_absolute_uri(event['couch_img'])
+            event['logo_img'] = request.build_absolute_uri(event['logo_img'])
+            event['poster'] = request.build_absolute_uri(event['poster'])
             return JsonResponse(data={"result": event})
         except Events.DoesNotExist as e:
             return JsonResponse(data={"result": "события не существует"})
