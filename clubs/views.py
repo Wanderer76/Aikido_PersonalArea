@@ -38,18 +38,12 @@ class UpdateClub(APIView):
             club = Club.objects.get(slug=slug)
         except Club.DoesNotExist:
             return JsonResponse({'message': 'The club does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-        main_trainers = get_main_trainers(request.data)
-
-        serializer = Clubs_Serializer(club, data=request.data, partial=True)
-
-        if serializer.is_valid():
-            # serializer.validated_data['slug'] = slugify(serializer.validated_data['name'])
-            set_main_trainers(main_trainers, serializer.save())
-            return Response(status=status.HTTP_200_OK, data={'content': 'updated'})
-        else:
-            print(serializer.validated_data)
-            return Response(status=status.HTTP_404_NOT_FOUND, data=serializer.errors)
+        data = request.data.copy()
+        main_trainers = get_main_trainers(data)
+        serializer = Clubs_Serializer().update(club, data)
+        if len(main_trainers) != 0:
+            set_main_trainers(main_trainers, serializer)
+        return Response(status=status.HTTP_200_OK, data={'content': 'updated'})
 
 
 class GetClub(APIView):
