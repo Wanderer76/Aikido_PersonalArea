@@ -17,6 +17,13 @@ class Events_ListSerializer(serializers.ModelSerializer):
         fields = ['event_name', 'date_of_event', 'end_of_event', 'address', 'responsible_club', 'slug']
 
 
+class Events_ProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Events
+        fields = ['date_of_event', 'end_of_event', 'address', 'contacts']
+
+
 class Requests_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Request

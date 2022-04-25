@@ -12,7 +12,11 @@ from rest_framework import status, permissions
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
+from events.models import Events
+from events.serializations import Events_ProfileSerializer
 from PersonalArea.models import *
 from PersonalArea.serializations import *
 from Utilities import password_generantor, services
@@ -66,9 +70,44 @@ class StudentInfo(APIView):
             many=True).data
         aiki_ser["seminars"] = aiki_seminars
         aiki_ser["club"] = aiki_ser["club"]["name"]
+
+        ku = None
+        if aiki_seminars.__len__():
+            aiki_ser["seminar_name"] = aiki_seminars[-1]["event_name"]
+            aiki_ser["seminar_date"] = aiki_seminars[-1]["attestation_date"]
+            ku = aiki_seminars[-1]["received_ku"]
+
+            if ku == 1:
+                ku = 10
+            aiki_ser["next_ku"] = ku + 1 if ku > 9 else ku - 1
+            months = datetime.strptime(aiki_seminars[-1]["attestation_date"],
+                                       "%Y-%m-%d") + relativedelta(months=12 if ku > 9 else 6)
+        else:
+            aiki_ser["next_ku"] = 5
+            aiki_sem = Achievements_Serializer(
+                Achievements.objects.filter(member__id=aiki_id, received_ku__isnull=True).order_by("attestation_date"),
+                many=True).data
+            aiki_ser["seminar_name"] = aiki_sem[-1]["event_name"]
+            aiki_ser["seminar_date"] = aiki_sem[-1]["attestation_date"]
+            months = datetime.strptime(aiki_sem[-1]["attestation_date"],
+                                       "%Y-%m-%d") + relativedelta(months=6)
+
+        aiki_ser["received_ku"] = ku
+        aiki_ser["next_seminar_date"] = str(months)[:10]
+
         if aiki_chel.is_trainer:
             aiki_ser["members"] = Aikido_Member.objects.filter(trainer_id=aiki_id).count()
             aiki_ser["area"] = aiki_chel.club.area
+
+        achivs = Achievements_Serializer(
+            Achievements.objects.filter(member__id=aiki_id).order_by("attestation_date"),
+            many=True).data
+
+        evens_names = list(item.get('event_name') for item in achivs)
+        eve = Events_ProfileSerializer(Events.objects.filter(event_name__in=evens_names).order_by("date_of_event"),
+                                    many=True).data
+
+        aiki_ser["events"] = eve
 
         return Response(aiki_ser, status=status.HTTP_200_OK)
 
@@ -223,7 +262,7 @@ class TrainerBaseInfo(APIView):
         trainer = Aikido_Member.objects.get(id=id)
         if not trainer.isTrainer:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
         first_achievment = Achievements.objects.order_by('attestation_date').first()
         trainer_ser = Trainer_Serializer(trainer).data
         trainer_ser['club'] = Club.objects.get(id=trainer_ser['club']).name
