@@ -85,11 +85,11 @@ class StudentInfo(APIView):
         else:
             aiki_ser["next_ku"] = 5
             aiki_sem = Achievements_Serializer(
-                Achievements.objects.filter(member__id=aiki_id, received_ku__isnull=True).order_by("attestation_date"),
+                Achievements.objects.filter(member__id=aiki_id, received_ku__isnull=True).order_by('-attestation_date'),
                 many=True).data
-            aiki_ser["seminar_name"] = aiki_sem[-1]["event_name"]
-            aiki_ser["seminar_date"] = aiki_sem[-1]["attestation_date"]
-            months = datetime.strptime(aiki_sem[-1]["attestation_date"],
+            aiki_ser["seminar_name"] = aiki_sem[0]["event_name"]
+            aiki_ser["seminar_date"] = aiki_sem[0]["attestation_date"]
+            months = datetime.strptime(aiki_sem[0]["attestation_date"],
                                        "%Y-%m-%d") + relativedelta(months=6)
 
         aiki_ser["received_ku"] = ku
