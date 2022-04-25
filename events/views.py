@@ -107,15 +107,13 @@ class CreateRequest(APIView, IsTrainerPermission):
     def post(self, request):
         data = JSONParser().parse(request)
         trainer_id = data[0]['trainer_id']
-        club = Events.objects.get(event_name=data[0]['event_name'])
-        current_trainer_requests = Request.objects.prefetch_related('event').filter(event_name__event_name=club.id,
-                                                                                    trainer_id=trainer_id)
-
+        event = Events.objects.get(event_name=data[0]['event_name'])
+        current_trainer_requests = Request.objects.filter(event_name=event.id, trainer_id=trainer_id)
         if current_trainer_requests.exists():
             current_trainer_requests.delete()
 
         for i in data:
-            i['event_name'] = club.id
+            i['event_name'] = event.id
 
         serializer = Requests_Serializer(data=data, many=True)
         if serializer.is_valid():
@@ -204,6 +202,20 @@ class EventsList(APIView, IsTrainerPermission):
 
         result = {'upcoming': upcoming, 'past': past}
         return Response(status=status.HTTP_200_OK, data=result)
+
+
+class UpcomingList(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        events = Events.objects.all()
+        upcoming = Events_ListSerializer(
+            events.filter(
+                end_of_event__gte=datetime.date.today()).order_by('end_of_event'), many=True).data
+        for i in upcoming:
+            i['responsible_club'] = i['responsible_club']['name']
+            i['poster'] = request.build_absolute_uri(i['poster'])
+        return Response(data=upcoming, status=status.HTTP_200_OK)
 
 
 class EventView(APIView, IsTrainerPermission):
