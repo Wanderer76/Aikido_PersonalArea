@@ -177,6 +177,10 @@
   font-weight: bolder;
 }
 
+.dan {
+  background: black;
+}
+
 .ku-1 {
   background-color: #9e4700;
 }
@@ -247,7 +251,13 @@
   border-right: 1px solid gray;
 }
 
-
+.apply{
+  color: white;
+  background-color: darkblue;
+  border-radius: 7px;
+  border-color: midnightblue;
+  box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+}
 /*styles for different resolutions */
 @media all and (max-width: 1000px){
     .menu {

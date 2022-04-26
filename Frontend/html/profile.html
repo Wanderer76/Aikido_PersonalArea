@@ -31,26 +31,26 @@
           <div class="row container current-achievment">
             <div class="col-md-5 card-block">
               <h3>Текущий ранг</h3>
-              <div class="card">
+              <div class="card" name="card-received">
                 <div class="prog">
-                  <div class="progress-done" data-done="100">
+                  <div class="progress-done dan" data-done="100" name="rank">
                     3 кю
                   </div>
                 </div>
-                <p>X центральный семинар по прикладному айкидо</p>
-                <p class="date">12.12.2022</p>
+                <p name="event-name">X центральный семинар по прикладному айкидо</p>
+                <p class="date" name="event-date">15.15.15</p>
               </div>
             </div>
             <div class="col-md-5 card-block">
               <h3>Следующий ранг</h3>
-              <div class="card">
+              <div class="card" name="card-next">
                 <div class="prog">
                   <div class="progress-done" data-done="80">
                     2 кю
                   </div>
                 </div>
                 <p>Дата возможности получения:</p>
-                <p class="date">12.12.2022</p>
+                <p class="date" name="event-date">15.15.15</p>
               </div>
             </div>
           </div>
@@ -253,9 +253,9 @@
               <table id="future-seminar-table">
                 <tr id="future-seminar-header">
                   <td class="heading">Дата</td>
-                  <td class="heading unvisible bordered">Город</td>
-                  <td class="heading unvisible bordered">Ответственный клуб</td>
-                  <td  class="heading">Результат</td>
+                  <td class="heading unvisible bordered">Название</td>
+                  <td class="heading unvisible bordered">Место</td>
+                  <td  class="heading"></td>
                 </tr>
 
                 <!-- Here wil be new rows with info about seminar. It's add with JS. -->

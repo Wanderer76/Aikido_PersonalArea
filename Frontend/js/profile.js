@@ -8,13 +8,53 @@ function setOutputParams(jsonData) {
     setBaseInfo(jsonData);
     setAchievmentStory(jsonData);
     setAchievmentStoryInTable(jsonData.seminars, document.getElementById('seminar-header'));
+    setFutureEvents(jsonData.events, document.getElementById('future-seminar-header'))
     setBelt(jsonData);
+    fillAchievmentCard('.card[name="card-received"]', jsonData);
+    fillAchievmentCard('.card[name="card-next"]', jsonData, false);
+}
+
+function fillAchievmentCard(cardNodeSelector, data, received=true,) {
+    let eventNameNode = document.querySelector(cardNodeSelector + '> p[name="event-name"]');
+    if (eventNameNode !== null)
+        eventNameNode.textContent = data.seminar_name;
+    document.querySelector(cardNodeSelector + '> p[name="event-date"]').textContent = received ? setDateFormat(data.seminar_date) : setDateFormat(data.next_seminar_date);
+
+    let progressBar = document.querySelector(cardNodeSelector + '>.prog>.progress-done');
+    fillBar(progressBar, received, data.seminar_date, data.next_seminar_date);
+    changeBarNameAndColor(progressBar, received ? data.received_ku : data.next_ku);
+
+}
+
+function fillBar(progress, full = true, startStrDate, endStrDate) {
+    if (!full) {
+        let startDate = new Date(startStrDate);
+        let endDate = new Date(endStrDate);
+        let now = Date.now();
+        let dif = (endDate - now) / (endDate - startDate) * 100;
+        progress.dataset.done = dif >= 100 || dif < 0 ? 100 : Math.round(dif);
+    } else {
+        progress.dataset.done = 100;
+    }
+    progress.style.width = progress.getAttribute('data-done') + '%';
+    progress.style.opacity = 1;
+}
+
+function changeBarNameAndColor(progressBar, ku) {
+    let className;
+    if (ku > 10) {
+        className = 'dan';
+        progressBar.textContent = ku % 10 === 0 ? 10 + ' дан' : ku % 10 + ' дан';
+    } else {
+        className = 'ku-'+ku;
+        progressBar.textContent = ku + ' кю';
+    }
+    progressBar.classList.add(className);
 }
 
 function setBelt(data) {
     console.log(data);
     let belt = getBeltColor(data.seminars);
-    console.log(belt);
     document.getElementById('belt-img').src = '../assets/belts/'+ belt +'_belt.jpg';
 }
 
@@ -92,6 +132,27 @@ function setAchievmentStoryInTable(events, tableHeader) {
     }
 }
 
+function setFutureEvents(events, tableHeader) {
+    console.log(events);
+    for (var i = 0; i < events.length; i++) {
+        let output = document.createElement('tr');
+
+        let result = events[i].received_ku;
+        if (result > 10) {
+            result = result % 10 + ' дан';
+        } else if (result < 6) {
+            result = result + ' кю';
+        }
+
+        output.innerHTML =
+            '<td>' + createDateOutput(events[i].date_of_event, events[i].end_of_event) + '</td>' +
+            '<td class="unvisible bordered">' + events[i].event_name + '</td>' +
+            '<td class="unvisible bordered">' + events[i].address + '</td>' +
+            '<td><button type="button" name="apple" class="apply">Подробнее</button></td>';
+        tableHeader.parentElement.insertBefore(output, tableHeader.nextSibling);
+    }
+}
+
 function setBaseInfo(data) {
     document.getElementById('name').textContent = data.name;
     document.getElementById('surname').textContent = data.surname;
@@ -120,26 +181,25 @@ function setDateFormat(strDate) {
 }
 
 
-function fillBar(progress) {
-    progress.style.width = progress.getAttribute('data-done') + '%';
-    progress.style.opacity = 1;
-}
-
-function changeBarColor(progressBar, color) {
-    progressBar.style.background = color;
-}
-
 function showBlock(button, block, textValue) {
     if (button.textContent === textValue +  ' ▼')
         button.textContent = textValue + ' ▲';
     else
         button.textContent = textValue + ' ▼';
     block.classList.toggle('visually-hidden');
-
 }
 
-fillBar(document.getElementsByClassName('progress-done')[0]);
-changeBarColor(document.getElementsByClassName('progress-done')[0], '#0417b4');
-fillBar(document.getElementsByClassName('progress-done')[1]);
-changeBarColor(document.getElementsByClassName('progress-done')[1], '#9e4700');
+function createDateOutput(date1, date2) {
+    var startDate = new Date(date1);
+    var endDate = new Date(date2);
+    if (startDate.getMonth() == endDate.getMonth() && startDate.getFullYear() == endDate.getFullYear())
+        return startDate.getDate() + " - " + endDate.getDate() + " " + endDate.toLocaleString('default', {month: 'long'}) + " "+ endDate.getFullYear();
+    else if (startDate.getMonth() !== endDate.getMonth() && startDate.getFullYear() == endDate.getFullYear())
+        return startDate.getDate() + " " + startDate.toLocaleString('default', {month: 'long'}) + " - " +
+            endDate.getDate() + " " + endDate.toLocaleString('default', {month: 'long'}) + " " + startDate.getFullYear();
+    else return startDate.getDate() + " " +startDate.toLocaleString('default', {month: 'long'}) + " " + startDate.getFullYear() + " - " +
+            endDate.getDate() + " " + endDate.toLocaleString('default', {month: 'long'}) + " " + endDate.getFullYear();
+}
+
+
 
