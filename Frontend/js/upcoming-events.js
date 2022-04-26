@@ -35,7 +35,7 @@ function fillCard(cardNode, eventInfo) {
         '                            <p class="club_name">'+ eventInfo.event_name +'</p>\n' +
         '                            <p class="date">'+ createDateOutput(eventInfo.date_of_event, eventInfo.end_of_event) +'</p>\n' +
         '                            <p class="city">'+ eventInfo.address +'</p>\n' +
-        '                            <button type="button" class="moreBut" name="edit" onclick="goToEventPage('+ eventInfo.slug +')">Подробнее</button>\n' +
+        '                            <button type="button" class="moreBut" name="edit" onclick="goToEventPage(\''+ eventInfo.slug +'\')">Подробнее</button>\n' +
         '                        </div>\n' +
         '                    </div>\n' +
         '                </div>'
