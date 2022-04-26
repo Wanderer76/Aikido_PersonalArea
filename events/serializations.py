@@ -14,14 +14,14 @@ class Events_ListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Events
-        fields = ['event_name', 'date_of_event', 'end_of_event', 'address', 'responsible_club', 'slug','poster']
+        fields = ['event_name', 'date_of_event', 'end_of_event', 'address', 'responsible_club', 'slug', 'poster']
 
 
 class Events_ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Events
-        fields = ['date_of_event', 'end_of_event', 'address', 'contacts']
+        fields = ['event_name', 'date_of_event', 'end_of_event', 'address', 'contacts']
 
 
 class Requests_Serializer(serializers.ModelSerializer):
