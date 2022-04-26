@@ -24,6 +24,19 @@ h1 {
 
 }
 
+
+.card-link {
+    text-decoration: none;
+    color: black;
+    transition: scale 0.5s;
+}
+
+.card-link:hover {
+    text-decoration: none;
+    color: black;
+}
+
+
 .card {
     display: flex;
     max-width: 70%;
@@ -93,6 +106,26 @@ img {
     margin-right: auto;
     margin-bottom: 2%;
     margin-top: auto;
+    padding: 1.1% 7% 1.1% 7%;
+    font-weight: bold;
+    font-size: large;
+}
+
+.moreBut {
+    display: inline-block;
+    width: 60%;
+    color: white;
+    background-color: #134F8C;
+    border-radius: 10px;
+    border-color: #134F8C;
+    box-shadow: 0.2em 0.2em 2px rgba(122, 122, 122, 0.5);
+    max-height: 20%;
+    min-height: 20px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3%;
+    margin-top: 2%;
     padding: 1.1% 7% 1.1% 7%;
     font-weight: bold;
     font-size: large;

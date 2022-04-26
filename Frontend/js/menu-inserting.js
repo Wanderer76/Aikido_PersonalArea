@@ -8,8 +8,8 @@ menu_inserting_element.innerHTML =
     '                <div class="icon"><a href="profile.html"><img src="../assets/home.png"></a></div>\n' +
     '            </div>\n' +
     '            <div class="btn">\n' +
-    '                <div class="description"><a href="#" class="text-a">Мероприятия</a></div>\n' +
-    '                <div class="icon"><a href="#"><img src="../assets/competition.png"></a></div>\n' +
+    '                <div class="description"><a href="../html/upcoming_events.html" class="text-a">Мероприятия</a></div>\n' +
+    '                <div class="icon"><a href="../html/upcoming_events.html"><img src="../assets/competition.png"></a></div>\n' +
     '            </div>\n' +
     '            <div class="btn" id="trainer-button">\n' +
     '                <div class="description"><a href="service_page.html" class="text-a">Служебная</a></div>\n' +
