@@ -46,10 +46,9 @@ class UpdateEvent(APIView):
     @transaction.atomic
     def patch(self, request, event_slug):
         try:
-            data = request.data.copy()
             event = Events.objects.get(slug=event_slug)
             serializer = UpdateEvents_Serializer()
-            serializer.update(event, data)
+            serializer.update(event, request.data)
             return Response(status=status.HTTP_200_OK)
         except Events.DoesNotExist as e:
             return Response(status=status.HTTP_404_NOT_FOUND)

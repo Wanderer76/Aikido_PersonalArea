@@ -1,3 +1,4 @@
+import datetime
 import os
 import tempfile
 from typing import List, Dict, Union, Optional, BinaryIO
@@ -49,7 +50,7 @@ def get_ku(record: Union[int, Union[str, None]]) -> Optional[int]:
             raise ArgumentError(f'Не правильно заполнена ячейка {record}')
 
 
-def parse_eu_date_to_us(record: str) -> str:
+def parse_eu_date_to_us(record:str) -> str:
     if len(record.split(' ')) > 1:
         return record.split(' ')[0]
     return datetime.datetime.strptime(record, "%d.%m.%Y").strftime("%Y-%m-%d")

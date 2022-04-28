@@ -18,13 +18,15 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
     book.iso_dates = True
     sheet = book.active
     event = services.find_event_by_slug(event_slug)
-
     if event is None:
         return 'Мероприятие не существует'
 
     services.delete_achievement_if_exists(event.event_name)
 
-    for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
+    for row in sheet.iter_rows(min_row=2):
+        if row[0].value is None or row[1].value is None or row[5].value is None:
+            raise ArgumentError(f"ФИО заполнена не правильно строка-{row[0].row}")
+
         member_id = services.parse_id_from_xls(row[4].value)
         if Achievements.objects.filter(event_name=event.event_name, member__id=member_id).exists():
             raise ArgumentError(f"Ячейка заполнена не правильно {row[4]}")
@@ -37,6 +39,7 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
 
         trainer_id = services.parse_id_from_xls(row[9].value)
         services.set_trainer_status(trainer_id)
+
         if not (Aikido_Member.objects.filter(id=member_id).exists()):
             data = {
                 'id': int(member_id),
@@ -44,7 +47,7 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
                 'name': row[1].value,
                 'surname': row[0].value,
                 'second_name': row[2].value,
-                'birthdate': services.parse_eu_date_to_us(str(row[5].value)),
+                'birthdate': row[5].value.date(),
                 'city': str(row[6].value),
                 'club': Club.objects.get(name=row[7].value).id,
                 'photo': None,

@@ -26,8 +26,6 @@ def get_club_info(club: Club, is_detail: bool = False) -> Dict[str, str]:
 
 def get_main_trainers(query) -> List[Any]:
     main_trainers = query.getlist('main_trainers', default=None)
-    if len(main_trainers) != 0:
-        query.pop('main_trainers')
     return main_trainers
 
 

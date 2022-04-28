@@ -1,5 +1,7 @@
 import datetime
+from datetime import datetime, date
 
+from dateutil.relativedelta import relativedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from django.http import JsonResponse
@@ -12,14 +14,12 @@ from rest_framework import status, permissions
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
-from events.models import Events
-from events.serializations import Events_ProfileSerializer
 from PersonalArea.models import *
 from PersonalArea.serializations import *
 from Utilities import password_generantor, services
+from events.models import Events
+from events.serializations import Events_ProfileSerializer
 
 
 class LoginAPIView(APIView):
@@ -106,7 +106,7 @@ class StudentInfo(APIView):
 
         evens_names = list(item.get('event_name') for item in achivs)
         eve = Events_ProfileSerializer(Events.objects.filter(event_name__in=evens_names).order_by("date_of_event"),
-                                    many=True).data
+                                       many=True).data
 
         aiki_ser["events"] = eve
 
@@ -114,6 +114,7 @@ class StudentInfo(APIView):
 
 
 class TrainerHasbiks(APIView):
+
     def get(self, request):
         try:
             data = request.headers.get('Authorization')[6:]
@@ -129,7 +130,6 @@ class TrainerHasbiks(APIView):
                                                                   received_ku__isnull=False).latest())
                     hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
                     hasbik["ku"] = seminar_boy.data["received_ku"]
-                    hasbik['club'] = hasbik['club']['name']
 
                 return Response(data={"список учеников": hasbiki}, status=status.HTTP_200_OK)
             else:
@@ -219,6 +219,7 @@ class Modificate_Trainer(APIView):
 
         club = Club.objects.get(name=request.data['club'])
         request.data['club'] = club.id
+
         achievement = Achievements.objects.get(member=trainer)
         aboba = {k: request.data.pop(k) for k in list(request.data.keys()) if k == 'event_name'
                  or k == 'attestation_date'
@@ -249,7 +250,7 @@ class Modificate_Trainer(APIView):
 class CandidatesToTrainer(APIView):
 
     def get(self, request):
-        current_year = datetime.date.today()
+        current_year = date.today()
         min_year = current_year.replace(current_year.year - 18, current_year.month, current_year.day)
         members = Aikido_Member.objects.filter(birthdate__lte=min_year, isTrainer=False)
         serializer = CandidatesToTrainerSerializer(members, many=True)
