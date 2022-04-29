@@ -113,8 +113,8 @@ class StudentInfo(APIView):
         return Response(aiki_ser, status=status.HTTP_200_OK)
 
 
-class TrainerHasbiks(APIView):
 
+class TrainerHasbiks(APIView):
     def get(self, request):
         try:
             data = request.headers.get('Authorization')[6:]
@@ -125,11 +125,12 @@ class TrainerHasbiks(APIView):
                                           .filter(trainer_id=aiki_chel.id), many=True).data
 
                 for hasbik in hasbiki:
-                    seminar_boy = Achievements_Serializer(Achievements.objects
-                                                          .filter(member__id=hasbik["id"],
-                                                                  received_ku__isnull=False).latest())
-                    hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
-                    hasbik["ku"] = seminar_boy.data["received_ku"]
+                    achievements = Achievements.objects.filter(member=hasbik["id"],
+                                                               received_ku__isnull=False)
+                    if achievements.count() != 0:
+                        seminar_boy = Achievements_Serializer(achievements.latest())
+                        hasbik["attestation_date"] = seminar_boy.data["attestation_date"]
+                        hasbik["ku"] = seminar_boy.data["received_ku"]
 
                 return Response(data={"список учеников": hasbiki}, status=status.HTTP_200_OK)
             else:
@@ -137,7 +138,6 @@ class TrainerHasbiks(APIView):
 
         except ObjectDoesNotExist:
             return Response(data={"error": "вы не тренер"}, status=status.HTTP_400_BAD_REQUEST)
-
 
 class TrainserSet(APIView):
     permission_classes = (permissions.IsAdminUser,)
@@ -265,7 +265,7 @@ class TrainerBaseInfo(APIView):
         if not trainer.isTrainer:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        first_achievment = Achievements.objects.order_by('attestation_date').first()
+        first_achievment = Achievements.objects.filter(member=trainer).order_by('attestation_date').first()
         trainer_ser = Trainer_Serializer(trainer).data
         trainer_ser['club'] = Club.objects.get(id=trainer_ser['club']).name
         achievement_ser = Achievement_Serializer(first_achievment).data

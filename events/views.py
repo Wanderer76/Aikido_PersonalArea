@@ -9,6 +9,7 @@ from rest_framework.permissions import BasePermission
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from PersonalArea.models import Aikido_Member
 from Utilities import xls_parser
 from Utilities.services import get_day_before
 from events.serializations import *
@@ -100,19 +101,23 @@ class CreateRequest(APIView, IsTrainerPermission):
           "trainer_id": ид тренера: int
           } ]"""
 
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (IsTrainerPermission,)
 
     @transaction.atomic
     def post(self, request):
+        token = request.headers.get('Authorization')[6:]
+        aiki_id = Token.objects.get(key=token).user_id
+        trainer = Aikido_Member.objects.get(id=aiki_id)
+
         data = JSONParser().parse(request)
-        trainer_id = data[0]['trainer_id']
         event = Events.objects.get(event_name=data[0]['event_name'])
-        current_trainer_requests = Request.objects.filter(event_name=event.id, trainer_id=trainer_id)
+        current_trainer_requests = Request.objects.filter(event_name=event.id, trainer_id=trainer.id)
         if current_trainer_requests.exists():
             current_trainer_requests.delete()
 
         for i in data:
             i['event_name'] = event.id
+            i['trainer_id'] = trainer.id
 
         serializer = Requests_Serializer(data=data, many=True)
         if serializer.is_valid():

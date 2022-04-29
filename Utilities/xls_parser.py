@@ -18,18 +18,28 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
     book.iso_dates = True
     sheet = book.active
     event = services.find_event_by_slug(event_slug)
+
     if event is None:
-        return 'Мероприятие не существует'
+        raise ArgumentError('Мероприятие не существует')
 
     services.delete_achievement_if_exists(event.event_name)
 
     for row in sheet.iter_rows(min_row=2):
         if row[0].value is None or row[1].value is None or row[5].value is None:
-            raise ArgumentError(f"ФИО заполнена не правильно строка-{row[0].row}")
+            raise ArgumentError(f"ФИО заполнена не правильно строка - {row[0].row - 1}")
+        if not Club.objects.filter(name=row[7].value).exists():
+            raise ArgumentError(f"Клуба {row[7].value} не существует строка - {row[0].value - 1}")
 
         member_id = services.parse_id_from_xls(row[4].value)
+
         if Achievements.objects.filter(event_name=event.event_name, member__id=member_id).exists():
             raise ArgumentError(f"Ячейка заполнена не правильно {row[4]}")
+
+        if row[12].value is None or row[12].value == "":
+            raise ArgumentError(f"Дата не заполнена строка - {row[0].value - 1}")
+
+        if row[9].value is None or row[9].value == "":
+            raise ArgumentError(f"Id тренера не заполнен строка - {row[0].value - 1}")
 
         achievement = Achievements()
         achievement.event_name = event.event_name
@@ -41,6 +51,11 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
         services.set_trainer_status(trainer_id)
 
         if not (Aikido_Member.objects.filter(id=member_id).exists()):
+            if row[5].value.date() is None or row[5].value.date() == "":
+                raise ArgumentError(f"Дата рождения не заполнена строка - {row[0].value - 1}")
+            if row[6].value is None or row[6].value == "":
+                raise ArgumentError(f"Город не запонен строка {row[0].value - 1}")
+
             data = {
                 'id': int(member_id),
                 'password': password_generantor.generate_password(),
@@ -62,6 +77,8 @@ def parseXlsToDb(event_slug: str, xlsx_file: InMemoryUploadedFile) -> str:
             else:
                 raise ArgumentError(f"Ошибка в строке {row}")
         else:
+            if not Aikido_Member.objects.filter(id=member_id).exists():
+                raise ArgumentError(f"Человека с таким id не существует строка - {row[0].value - 1}")
             aikiboy = Aikido_Member.objects.get(id=member_id)
             achievement.member = aikiboy
             achievement.save()
@@ -80,8 +97,7 @@ def createXlsxFromRequests(event_slug: str) -> BinaryIO:
     services.set_blue_row(work_sheet)
     event = Events.objects.get(slug=event_slug)
 
-    is_past = True if event.date_of_event <= datetime.date.today() else False
-
+    is_past = True if event.end_of_event <= datetime.date.today() else False
     if is_past:
         records = Achievements.objects.filter(event_name=event.event_name) \
             .prefetch_related('member').prefetch_related('member__club')

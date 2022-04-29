@@ -50,7 +50,7 @@ def get_ku(record: Union[int, Union[str, None]]) -> Optional[int]:
             raise ArgumentError(f'Не правильно заполнена ячейка {record}')
 
 
-def parse_eu_date_to_us(record:str) -> str:
+def parse_eu_date_to_us(record: str) -> str:
     if len(record.split(' ')) > 1:
         return record.split(' ')[0]
     return datetime.datetime.strptime(record, "%d.%m.%Y").strftime("%Y-%m-%d")
@@ -61,12 +61,15 @@ def set_trainer_status(trainer_id: int) -> None:
         trainer = Aikido_Member.objects.get(id=trainer_id)
         trainer.isTrainer = True
         trainer.save()
+    else:
+        raise ArgumentError(f'Тренера с id - {trainer_id} не существует')
 
 
 def create_row(request: Dict[str, str], event: Events, member=None) -> List[str]:
     trainer = Aikido_Member.objects.get(id=request['trainer_id'])
     last = 0
     ku_suffix = ''
+    is_child = False
     if member is not None:
         member_achievements = Achievements.objects.filter(member=member, received_ku__isnull=False).order_by(
             'attestation_date')
@@ -74,6 +77,7 @@ def create_row(request: Dict[str, str], event: Events, member=None) -> List[str]
             last = member_achievements.values_list('received_ku')[member_achievements.count() - 1][0]
             if member_achievements[member_achievements.count() - 1].is_child:
                 ku_suffix = ' детский'
+                is_child = True
     second_name = ''
     if request['second_name'] != 'None' and request['second_name'] != '':
         second_name = request['second_name']
@@ -90,7 +94,7 @@ def create_row(request: Dict[str, str], event: Events, member=None) -> List[str]
         f"{trainer.surname} {trainer.name[0]}.{trainer.second_name[0]}",
         trainer.id,
         event.start_record_date.date(), event.address,
-        event.date_of_event, '', '', event.responsible_trainer]
+        event.date_of_event, '', '' if not is_child else '+', event.responsible_trainer]
 
 
 def create_row_to_past(record: Achievements, event: Events):
