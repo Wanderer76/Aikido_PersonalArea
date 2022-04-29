@@ -7,7 +7,6 @@ let eventName = eventSlug;
 let downloadUrl = `http://localhost:8000/api/v1/events/file/download/${eventName}/`;
 let downloadButton = document.getElementById('download');
 let downloader = new XMLHttpRequest();
-downloader.responseType = 'blob';
 
 downloadButton.onclick = function () {
     downloader.open('GET', downloadUrl);
@@ -16,5 +15,10 @@ downloadButton.onclick = function () {
 }
 
 downloader.onload = function () {
-    window.open(downloadUrl);
-}
+    if ((downloader.status >= 200 && downloader.status < 300)) {
+        window.open(downloadUrl);
+    } else {
+        alert(JSON.parse(downloader.response).result);
+    }
+};
+

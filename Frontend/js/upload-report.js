@@ -7,7 +7,11 @@ let uploadButton = document.getElementById('upload');
 let uploadUrl = `http://localhost:8000/api/v1/events/file/upload/${eventSlug}/`;
 let uploader = new XMLHttpRequest();
 
-uploader.onreadystatechange = state => { console.log(uploader.response); }
+uploader.onload = function () {
+    if (!(uploader.status >= 200 && uploader.status < 300)) {
+        alert(JSON.parse(uploader.response).result);
+    }
+};
 
 uploadButton.onchange = function () {
     let file = document.getElementById('upload').files[0];
@@ -21,3 +25,4 @@ uploadButton.onchange = function () {
     uploader.setRequestHeader('Content-Disposition', `attachment; filename="${fileName}"`);
     uploader.send(formData);
 }
+
