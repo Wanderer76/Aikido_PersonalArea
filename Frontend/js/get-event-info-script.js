@@ -1,5 +1,6 @@
 import {createElement, render, RenderPosition} from "./add-event-render-script.js";
 import {dayInputs, hoursInputs, dayClickListener, dayChangeListener, addHiddenClass} from "./add-event-schedule-script.js";
+import {setRespClub} from "./event-page-add-clubs.js";
 
 export const eventSlug = sessionStorage.getItem('slug');
 getRequest(`http://localhost:8000/api/v1/events/event_statistic/${eventSlug}/`, fillInputs);
@@ -12,11 +13,17 @@ function fillInputs(data) {
     document.getElementById('date-start').value = parsed['date_of_event'];
     document.getElementById('date-end').value = parsed['end_of_event'];
     document.getElementById('event-location').value = parsed['address'];
-    document.getElementById('resp-club-select').value = parsed['responsible_club'];
+
+    //document.getElementById('resp-club-select').value = parsed['responsible_club'];
+
+    setRespClub(parsed['responsible_club']);
+
+    console.log( document.getElementById('resp-club-select'));
+    console.log( document.getElementById('resp-club-select').value);
+
     document.getElementById('lead-coach').value = parsed['responsible_trainer'];
     document.getElementById('max-rang-select').value = parsed['max_rang'];
 
-    // не работает.
     document.getElementById('logo-icon-preview').src = parsed['logo_img'];
     document.getElementById('coach-icon-preview').src = parsed['couch_img'];
     document.getElementById('event-poster-preview').src = parsed['poster'];
