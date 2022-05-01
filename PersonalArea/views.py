@@ -220,6 +220,16 @@ class Modificate_Trainer(APIView):
         club = Club.objects.get(name=request.data['club'])
         request.data['club'] = club.id
 
+        if trainer.is_superuser:
+            if not Achievements.objects.filter(member=trainer).exists():
+                achievement = Achievements()
+                achievement.event_name = ""
+                achievement.attestation_date = "2018-06-15"
+                achievement.received_ku = None
+                achievement.is_child = False
+                achievement.member = trainer
+                achievement.save()
+
         achievement = Achievements.objects.get(member=trainer)
         aboba = {k: request.data.pop(k) for k in list(request.data.keys()) if k == 'event_name'
                  or k == 'attestation_date'
