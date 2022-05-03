@@ -65,7 +65,7 @@ class GetClubs(APIView):
 
     def get(self, request):
         serializer = Clubs_Serializer(Club.objects.all(), many=True)
-        clubs = Club.objects.all()
+        clubs = Club.objects.all().order_by("name")
         res = [get_club_info(i) for i in clubs]
         for i in res:
             i['logo'] = request.build_absolute_uri(i['logo'])

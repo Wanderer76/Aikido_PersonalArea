@@ -6,9 +6,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-# from django.template.defaultfilters import slugify
-# from django.utils.text import slugify
-# from pytils.translit import slugify
 from pytz import unicode
 from rest_framework import status, permissions
 from rest_framework.parsers import JSONParser
@@ -113,7 +110,6 @@ class StudentInfo(APIView):
         return Response(aiki_ser, status=status.HTTP_200_OK)
 
 
-
 class TrainerHasbiks(APIView):
     def get(self, request):
         try:
@@ -122,7 +118,7 @@ class TrainerHasbiks(APIView):
             aiki_chel = Aikido_Member.objects.get(id=aiki_id)
             if aiki_chel.is_trainer:
                 hasbiki = Deti_Serializer(Aikido_Member.objects
-                                          .filter(trainer_id=aiki_chel.id), many=True).data
+                                          .filter(trainer_id=aiki_chel.id).order_by("surname"), many=True).data
 
                 for hasbik in hasbiki:
                     achievements = Achievements.objects.filter(member=hasbik["id"],
@@ -139,12 +135,13 @@ class TrainerHasbiks(APIView):
         except ObjectDoesNotExist:
             return Response(data={"error": "вы не тренер"}, status=status.HTTP_400_BAD_REQUEST)
 
+
 class TrainserSet(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def get(self, request):
         try:
-            trainers = Aikido_Member.objects.filter(isTrainer=True)
+            trainers = Aikido_Member.objects.filter(isTrainer=True).order_by("surname")
             serializer = Profile_Serializer(trainers, many=True)
             for i in serializer.data:
                 last_achievement = Achievements.objects.filter(member__id=i['id']).order_by(
@@ -231,7 +228,8 @@ class Modificate_Trainer(APIView):
                     achievement.member = trainer
                     achievement.save()
                 else:
-                    return JsonResponse({'message': 'заполните все поля о мероприятии аттестации'}, status=status.HTTP_400_BAD_REQUEST)
+                    return JsonResponse({'message': 'заполните все поля о мероприятии аттестации'},
+                                        status=status.HTTP_400_BAD_REQUEST)
 
         achievement = Achievements.objects.get(member=trainer)
         aboba = {k: request.data.pop(k) for k in list(request.data.keys()) if k == 'event_name'
@@ -265,7 +263,7 @@ class CandidatesToTrainer(APIView):
     def get(self, request):
         current_year = date.today()
         min_year = current_year.replace(current_year.year - 18, current_year.month, current_year.day)
-        members = Aikido_Member.objects.filter(birthdate__lte=min_year, isTrainer=False)
+        members = Aikido_Member.objects.filter(birthdate__lte=min_year, isTrainer=False).order_by("surname")
         serializer = CandidatesToTrainerSerializer(members, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
