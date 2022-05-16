@@ -46,8 +46,11 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-# AUTH_USER_MODEL = PersonalArea.models.Aikido_Member
-
+AUTH_USER_MODEL = 'PersonalArea.models.Aikido_Member'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'PersonalArea.admin.SettingsBackend'
+)
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -123,7 +126,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {

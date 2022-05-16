@@ -44,6 +44,7 @@ class Aikido_Account_Manager(BaseUserManager):
             is_superuser=True,
             is_staff=True
         )
+        user.set_password(password)
         user.save(using=self._db)
         return user
 
@@ -73,7 +74,7 @@ class Aikido_Member(AbstractBaseUser, PermissionsMixin):
     objects = Aikido_Account_Manager()
 
     def __str__(self):
-        return str(id)
+        return f"ID: {self.id} ФИО: {self.surname} {self.name} {self.second_name}"
 
     @property
     def is_trainer(self):
@@ -101,3 +102,6 @@ class Achievements(models.Model):
         db_table = "achievements"
         managed = True
         get_latest_by = 'attestation_date'
+
+    def __str__(self):
+        return f"ФИО: {self.member} - Мероприятие: {self.event_name}"

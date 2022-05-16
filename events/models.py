@@ -30,6 +30,9 @@ class Events(models.Model):
         db_table = "event"
         managed = True
 
+    def __str__(self):
+        return self.event_name
+
 
 class Request(models.Model):
     name = models.CharField(name="name", max_length=25, default="None")
@@ -43,3 +46,6 @@ class Request(models.Model):
     class Meta:
         db_table = "request"
         managed = True
+
+    def __str__(self):
+        return f"Отправитель: {self.surname} {self.name} {self.second_name if not 'None' else ''}, Мероприятие: {self.event_name}"
