@@ -44,7 +44,6 @@ class Aikido_Account_Manager(BaseUserManager):
             is_superuser=True,
             is_staff=True
         )
-        user.set_password(password)
         user.save(using=self._db)
         return user
 
