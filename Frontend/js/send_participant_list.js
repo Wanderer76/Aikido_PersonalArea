@@ -23,8 +23,8 @@ function getRowInfo(checkbox) {
         console.log('member: ' + memberId);
         if (memberId != '') {
             participants.push({
-            "name": cols[1].textContent.split(" ")[0],
-            "surname" : cols[1].textContent.split(" ")[1],
+            "name": cols[1].textContent.split(" ")[1],
+            "surname" : cols[1].textContent.split(" ")[0],
             "member_id" : cols[0].textContent.substring(1, cols[0].textContent.length),
             "birthdate" : birthdate[2]+'-'+birthdate[1]+'-'+birthdate[0],
             "event_name" : document.getElementById('event-name').textContent,
@@ -32,8 +32,8 @@ function getRowInfo(checkbox) {
         });
         } else {
             participants.push({
-            "name": cols[1].textContent.split(" ")[0],
-            "surname" : cols[1].textContent.split(" ")[1],
+            "name": cols[1].textContent.split(" ")[1],
+            "surname" : cols[1].textContent.split(" ")[0],
             "second_name" : cols[1].textContent.split(" ")[2],
             "birthdate" : birthdate[2]+'-'+birthdate[1]+'-'+birthdate[0],
             "event_name" : document.getElementById('event-name').textContent,

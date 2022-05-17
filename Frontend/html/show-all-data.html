@@ -8,20 +8,23 @@
     <link rel="stylesheet" href="../css/show-all-studs-data.css">
 </head>
 <body>
-    <div class="content container-fluid">
-        <h2>Данные ID и пароли для всех аккаунтов в базе</h2>
-        <div class="bordered">
-            <table>
-                <tr id="header">
-                    <th>ID</th>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>Пароль</th>
-                </tr>
-            </table>
+    <div class="wrapper">
+        <div class="content container-fluid">
+            <h2>Данные ID и пароли для всех аккаунтов в базе</h2>
+            <div class="bordered">
+                <table>
+                    <tr id="header">
+                        <th>ID</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Пароль</th>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </body>
+<script src="../js/menu-inserting.js"></script>
 <script src="../js/show-all-stud-data.js"></script>
 <script>getTrainerStudents('http://localhost:8000/api/v1/admin/members_info/')</script>
 </html>
