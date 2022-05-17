@@ -19,6 +19,10 @@ menu_inserting_element.innerHTML =
     '                <div class="description"><a href="admin-page-main.html" class="text-a">Админка</a></div>\n' +
     '                <div class="icon"><a href="admin-main-page.html"><img src="../assets/admin-icon.png"></a></div>\n' +
     '            </div>\n' +
+    '            <div class="btn" id="edit-button">\n' +
+    '                <div class="description"><a href="admin-page-main.html" class="text-a">Редактировать</a></div>\n' +
+    '                <div class="icon"><a href="http://localhost:8000/admin/" target="_blank"><img src="../assets/edit.png"></a></div>\n' +
+    '            </div>\n' +
     '            <img id="logo" src="../assets/logo_federation.png" alt="LOGO">\n' +
     '            <div class="exit-btn">\n' +
     '                <div class="description"><a href="authorization.html" class="text-a">Выйти</a></div>\n' +

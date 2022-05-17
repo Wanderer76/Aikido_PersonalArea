@@ -26,7 +26,7 @@ function fillAchievmentCard(cardNodeSelector, data, received=true,) {
 
 }
 
-function fillBar(progress, full = true, startStrDate, endStrDate) {
+function fillBar(progress, full, startStrDate, endStrDate) {
     if (!full) {
         let startDate = new Date(startStrDate);
         let endDate = new Date(endStrDate);

@@ -65,9 +65,14 @@ function addNewMembersFromPreviewAplication(eventCheckedMembers) {
     for (let i=0; i< eventCheckedMembers.length; i++) {
         if (!checkMemberInListByID(studentList, eventCheckedMembers[i].member_id)) {
             let output = document.createElement('tr');
-            output.innerHTML =
+            output.innerHTML = eventCheckedMembers[i].second_name !== "None" ?
             '<td></td>' +
-            '<td>'+ eventCheckedMembers[i].name + ' ' + eventCheckedMembers[i].surname + ' ' + eventCheckedMembers[i].second_name +'</td>' +
+            '<td>'+ eventCheckedMembers[i].surname + ' ' + eventCheckedMembers[i].name + ' ' + eventCheckedMembers[i].second_name +'</td>' +
+            '<td>'+ setDateFormat(eventCheckedMembers[i].birthdate) +'</td>' +
+            '<td></td>' +
+            '<td class="checkbox-cell"><input type="checkbox" class="checkbox" checked></td>' :
+            '<td></td>' +
+            '<td>'+ eventCheckedMembers[i].surname + ' ' + eventCheckedMembers[i].name +'</td>' +
             '<td>'+ setDateFormat(eventCheckedMembers[i].birthdate) +'</td>' +
             '<td></td>' +
             '<td class="checkbox-cell"><input type="checkbox" class="checkbox" checked></td>';
